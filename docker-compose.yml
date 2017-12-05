@@ -1,0 +1,66 @@
+version: '3'
+services:
+   grafana:
+     container_name: grafana
+     depends_on:
+       - graphite
+     links:
+       - influxdb:influxdb
+       - graphite
+     #image: grafana
+     build: ./grafana
+     ports:
+       - "8857:3000"
+     environment:
+       - GF_SECURITY_ADMIN_PASSWORD=admin
+       - GF_SECURITY_ADMIN_USER=admin
+       - GF_AUTH_ANONYMOUS_ENABLED=true
+       - GF_USERS_ALLOW_SIGN_UP=false
+       - GF_USERS_ALLOW_ORG_CREATE=false
+     restart: always 
+   influxdb:
+     #image: influxdb
+     build: ./influxdb
+     container_name: influxdb
+     ports:
+       - "8653:8086"
+     expose:
+        - 8653
+   telegraf:
+     #image: telegraf
+     build: ./telegraf
+     container_name: telegraf
+     #network_mode: "container:influxdb"
+     #volumes:
+       # - "c:/:/rootfs/proc:ro"
+   #environment:
+       # - SYS_PATH_PREFIX=/rootfs
+   sitespeed.io:
+      image: sitespeedio/sitespeed.io
+      command: -V
+      privileged: true
+      shm_size: 1g
+      volumes:
+            - ./docker/:/sitespeed.io/
+   graphite:
+      image: sitespeedio/graphite:1.0.2-2-b
+      ports:
+        - "2003:2003"
+        - "8080:80"
+      restart: always
+      volumes:
+        - whisper:/opt/graphite/storage/whisper
+        #- ./graphite/graphite.db:/opt/graphite/storage/graphite.db
+        #- ./graphite/conf/storage-schemas.conf:/opt/graphite/conf/storage-schemas.conf
+        #- ./graphite/conf/storage-aggregation.conf:/opt/graphite/conf/storage-aggregation.conf
+        #- ./graphite/conf/carbon.conf:/opt/graphite/conf/carbon.conf
+   grafana-setup:
+      image: sitespeedio/grafana-bootstrap:sitespeed.io-4.6
+      links:
+        - grafana
+      environment:
+        - GF_PASSWORD=admin
+        - GF_USER=admin
+volumes:
+    grafana:
+    whisper:

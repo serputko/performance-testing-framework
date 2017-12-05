@@ -1,0 +1,1 @@
+{"name":"telegraf","type":"influxdb","url":"http://influxdb:8086","access":"proxy","isDefault":false,"database":"telegraf","user":"","password":""}
