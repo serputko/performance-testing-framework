@@ -37,6 +37,7 @@ services:
        # - SYS_PATH_PREFIX=/rootfs
    sitespeed.io:
       image: sitespeedio/sitespeed.io
+      container_name: sitespeed.io
       command: -V
       privileged: true
       shm_size: 1g
@@ -89,8 +90,33 @@ services:
       ports:
        - "9000:9000"
       volumes:
-        - /var/run/docker.sock:/var/run/docker.sock  
+        - /var/run/docker.sock:/var/run/docker.sock
+   webpagetestserver:
+      build: ./wptserver
+      container_name: wptserver
+      image: wptserver
+      ports:
+        - "4000:80"
+   webpagetestagent:
+      image: webpagetest/agent
+      container_name: wptagent
+      depends_on:
+        - webpagetestserver
+      ports:
+        - "4001:80"
+      volumes:
+        - webpagetest:/var/www/html/results/
+      environment:
+        - SERVER_URL=http://wptserver:80/work/
+        - LOCATION=Test
+        # You need to also pass EXTRA_ARGS="--shaper none" to tell the agent that shaping isn't possible, 
+        # otherwise it will default to the netem shaper on Linux (in Docker) and still try to set up the configuration.
+        # https://github.com/WPO-Foundation/wptagent/issues/48
+        # -vvvvv - debug mode(more v - more detailed debug)
+        - EXTRA_ARGS=-vvvvv --shaper none
+        
 volumes:
     grafana:
     whisper:
     docker-dind:
+    webpagetest:
