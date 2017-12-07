@@ -1,0 +1,5 @@
+display-console-output
+greenballs
+htmlpublisher
+show-build-parameters
+job-import-plugin
