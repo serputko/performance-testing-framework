@@ -7,7 +7,7 @@ services:
      links:
        - influxdb:influxdb
        - graphite
-     #image: grafana
+     image: grafana
      build: ./grafana
      ports:
        - "8857:3000"
@@ -19,7 +19,7 @@ services:
        - GF_USERS_ALLOW_ORG_CREATE=false
      restart: always 
    influxdb:
-     #image: influxdb
+     image: influxdb
      build: ./influxdb
      container_name: influxdb
      ports:
@@ -27,7 +27,7 @@ services:
      expose:
         - 8653
    telegraf:
-     #image: telegraf
+     image: telegraf
      build: ./telegraf
      container_name: telegraf
      #network_mode: "container:influxdb"
@@ -44,6 +44,7 @@ services:
             - ./docker/:/sitespeed.io/
    graphite:
       image: sitespeedio/graphite:1.0.2-2-b
+      container_name: graphite
       ports:
         - "2003:2003"
         - "8080:80"
@@ -56,11 +57,40 @@ services:
         #- ./graphite/conf/carbon.conf:/opt/graphite/conf/carbon.conf
    grafana-setup:
       image: sitespeedio/grafana-bootstrap:sitespeed.io-4.6
+      container_name: grafana-setup
       links:
         - grafana
       environment:
         - GF_PASSWORD=admin
         - GF_USER=admin
+   docker-dind:
+      image: docker:dind
+      volumes:
+        - docker-dind:/usr/local/bin
+        - /var/run/docker.sock:/var/run/docker.sock
+      container_name: docker-dind
+      privileged: true
+   jenkins:
+      image: jenkins
+      build: ./jenkins
+      depends_on:
+       - docker-dind
+      container_name: jenkins
+      ports:
+       - "8181:8080"
+       - "50000:50000"
+      volumes:
+        - /var/lib/sitespeed.io/:/var/lib/sitespeed.io/
+        - docker-dind:/usr/local/bin/dind/
+        - /var/run/docker.sock:/var/run/docker.sock
+   portainer:
+      image: portainer/portainer
+      container_name: portainer
+      ports:
+       - "9000:9000"
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock  
 volumes:
     grafana:
     whisper:
+    docker-dind:
