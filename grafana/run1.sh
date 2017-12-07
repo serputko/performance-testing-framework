@@ -6,8 +6,6 @@ GF_API=${GF_API:-http://grafana:3000/api}
 GF_USER=${GF_USER:-admin}
 GF_PASSWORD=${GF_PASSWORD:-admin}
 
-# BACKEND=${BACKEND:-graphite}
-
 print_header() {
   echo " "
   echo "------------------"
@@ -60,7 +58,7 @@ for datasource in `ls -1 /datasources/*.json`; do
   fi
 done
 
-print_header "Adding Graphite dashboards"
+print_header "Adding dashboards"
 
 for dashboard in `ls -1 /dashboards/*.json`; do
   dashboard_json=$( wrap_dashboard_json $dashboard )
