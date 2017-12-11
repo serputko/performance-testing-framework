@@ -84,6 +84,9 @@ services:
         - /var/lib/sitespeed.io/:/var/lib/sitespeed.io/
         - docker-dind:/usr/local/bin/dind/
         - /var/run/docker.sock:/var/run/docker.sock
+        - jenkins-workspace:/var/jenkins_home/workspace/
+        # if you want to run local tests uncomment line below and replace <jmeter-scenarios> on dir to your tests 
+        #- <path to local directory with tests>:/var/lib/jmeter-scenarios/
    portainer:
       image: portainer/portainer
       container_name: portainer
@@ -120,3 +123,4 @@ volumes:
     whisper:
     docker-dind:
     webpagetest:
+    jenkins-workspace:

@@ -7,7 +7,7 @@ docker run --privileged --name docker-dind --rm -v /var/run/docker.sock:/var/run
 # run jenkins container with jobs importing
 # to be able to tun sitespeed.io tests you need to run docker-dind container before running jenkins container
 # more about jenkins https://jenkins.io/doc/
-docker run --name jenkins -v /var/lib/sitespeed.io/:/var/lib/sitespeed.io/ -v docker-dind:/usr/local/bin/dind/ -v /var/run/docker.sock:/var/run/docker.sock --rm -p 8080:8080 jenkins
+docker run --name jenkins -v <local path to tests>:/var/lib/jmeter-scenarios/ -v jenkins-workspace/:/var/lib/jenkins-workspace/ -v /var/lib/sitespeed.io/:/var/lib/sitespeed.io/ -v docker-dind:/usr/local/bin/dind/ -v /var/run/docker.sock:/var/run/docker.sock --rm -p 8181:8080 jenkins
 
 # run portainer to monitor your docker environment on web
 # more https://github.com/portainer/portainer
@@ -20,3 +20,9 @@ docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portaine
 # URL - urls to test. To test multiple sites use space as a delimiter. Example https://google.com/ https://dou.ua/
 # more documentation https://www.sitespeed.io/documentation/sitespeed.io/
 docker run --shm-size=1g --rm -v "/var/lib/sitespeed.io":/sitespeed.io sitespeedio/sitespeed.io --browsertime.browser chrome --browsertime.iterations 1 https://google.com/
+_______
+graphite_network=$(docker inspect --format='{{.HostConfig.NetworkMode}}' graphite)
+docker run --network=$graphite_network --privileged=true --shm-size=1g --rm -v "/var/lib/sitespeed.io/":/sitespeed.io sitespeedio/sitespeed.io --graphite.host graphite --graphite.port 2003 --graphite.httpPort 80 --browsertime.browser $browser --browsertime.iterations $run_number https://$URL/
+
+# run jmeter 
+docker run --rm --name jmeter --volumes-from=jenkins -e SCENARIO=$WORKSPACE/$SCENARIO -e WORKSPACE=$WORKSPACE -e USERS=$USERS -e PAMPUP=$RAMPUP -e HOLDLOAD=$HOLDLOAD -e SHUTDOWN=$SHUTDOWN jmeter 
