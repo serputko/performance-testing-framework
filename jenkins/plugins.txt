@@ -2,4 +2,4 @@ display-console-output
 greenballs
 htmlpublisher
 show-build-parameters
-job-import-plugin
+filesystem-list-parameter-plugin
