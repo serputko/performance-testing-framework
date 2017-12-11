@@ -19,34 +19,46 @@
           <description>Set total number of users for load test
 </description>
           <defaultValue>100</defaultValue>
+          <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>RAMPUP</name>
           <description>Set ramp up duration(sec)</description>
           <defaultValue>180</defaultValue>
+          <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>HOLDLOAD</name>
           <description>Set max load duration(sec)</description>
           <defaultValue>600</defaultValue>
+          <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
           <name>SHUTDOWN</name>
           <description>Set shutdown duration(sec)</description>
           <defaultValue>120</defaultValue>
+          <trim>false</trim>
         </hudson.model.StringParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
+        <alex.jenkins.plugins.FileSystemListParameterDefinition plugin="filesystem-list-parameter-plugin@0.0.3">
           <name>SCENARIO</name>
           <description>Select scenario to run</description>
-          <choices class="java.util.Arrays$ArrayList">
-            <a class="string-array">
-              <string>all</string>
-            </a>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
+          <path>/var/lib/jmeter-scenarios/</path>
+          <selectedType>FILE</selectedType>
+          <sortByLastModified>false</sortByLastModified>
+          <sortReverseOrder>false</sortReverseOrder>
+          <selectedEnumType>FILE</selectedEnumType>
+          <regexIncludePattern>.+\.jmx</regexIncludePattern>
+          <regexExcludePattern></regexExcludePattern>
+          <formatter>
+            <a class="string-builder"></a>
+            <l>en</l>
+            <zero>0</zero>
+          </formatter>
+        </alex.jenkins.plugins.FileSystemListParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
+  <scm class="hudson.scm.NullSCM"/>
   <canRoam>true</canRoam>
   <disabled>false</disabled>
   <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
@@ -55,19 +67,18 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>sudo service grafana-server start
-sudo service telegraf start
-sudo service influxdb start</command>
+      <command>docker container start telegraf</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>pwd
 ls
-rm -f report.log &amp;&amp; rm -rf report/
-sh ./apache-jmeter-3.3/bin/jmeter.sh -n -t ./scenarios/$SCENARIO.jmx -l report.log -e -o report/ -JUSERS=$USERS -JPAMPUP=$RAMPUP -JHOLDLOAD=$HOLDLOAD -JSHUTDOWN=$SHUTDOWN
+sudo rm -f report.log &amp;&amp; sudo rm -rf report/
+sudo cp /var/lib/jmeter-scenarios/* $WORKSPACE
+docker run --rm --name jmeter --volumes-from=jenkins -e SCENARIO=$WORKSPACE/$SCENARIO -e WORKSPACE=$WORKSPACE -e USERS=$USERS -e PAMPUP=$RAMPUP -e HOLDLOAD=$HOLDLOAD -e SHUTDOWN=$SHUTDOWN jmeter 
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
-      <command>sudo service telegraf stop</command>
+      <command>docker container stop telegraf</command>
     </hudson.tasks.Shell>
   </builders>
   <publishers>
@@ -86,11 +97,5 @@ sh ./apache-jmeter-3.3/bin/jmeter.sh -n -t ./scenarios/$SCENARIO.jmx -l report.l
       </reportTargets>
     </htmlpublisher.HtmlPublisher>
   </publishers>
-  <buildWrappers>
-    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.34">
-      <deleteDirs>false</deleteDirs>
-      <cleanupParameter></cleanupParameter>
-      <externalDelete></externalDelete>
-    </hudson.plugins.ws__cleanup.PreBuildCleanup>
-  </buildWrappers>
+  <buildWrappers/>
 </project>

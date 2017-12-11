@@ -51,11 +51,12 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>sudo docker run --shm-size=1g --rm -v &quot;/var/lib/sitespeed.io/&quot;:/sitespeed.io \
+      <command>docker run --shm-size=1g --rm -v &quot;/var/lib/sitespeed.io/&quot;:/sitespeed.io \
 	sitespeedio/sitespeed.io --graphite.host graphite --graphite.port 2003 \
     --graphite.httpPort 8080 --browsertime.browser $browser --browsertime.iterations $run_number https://$URL/
 sudo rm -rf report &amp;&amp; mkdir &quot;$WORKSPACE/report&quot;
 cd &quot;/var/lib/sitespeed.io/sitespeed-result/$URL/&quot;
+mkdir $WORKSPACE/report
 cp -r $(ls -Art | tail -n 1)/* &quot;$WORKSPACE/report&quot;
 </command>
     </hudson.tasks.Shell>
