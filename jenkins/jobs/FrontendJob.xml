@@ -38,6 +38,7 @@
           <name>run_number</name>
           <description>How many times you want to test each page</description>
           <defaultValue>3</defaultValue>
+          <trim>false</trim>
         </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
@@ -51,12 +52,12 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>docker run --shm-size=1g --rm -v &quot;/var/lib/sitespeed.io/&quot;:/sitespeed.io \
-	sitespeedio/sitespeed.io --graphite.host graphite --graphite.port 2003 \
-    --graphite.httpPort 8080 --browsertime.browser $browser --browsertime.iterations $run_number https://$URL/
-sudo rm -rf report &amp;&amp; mkdir &quot;$WORKSPACE/report&quot;
+      <command>graphite_network=$(docker inspect --format=&apos;{{.HostConfig.NetworkMode}}&apos; graphite)
+docker run --network=$graphite_network --privileged=true --shm-size=1g --rm -v &quot;/var/lib/sitespeed.io/&quot;:/sitespeed.io \
+sitespeedio/sitespeed.io --graphite.host graphite --graphite.port 2003 --graphite.httpPort 80 --browsertime.browser $browser \
+--browsertime.iterations $run_number https://$URL/
+sudo rm -rf report &amp;&amp; sudo mkdir &quot;$WORKSPACE/report&quot;
 cd &quot;/var/lib/sitespeed.io/sitespeed-result/$URL/&quot;
-mkdir $WORKSPACE/report
 cp -r $(ls -Art | tail -n 1)/* &quot;$WORKSPACE/report&quot;
 </command>
     </hudson.tasks.Shell>
@@ -77,11 +78,5 @@ cp -r $(ls -Art | tail -n 1)/* &quot;$WORKSPACE/report&quot;
       </reportTargets>
     </htmlpublisher.HtmlPublisher>
   </publishers>
-  <buildWrappers>
-    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.34">
-      <deleteDirs>false</deleteDirs>
-      <cleanupParameter></cleanupParameter>
-      <externalDelete></externalDelete>
-    </hudson.plugins.ws__cleanup.PreBuildCleanup>
-  </buildWrappers>
+  <buildWrappers/>
 </project>
