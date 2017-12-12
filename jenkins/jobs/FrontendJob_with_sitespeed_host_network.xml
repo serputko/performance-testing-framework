@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description></description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>100</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
+    <hudson.model.ParametersDefinitionProperty>
+      <parameterDefinitions>
+        <com.gem.persistentparameter.PersistentStringParameterDefinition plugin="persistent-parameter@1.1">
+          <name>URL</name>
+          <description>Webpage url to test</description>
+          <defaultValue>https://google.com/</defaultValue>
+          <successfulOnly>true</successfulOnly>
+        </com.gem.persistentparameter.PersistentStringParameterDefinition>
+        <com.gem.persistentparameter.PersistentChoiceParameterDefinition plugin="persistent-parameter@1.1">
+          <name>browser</name>
+          <description>Choose which Browser to use when you test.</description>
+          <choices>
+            <string>chrome</string>
+            <string>firefox</string>
+          </choices>
+          <successfulOnly>true</successfulOnly>
+        </com.gem.persistentparameter.PersistentChoiceParameterDefinition>
+        <com.gem.persistentparameter.PersistentStringParameterDefinition plugin="persistent-parameter@1.1">
+          <name>run_number</name>
+          <description>How many times you want to test each page</description>
+          <defaultValue>3</defaultValue>
+          <successfulOnly>true</successfulOnly>
+        </com.gem.persistentparameter.PersistentStringParameterDefinition>
+        <com.gem.persistentparameter.PersistentStringParameterDefinition plugin="persistent-parameter@1.1">
+          <name>additional_args</name>
+          <description>Add any valid sitespeed.io arguments. https://www.sitespeed.io/documentation/sitespeed.io/configuration/</description>
+          <defaultValue>--webpagetest.host localhost --webpagetest.location Test --webpagetest.runs 1</defaultValue>
+          <successfulOnly>true</successfulOnly>
+        </com.gem.persistentparameter.PersistentStringParameterDefinition>
+      </parameterDefinitions>
+    </hudson.model.ParametersDefinitionProperty>
+  </properties>
+  <scm class="hudson.scm.NullSCM"/>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers/>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>graphite_network=$(docker inspect --format=&apos;{{.HostConfig.NetworkMode}}&apos; graphite)
+docker run --network=host --privileged=true --shm-size=1g --rm -v &quot;/var/lib/sitespeed.io/&quot;:/sitespeed.io \
+sitespeedio/sitespeed.io --graphite.host localhost --graphite.port 2003 --graphite.httpPort 8080 --browsertime.browser $browser \
+--browsertime.iterations $run_number $additional_args $URL
+
+report_dir_name=$(echo $URL | awk -F/ &apos;{print $3}&apos;)
+sudo rm -rf frontend_report &amp;&amp; sudo mkdir &quot;$WORKSPACE/frontend_report&quot;
+
+cd &quot;/var/lib/sitespeed.io/sitespeed-result/$report_dir_name/&quot;
+cp -r $(ls -Art | tail -n 1)/* &quot;$WORKSPACE/frontend_report&quot;
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <htmlpublisher.HtmlPublisher plugin="htmlpublisher@1.14">
+      <reportTargets>
+        <htmlpublisher.HtmlPublisherTarget>
+          <reportName>frontend_report</reportName>
+          <reportDir>frontend_report/</reportDir>
+          <reportFiles>index.html</reportFiles>
+          <alwaysLinkToLastBuild>true</alwaysLinkToLastBuild>
+          <reportTitles></reportTitles>
+          <keepAll>true</keepAll>
+          <allowMissing>false</allowMissing>
+          <includes>**/*</includes>
+        </htmlpublisher.HtmlPublisherTarget>
+      </reportTargets>
+    </htmlpublisher.HtmlPublisher>
+  </publishers>
+  <buildWrappers/>
+</project>
