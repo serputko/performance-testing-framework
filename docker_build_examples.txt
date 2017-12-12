@@ -7,3 +7,6 @@ docker build --no-cache -t grafana <path to directory with Dockerfile>
 
 # to build jmeter
 docker build --no-cache -t jmeter <path to directory with Dockerfile>
+
+# to build jenkins
+docker build --no-cache -t jenkins <path to directory with Dockerfile>

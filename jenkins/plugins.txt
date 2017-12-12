@@ -3,3 +3,6 @@ greenballs
 htmlpublisher
 show-build-parameters
 filesystem-list-parameter-plugin
+git
+rebuild
+persistent-parameter

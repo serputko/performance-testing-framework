@@ -12,34 +12,39 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
-        <hudson.model.ChoiceParameterDefinition>
+        <com.gem.persistentparameter.PersistentStringParameterDefinition plugin="persistent-parameter@1.1">
           <name>URL</name>
           <description>Webpage url to test</description>
-          <choices class="java.util.Arrays$ArrayList">
-            <a class="string-array">
-              <string>google.com</string>
-              <string>dou.ua</string>
-            </a>
-          </choices>
-        </hudson.model.ChoiceParameterDefinition>
-        <hudson.model.ChoiceParameterDefinition>
+          <defaultValue>https://google.com/</defaultValue>
+          <successfulOnly>false</successfulOnly>
+        </com.gem.persistentparameter.PersistentStringParameterDefinition>
+        <com.gem.persistentparameter.PersistentChoiceParameterDefinition plugin="persistent-parameter@1.1">
           <name>browser</name>
           <description>Choose which Browser to use when you test.</description>
-          <choices class="java.util.Arrays$ArrayList">
-            <a class="string-array">
-              <string>chrome</string>
-              <string>firefox</string>
-            </a>
+          <choices>
+            <string>chrome</string>
+            <string>firefox</string>
           </choices>
-        </hudson.model.ChoiceParameterDefinition>
-        <hudson.model.StringParameterDefinition>
+          <successfulOnly>false</successfulOnly>
+        </com.gem.persistentparameter.PersistentChoiceParameterDefinition>
+        <com.gem.persistentparameter.PersistentStringParameterDefinition plugin="persistent-parameter@1.1">
           <name>run_number</name>
           <description>How many times you want to test each page</description>
           <defaultValue>3</defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
+          <successfulOnly>false</successfulOnly>
+        </com.gem.persistentparameter.PersistentStringParameterDefinition>
+        <com.gem.persistentparameter.PersistentStringParameterDefinition plugin="persistent-parameter@1.1">
+          <name>additional_args</name>
+          <description>Add any valid sitespeed.io arguments. https://www.sitespeed.io/documentation/sitespeed.io/configuration/</description>
+          <defaultValue>--webpagetest.host localhost --webpagetest.location Test --webpagetest.runs 1</defaultValue>
+          <successfulOnly>false</successfulOnly>
+        </com.gem.persistentparameter.PersistentStringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
@@ -55,10 +60,13 @@
       <command>graphite_network=$(docker inspect --format=&apos;{{.HostConfig.NetworkMode}}&apos; graphite)
 docker run --network=$graphite_network --privileged=true --shm-size=1g --rm -v &quot;/var/lib/sitespeed.io/&quot;:/sitespeed.io \
 sitespeedio/sitespeed.io --graphite.host graphite --graphite.port 2003 --graphite.httpPort 80 --browsertime.browser $browser \
---browsertime.iterations $run_number https://$URL/
-sudo rm -rf report &amp;&amp; sudo mkdir &quot;$WORKSPACE/report&quot;
-cd &quot;/var/lib/sitespeed.io/sitespeed-result/$URL/&quot;
-cp -r $(ls -Art | tail -n 1)/* &quot;$WORKSPACE/report&quot;
+--browsertime.iterations $run_number $additional_args $URL
+
+report_dir_name=$(echo $URL | awk -F/ &apos;{print $3}&apos;)
+sudo rm -rf frontend_report &amp;&amp; sudo mkdir &quot;$WORKSPACE/frontend_report&quot;
+
+cd &quot;/var/lib/sitespeed.io/sitespeed-result/$report_dir_name/&quot;
+cp -r $(ls -Art | tail -n 1)/* &quot;$WORKSPACE/frontend_report&quot;
 </command>
     </hudson.tasks.Shell>
   </builders>

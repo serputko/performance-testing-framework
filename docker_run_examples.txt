@@ -11,7 +11,7 @@ docker run --name jenkins -v <local path to tests>:/var/lib/jmeter-scenarios/ -v
 
 # run portainer to monitor your docker environment on web
 # more https://github.com/portainer/portainer
-docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer
+docker run -d -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer --name portainer
 
 # run sitespeed.io test
 # params :
