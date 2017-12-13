@@ -15,6 +15,9 @@ RUN tar -xzf /tmp/dependencies/apache-jmeter-${JMETER_VERSION}.tgz -C /opt && \
 # Set global PATH such that "jmeter" command is found
 ENV PATH $PATH:$JMETER_BIN
 
+COPY plugins/lib/*.jar ${JMETER_HOME}/lib/
+COPY plugins/lib/ext/*.jar ${JMETER_HOME}/lib/ext/
+
 COPY entrypoint.sh /
 
 WORKDIR	${JMETER_HOME}

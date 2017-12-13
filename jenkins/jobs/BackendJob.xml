@@ -74,7 +74,7 @@
 ls
 sudo rm -f report.log &amp;&amp; sudo rm -rf report/
 sudo cp /var/lib/jmeter-scenarios/* $WORKSPACE
-docker run --rm --name jmeter --volumes-from=jenkins -e SCENARIO=$WORKSPACE/$SCENARIO -e WORKSPACE=$WORKSPACE -e USERS=$USERS -e PAMPUP=$RAMPUP -e HOLDLOAD=$HOLDLOAD -e SHUTDOWN=$SHUTDOWN jmeter 
+docker run --rm --volumes-from=jenkins -e SCENARIO=$WORKSPACE/$SCENARIO -e WORKSPACE=$WORKSPACE -e USERS=$USERS -e PAMPUP=$RAMPUP -e HOLDLOAD=$HOLDLOAD -e SHUTDOWN=$SHUTDOWN jmeter 
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>

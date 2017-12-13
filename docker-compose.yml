@@ -129,7 +129,13 @@ services:
         # https://github.com/WPO-Foundation/wptagent/issues/48
         # -vvvvv - debug mode(more v - more detailed debug)
         - EXTRA_ARGS=-vvvvv --shaper none
-      restart: always        
+      restart: always
+   jmeter:
+     container_name: jmeter
+     build: ./jmeter
+     image: jmeter
+     entrypoint:
+       - cat
 volumes:
     grafana:
     whisper:
