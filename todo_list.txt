@@ -1,0 +1,34 @@
+- add script that adds jmeter database to influxdb
+- use used_mem in % for memory graphs
+- set jmeter log saving to jenkins workspace /var/jenkins_home/workspace/
+- change PAMPUP to RAMPUP in jmeter job in jenkins
+- add name to telegraf host in docker config file
+- add jmeter docker container stop after build is aborted:
+	add postbuild-task to jenkins for stopping jmeter docker containerin case of build abort
+		add postbuild-task (log text:Build was aborted; Command:docker container stop jmeter)
+		add --name jmeter to docker run command in jmeter job
+	create some logic to be able run few jmeter tests
+- add throughput to composite graph on grafana dashboard
+- Add jenkins pre build step
+	if docker container ls -a | grep jmeter;
+then
+	docker container stop jmeter
+	docker container rm jmeter
+fi
+- add hostname: telegraf-loadgenerator to telegraf docker file
+- add jenkins-home volume and influxdb home
+- volumes:
+       - influxdb:/var/lib/influxdb
+- jenkins-home:/var/jenkins_home
+- grafana-home:/var/lib/grafana/
+
+jenkins-home:
+influxdb:
+grafana-home:
+
+- issue: jenkins is not replacing job with the same name as existing one. need to delete old one, and then docker-compose up
+
+- change jmeter download link to http://www-eu.apache.org/dist//jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz
+- add parameter-separator jenkins plugin
+Reject- change backend job paramaters to persistent ones
+- add separators to job params
