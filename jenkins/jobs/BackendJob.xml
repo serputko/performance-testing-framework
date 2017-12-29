@@ -12,13 +12,16 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+      <autoRebuild>false</autoRebuild>
+      <rebuildDisabled>false</rebuildDisabled>
+    </com.sonyericsson.rebuild.RebuildSettings>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
         <hudson.model.StringParameterDefinition>
           <name>USERS</name>
-          <description>Set total number of users for load test
-</description>
-          <defaultValue>100</defaultValue>
+          <description>Set total number of users</description>
+          <defaultValue>10</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
@@ -28,15 +31,9 @@
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <hudson.model.StringParameterDefinition>
-          <name>HOLDLOAD</name>
-          <description>Set max load duration(sec)</description>
+          <name>DURATION</name>
+          <description>Set test duration(sec)</description>
           <defaultValue>600</defaultValue>
-          <trim>false</trim>
-        </hudson.model.StringParameterDefinition>
-        <hudson.model.StringParameterDefinition>
-          <name>SHUTDOWN</name>
-          <description>Set shutdown duration(sec)</description>
-          <defaultValue>120</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
         <alex.jenkins.plugins.FileSystemListParameterDefinition plugin="filesystem-list-parameter-plugin@0.0.3">
@@ -67,14 +64,19 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>docker container start telegraf</command>
+      <command>docker container start telegraf
+if docker container ls -a| grep jmeter;
+then
+	docker container stop jmeter
+	docker container rm jmeter
+fi</command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
       <command>pwd
 ls
 sudo rm -f report.log &amp;&amp; sudo rm -rf report/
-sudo cp /var/lib/jmeter-scenarios/* $WORKSPACE
-docker run --rm --volumes-from=jenkins -e SCENARIO=$WORKSPACE/$SCENARIO -e WORKSPACE=$WORKSPACE -e USERS=$USERS -e PAMPUP=$RAMPUP -e HOLDLOAD=$HOLDLOAD -e SHUTDOWN=$SHUTDOWN jmeter 
+sudo cp -r /var/lib/jmeter-scenarios/* $WORKSPACE
+docker run --name jmeter --rm --volumes-from=jenkins -e SCENARIO=$WORKSPACE/$SCENARIO -e WORKSPACE=$WORKSPACE -e USERS=$USERS -e RAMPUP=$RAMPUP -e DURATION=$DURATION jmeter 
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>

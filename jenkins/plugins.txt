@@ -6,3 +6,4 @@ filesystem-list-parameter-plugin
 git
 rebuild
 persistent-parameter
+parameter-separator

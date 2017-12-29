@@ -19,11 +19,14 @@ services:
        - GF_USERS_ALLOW_ORG_CREATE=false
      volumes:
        - grafana:/var/run/grafana/
+       - grafana-home:/var/lib/grafana/
      restart: always 
    influxdb:
      image: influxdb
      build: ./influxdb
      container_name: influxdb
+     volumes:
+       - influxdb:/var/lib/influxdb
      ports:
        - "8653:8086"
      expose:
@@ -32,6 +35,7 @@ services:
    telegraf:
      image: telegraf
      build: ./telegraf
+     hostname: telegraf-loadgenerator
      container_name: telegraf
      #network_mode: "container:influxdb"
      #volumes:
@@ -92,6 +96,7 @@ services:
         - docker-dind:/usr/local/bin/dind/
         - /var/run/docker.sock:/var/run/docker.sock
         - jenkins-workspace:/var/jenkins_home/workspace/
+        - jenkins-home:/var/jenkins_home
         # if you want to run local tests uncomment line below and replace <jmeter-scenarios> on dir to your tests 
         #- <path to local directory with tests>:/var/lib/jmeter-scenarios/
       restart: always
@@ -138,7 +143,10 @@ services:
        - cat
 volumes:
     grafana:
+    grafana-home:
     whisper:
     docker-dind:
     webpagetest:
     jenkins-workspace:
+    jenkins-home:
+    influxdb:

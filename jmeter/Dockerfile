@@ -3,7 +3,7 @@ FROM java:8-jdk
 ARG JMETER_VERSION="3.3"
 ENV JMETER_HOME /opt/apache-jmeter-${JMETER_VERSION}
 ENV	JMETER_BIN	${JMETER_HOME}/bin
-ENV	JMETER_DOWNLOAD_URL  http://apache.cp.if.ua//jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz
+ENV	JMETER_DOWNLOAD_URL  http://www-eu.apache.org/dist//jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz
 
 # download and extract JMeter
 RUN mkdir /tmp/dependencies
