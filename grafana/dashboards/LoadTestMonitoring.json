@@ -96,7 +96,7 @@
   "hideControls": false,
   "id": null,
   "links": [],
-  "refresh": false,
+  "refresh": "5s",
   "rows": [
     {
       "collapse": false,
@@ -757,6 +757,7 @@
             "max": true,
             "min": true,
             "show": true,
+            "sortDesc": true,
             "total": false,
             "values": true
           },
@@ -797,7 +798,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT (100-usage_idle) FROM cpu WHERE $timeFilter",
+              "query": "SELECT (100-usage_idle) as usage FROM cpu WHERE $timeFilter and host='telegraf-loadgenerator'",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -835,7 +836,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT (used/1073741824) FROM mem WHERE $timeFilter",
+              "query": "SELECT (100-available_percent) as used FROM mem WHERE $timeFilter and host='telegraf-loadgenerator'",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -883,10 +884,10 @@
               "show": true
             },
             {
-              "format": "decgbytes",
+              "format": "percent",
               "label": null,
               "logBase": 1,
-              "max": "16",
+              "max": "100",
               "min": null,
               "show": true
             }
@@ -1055,7 +1056,7 @@
           "repeat": "transactions",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "span": 6,
+          "span": 12,
           "stack": false,
           "steppedLine": false,
           "targets": [
@@ -1203,7 +1204,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT\nsum(\"count\") as NumberOfSamples,\nlast(avg) as Average,\nlast(\"pct90.0\") as pct90,\nlast(\"pct95.0\") as pct95, \nlast(\"pct99.0\") as pct99,\nlast(min) as Min,\nlast(max) as Max,\nsum(countError)/sum(count) as Error\nFROM \"$measurement\"\nWHERE \"statut\"='all' and transaction =~ /.*(?i)transaction/ and $timeFilter\nGROUP BY \"transaction\"",
+              "query": "SELECT\nsum(\"count\") as NumberOfSamples,\nlast(avg) as Average,\nlast(\"pct90.0\") as pct90,\nlast(\"pct95.0\") as pct95, \nlast(\"pct99.0\") as pct99,\nlast(min) as Min,\nlast(max) as Max,\nsum(countError)/sum(count) as Error\nFROM \"$measurement\"\nWHERE \"statut\"='all' and $timeFilter\nGROUP BY \"transaction\"\n",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -1912,7 +1913,7 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "alias": "jmeter.minAT",
+              "alias": "jmeter.active_users",
               "yaxis": 2
             },
             {
@@ -1922,6 +1923,10 @@
             },
             {
               "alias": "jmeter.avg"
+            },
+            {
+              "alias": "jmeter.throughput",
+              "yaxis": 2
             }
           ],
           "spaceLength": 10,
@@ -1947,7 +1952,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT avg  FROM \"$measurement\" WHERE \"transaction\"='all' AND \"statut\"='all' and $timeFilter",
+              "query": "SELECT avg  FROM \"$measurement\" WHERE \"transaction\"='all' AND \"statut\"='all' and $timeFilter ",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1985,7 +1990,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT \"minAT\" FROM \"$measurement\" WHERE \"transaction\"='internal' and $timeFilter ",
+              "query": "SELECT \"minAT\" as active_users FROM \"$measurement\" WHERE \"transaction\"='internal' and $timeFilter ",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -2026,6 +2031,44 @@
               "query": "SELECT \"countError\"  FROM \"$measurement\" WHERE \"transaction\"='all' AND \"statut\"='all' and $timeFilter",
               "rawQuery": true,
               "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT last(\"count\")/5 as throughput FROM \"$measurement\" WHERE \"transaction\" = 'all' AND $timeFilter GROUP BY time(5s) fill(null)",
+              "rawQuery": true,
+              "refId": "D",
               "resultFormat": "time_series",
               "select": [
                 [
@@ -2090,25 +2133,24 @@
     },
     {
       "collapse": false,
-      "height": 435,
+      "height": -681,
       "panels": [
         {
-          "aliasColors": {
-            "cpu.usage_idle": "#70dbed",
-            "mem.used": "#fce2de"
-          },
+          "aliasColors": {},
           "bars": false,
           "dashLength": 10,
           "dashes": false,
           "datasource": "${DS_TELEGRAF}",
           "fill": 1,
-          "id": 82,
+          "height": "400",
+          "id": 86,
           "legend": {
             "alignAsTable": true,
             "avg": true,
             "current": true,
             "max": true,
             "min": true,
+            "rightSide": true,
             "show": true,
             "total": false,
             "values": true
@@ -2121,12 +2163,7 @@
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "mem.used",
-              "yaxis": 2
-            }
-          ],
+          "seriesOverrides": [],
           "spaceLength": 10,
           "span": 12,
           "stack": false,
@@ -2150,47 +2187,9 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT (100-usage_idle) as usage FROM cpu WHERE $timeFilter",
+              "query": "SELECT (100-usage_idle) as usage FROM cpu WHERE $timeFilter GROUP BY host",
               "rawQuery": true,
               "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            },
-            {
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT (used/1073741824) FROM mem WHERE $timeFilter",
-              "rawQuery": true,
-              "refId": "B",
               "resultFormat": "time_series",
               "select": [
                 [
@@ -2212,7 +2211,116 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Server metrics",
+          "title": "CPU All hosts",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "${DS_TELEGRAF}",
+          "fill": 1,
+          "height": "400",
+          "id": 87,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 12,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT (100-available_percent) as used FROM mem WHERE $timeFilter GROUP BY host",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Memory All hosts",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -2236,25 +2344,38 @@
               "show": true
             },
             {
-              "format": "decgbytes",
+              "format": "short",
               "label": null,
               "logBase": 1,
-              "max": "16",
+              "max": null,
               "min": null,
-              "show": true
+              "show": false
             }
           ]
-        },
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "Server metrics",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
         {
           "aliasColors": {
-            "cpu.usage_idle": "#70dbed"
+            "cpu.usage": "#65c5db",
+            "mem.usage": "#ea6460"
           },
           "bars": false,
           "dashLength": 10,
           "dashes": false,
           "datasource": "${DS_TELEGRAF}",
           "fill": 1,
-          "id": 83,
+          "id": 88,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -2268,14 +2389,16 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
+          "minSpan": 4,
           "nullPointMode": "null",
           "percentage": false,
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
+          "repeat": "host",
           "seriesOverrides": [],
           "spaceLength": 10,
-          "span": 6,
+          "span": 12,
           "stack": false,
           "steppedLine": false,
           "targets": [
@@ -2297,7 +2420,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT (100-usage_idle) FROM cpu WHERE $timeFilter",
+              "query": "SELECT (100-usage_idle) as usage FROM cpu WHERE $timeFilter and host='$host'",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2316,78 +2439,7 @@
                 ]
               ],
               "tags": []
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "CPU",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "percent",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
             },
-            {
-              "format": "decgbytes",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ]
-        },
-        {
-          "aliasColors": {
-            "mem.used": "#fce2de"
-          },
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "${DS_TELEGRAF}",
-          "fill": 1,
-          "id": 84,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": true,
-            "min": true,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "span": 6,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
             {
               "dsType": "influxdb",
               "groupBy": [
@@ -2406,7 +2458,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT (used/1073741824) FROM mem WHERE $timeFilter",
+              "query": "SELECT  (100-available_percent) as usage FROM mem WHERE $timeFilter and host='$host'",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -2430,7 +2482,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Memory",
+          "title": "$host cpu/memory",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -2446,15 +2498,15 @@
           },
           "yaxes": [
             {
-              "format": "decgbytes",
+              "format": "percent",
               "label": null,
               "logBase": 1,
-              "max": "16",
+              "max": "100",
               "min": null,
               "show": true
             },
             {
-              "format": "decgbytes",
+              "format": "short",
               "label": null,
               "logBase": 1,
               "max": null,
@@ -2467,8 +2519,8 @@
       "repeat": null,
       "repeatIteration": null,
       "repeatRowId": null,
-      "showTitle": true,
-      "title": "Server metrics",
+      "showTitle": false,
+      "title": "Dashboard Row",
       "titleSize": "h6"
     }
   ],
@@ -2501,11 +2553,8 @@
         "allValue": null,
         "current": {
           "selected": true,
-          "tags": [],
           "text": "All",
-          "value": [
-            "$__all"
-          ]
+          "value": "$__all"
         },
         "hide": 0,
         "includeAll": true,
@@ -2554,47 +2603,6 @@
       },
       {
         "allValue": null,
-        "current": {
-          "text": "BNDEMO",
-          "value": "BNDEMO"
-        },
-        "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "application",
-        "options": [
-          {
-            "selected": true,
-            "text": "BNDEMO",
-            "value": "BNDEMO"
-          },
-          {
-            "selected": false,
-            "text": "GGDEMO",
-            "value": "GGDEMO"
-          },
-          {
-            "selected": false,
-            "text": "LBDEMO",
-            "value": "LBDEMO"
-          },
-          {
-            "selected": false,
-            "text": "RBEMO",
-            "value": "RBEMO"
-          },
-          {
-            "selected": false,
-            "text": "SBUDEMO",
-            "value": "SBUDEMO"
-          }
-        ],
-        "query": "BNDEMO, GGDEMO, LBDEMO, RBEMO, SBUDEMO",
-        "type": "custom"
-      },
-      {
-        "allValue": null,
         "current": {},
         "datasource": "${DS_JMETER}",
         "hide": 0,
@@ -2603,7 +2611,7 @@
         "multi": true,
         "name": "transactions",
         "options": [],
-        "query": "SHOW TAG VALUES WITH KEY = \"transaction\" where  transaction !~ /(internal|all)/ AND transaction =~ /$application.*(?i)transaction/",
+        "query": "SHOW TAG VALUES WITH KEY = \"transaction\" where  transaction !~ /(internal|all)/",
         "refresh": 1,
         "regex": "",
         "sort": 0,
@@ -2612,12 +2620,32 @@
         "tagsQuery": "SHOW TAG VALUES WITH key = \"application\"",
         "type": "query",
         "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_TELEGRAF}",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "host",
+        "options": [],
+        "query": "show tag values with key=host",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       }
     ]
   },
   "time": {
-    "from": "2017-12-04T10:29:00.588Z",
-    "to": "2017-12-04T10:38:22.061Z"
+    "from": "now-1h",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -2645,6 +2673,6 @@
     ]
   },
   "timezone": "",
-  "title": "Load test monitoring",
-  "version": 43
+  "title": "Load test monitoring v1.0",
+  "version": 2
 }
