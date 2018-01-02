@@ -50,7 +50,7 @@ services:
       privileged: true
       shm_size: 1g
       volumes:
-            - ./docker/:/sitespeed.io/
+            - sitespeed:/sitespeed.io/
    graphite:
       image: sitespeedio/graphite:1.0.2-2-b
       container_name: graphite
@@ -150,3 +150,4 @@ volumes:
     jenkins-workspace:
     jenkins-home:
     influxdb:
+    sitespeed:
