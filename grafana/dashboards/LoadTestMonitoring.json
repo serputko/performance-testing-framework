@@ -96,7 +96,7 @@
   "hideControls": false,
   "id": null,
   "links": [],
-  "refresh": "5s",
+  "refresh": "30s",
   "rows": [
     {
       "collapse": false,
@@ -170,7 +170,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT \"startedT\" AS \"startedT\" FROM \"$measurement\" WHERE \"transaction\"='internal' and $timeFilter",
+              "query": "SELECT last(\"startedT\") AS \"startedT\" FROM \"$measurement\" WHERE \"transaction\"='internal' and $timeFilter group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -278,7 +278,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT \"minAT\" AS \"minAT\" FROM \"$measurement\" WHERE \"transaction\"='internal' and $timeFilter",
+              "query": "SELECT last(\"minAT\") AS \"minAT\" FROM \"$measurement\" WHERE \"transaction\"='internal' and $timeFilter  group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -386,7 +386,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT \"count\" FROM \"$measurement\" WHERE \"transaction\"='all' and $timeFilter",
+              "query": "SELECT sum(\"count\") FROM \"$measurement\" WHERE \"transaction\"='all' and $timeFilter  group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -494,7 +494,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT \"countError\" FROM \"$measurement\" WHERE \"transaction\"='all' and $timeFilter",
+              "query": "SELECT sum(\"countError\") FROM \"$measurement\" WHERE \"transaction\"='all' and $timeFilter  group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -684,7 +684,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT \"minAT\" FROM \"$measurement\" WHERE \"transaction\"='internal' and $timeFilter ",
+              "query": "SELECT last(\"minAT\") as \"minAT\" FROM \"$measurement\" WHERE \"transaction\"='internal' and $timeFilter  group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -769,12 +769,7 @@
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "mem.usage",
-              "yaxis": 2
-            }
-          ],
+          "seriesOverrides": [],
           "spaceLength": 10,
           "span": 5,
           "stack": false,
@@ -798,7 +793,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT (100-usage_idle) as usage FROM cpu WHERE $timeFilter and host='telegraf-loadgenerator'",
+              "query": "SELECT 100-mean(usage_idle) as usage FROM cpu WHERE $timeFilter and host='telegraf-loadgenerator' group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -836,7 +831,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT (100-available_percent) as usage FROM mem WHERE $timeFilter and host='telegraf-loadgenerator'",
+              "query": "SELECT 100-mean(available_percent) as used FROM mem WHERE $timeFilter and host='telegraf-loadgenerator' group by time($group_time)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -889,7 +884,7 @@
               "logBase": 1,
               "max": "100",
               "min": null,
-              "show": true
+              "show": false
             }
           ]
         },
@@ -951,7 +946,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT \"countError\" FROM \"$measurement\" WHERE \"transaction\"='all' and $timeFilter",
+              "query": "SELECT sum(\"countError\") as \"countError\" FROM \"$measurement\" WHERE \"transaction\"='all' and $timeFilter group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1018,7 +1013,7 @@
       "titleSize": "h6"
     },
     {
-      "collapse": false,
+      "collapse": true,
       "height": "350",
       "panels": [
         {
@@ -1079,7 +1074,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT /$metric$/ FROM \"$measurement\" WHERE \"transaction\"='$transactions' AND \"statut\"='all' and $timeFilter",
+              "query": "SELECT max(/$metric$/) FROM \"$measurement\" WHERE \"transaction\"='$transactions' AND \"statut\"='all' and $timeFilter group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1146,7 +1141,7 @@
       "titleSize": "h6"
     },
     {
-      "collapse": false,
+      "collapse": true,
       "height": 249,
       "panels": [
         {
@@ -1204,7 +1199,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT\nsum(\"count\") as NumberOfSamples,\nlast(avg) as Average,\nlast(\"pct90.0\") as pct90,\nlast(\"pct95.0\") as pct95, \nlast(\"pct99.0\") as pct99,\nlast(min) as Min,\nlast(max) as Max,\nsum(countError)/sum(count) as Error\nFROM \"$measurement\"\nWHERE \"statut\"='all' and $timeFilter\nGROUP BY \"transaction\"\n",
+              "query": "SELECT\nsum(\"count\") as NumberOfSamples,\nlast(avg) as Average,\nlast(\"pct90.0\") as pct90,\nlast(\"pct95.0\") as pct95, \nlast(\"pct99.0\") as pct99,\nlast(min) as Min,\nlast(max) as Max,\nsum(countError)/sum(count) as Error\nFROM \"$measurement\"\nWHERE \"statut\"='all' and $timeFilter\nand transaction !~ /(all|\\/)/\nGROUP BY \"transaction\"\n",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -1239,7 +1234,7 @@
       "titleSize": "h6"
     },
     {
-      "collapse": false,
+      "collapse": true,
       "height": 320,
       "panels": [
         {
@@ -1320,7 +1315,7 @@
       "titleSize": "h6"
     },
     {
-      "collapse": false,
+      "collapse": true,
       "height": 98,
       "panels": [
         {
@@ -1776,7 +1771,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "nullPointMode": "connected",
+          "nullPointMode": "null",
           "percentage": false,
           "pointradius": 5,
           "points": false,
@@ -1876,7 +1871,7 @@
       "titleSize": "h6"
     },
     {
-      "collapse": false,
+      "collapse": true,
       "height": 250,
       "panels": [
         {
@@ -1952,7 +1947,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT avg  FROM \"$measurement\" WHERE \"transaction\"='all' AND \"statut\"='all' and $timeFilter ",
+              "query": "SELECT max(avg)  FROM \"$measurement\" WHERE \"transaction\"='all' AND \"statut\"='all' and $timeFilter  group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1990,7 +1985,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT \"minAT\" as active_users FROM \"$measurement\" WHERE \"transaction\"='internal' and $timeFilter ",
+              "query": "SELECT last(\"minAT\") as active_threads FROM \"$measurement\" WHERE \"transaction\"='internal' and $timeFilter  group by time($group_time)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -2028,7 +2023,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT \"countError\"  FROM \"$measurement\" WHERE \"transaction\"='all' AND \"statut\"='all' and $timeFilter",
+              "query": "SELECT sum(\"countError\") as countError FROM \"$measurement\" WHERE \"transaction\"='all' AND \"statut\"='all' and $timeFilter  group by time($group_time)",
               "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
@@ -2132,7 +2127,7 @@
       "titleSize": "h6"
     },
     {
-      "collapse": false,
+      "collapse": true,
       "height": -681,
       "panels": [
         {
@@ -2187,7 +2182,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT (100-usage_idle) as usage FROM cpu WHERE $timeFilter GROUP BY host",
+              "query": "SELECT 100-mean(usage_idle) as usage FROM cpu WHERE $timeFilter GROUP BY host , time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2296,7 +2291,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT (100-available_percent) as usage FROM mem WHERE $timeFilter GROUP BY host",
+              "query": "SELECT 100-mean(available_percent) as used FROM mem WHERE $timeFilter GROUP BY host, time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2362,7 +2357,7 @@
       "titleSize": "h6"
     },
     {
-      "collapse": false,
+      "collapse": true,
       "height": 250,
       "panels": [
         {
@@ -2420,7 +2415,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT (100-usage_idle) as usage FROM cpu WHERE $timeFilter and host='$host'",
+              "query": "SELECT 100-mean(usage_idle) as usage FROM cpu WHERE $timeFilter and host='$host' group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2458,7 +2453,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT  (100-available_percent) as usage FROM mem WHERE $timeFilter and host='$host'",
+              "query": "SELECT  100-mean(available_percent) as usage FROM mem WHERE $timeFilter and host='$host' group by time($group_time)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -2519,8 +2514,8 @@
       "repeat": null,
       "repeatIteration": null,
       "repeatRowId": null,
-      "showTitle": false,
-      "title": "Dashboard Row",
+      "showTitle": true,
+      "title": "Server metrics for each host",
       "titleSize": "h6"
     }
   ],
@@ -2611,7 +2606,7 @@
         "multi": true,
         "name": "transactions",
         "options": [],
-        "query": "SHOW TAG VALUES WITH KEY = \"transaction\" where  transaction !~ /(internal|all)/",
+        "query": "\tSHOW TAG VALUES WITH KEY = \"transaction\" where transaction !~ /(internal|all|\\/|Dummy)/",
         "refresh": 1,
         "regex": "",
         "sort": 0,
@@ -2640,11 +2635,63 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "auto": true,
+        "auto_count": 30,
+        "auto_min": "1s",
+        "current": {
+          "text": "30s",
+          "value": "30s"
+        },
+        "hide": 0,
+        "label": null,
+        "name": "group_time",
+        "options": [
+          {
+            "selected": false,
+            "text": "auto",
+            "value": "$__auto_interval"
+          },
+          {
+            "selected": false,
+            "text": "5s",
+            "value": "5s"
+          },
+          {
+            "selected": false,
+            "text": "10s",
+            "value": "10s"
+          },
+          {
+            "selected": true,
+            "text": "30s",
+            "value": "30s"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "15m",
+            "value": "15m"
+          }
+        ],
+        "query": "5s,10s,30s,1m,5m,15m",
+        "refresh": 2,
+        "type": "interval"
       }
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -2674,5 +2721,5 @@
   },
   "timezone": "",
   "title": "Load test monitoring",
-  "version": 2
+  "version": 11
 }
