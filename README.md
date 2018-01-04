@@ -17,10 +17,10 @@ Framework consists of next services:
 - **Apache Jmeter**: tool for backend load testing
 
 
-### Framework architecture:
+## Framework architecture:
 ![](https://github.com/serputko/performance-testing-framework/blob/master/docs/img/Framework%20structure.png)
 	
-### Prerequisites
+## Prerequisites
 
 To run framework install docker: https://docs.docker.com/engine/installation/.
 
@@ -28,14 +28,14 @@ You should be able to run ```docker run hello-world``` with no errors.
 
 For Windown share drives with docker: https://blogs.msdn.microsoft.com/stevelasker/2016/06/14/configuring-docker-for-windows-volumes/
 
-### Installing
+## Installing
 
 1. git clone this repository
 2. open performance-testing-framework dir
 3. docker-compose up -d
 All containers should be up and running
 
-**Services endpoints:**
+### Services endpoints
 - **jenkins** localhost:8181
 - **grafana** localhost:8857
 - **portainer** localhost:9000
@@ -50,20 +50,20 @@ By default jenkins consists of 2 jobs:
 - **BackendJob**: run Jmeter scenarios
 - **FrontendJob**: run tests with sitespeed.io and webpagetest private instance
 
-### BackendJob
+## BackendJob
 To run jmeter demo script: **Open BackendJob -> Build with Parameters -> Set build parameters -> Select scenario -> Build**
 ![](https://github.com/serputko/performance-testing-framework/blob/master/docs/img/jenkins_backendjob_run.png)
 
 This job will start jmeter docker container and execute demo_scenario.jmx jmeter scenario
 ![](https://github.com/serputko/performance-testing-framework/blob/master/docs/img/jmeter_demo_scenario.png)
 
-Jmeter test deliverables:
+### Jmeter test deliverables:
 - **jmeter log file**
 - **raw test results in report.log csv file**
 - **jmeter HTML report(available after test is finished)** ![](https://github.com/serputko/performance-testing-framework/blob/master/docs/img/jenkins_backendjob_jmeter_html_report.png )
 - **grafana load test monitoring dashboard(real-time monitoring)** ![](https://github.com/serputko/performance-testing-framework/blob/master/docs/img/grafana_load_test_dashboard.png)
 
-### FrontendJob
+## FrontendJob
 To run frontend test: **Open FrontendJob -> Build with Parameters -> Set build parameters -> Build**
 ![](https://github.com/serputko/performance-testing-framework/blob/master/docs/img/jenkins_frontendjob_run.png)
 
