@@ -1,3 +1,20 @@
+**TODO:**
+- [ ] add test name filtering in grafana
+- [ ] investigate server metrics monitoring for windows(now telegraf shows container metrics, not host)
+- [ ] move jmeter script invocation from entrypoint script to jenkins job
+
+
+**Update readme/wiki:**
+- [ ] how to use Portainer
+- [ ] how to use WebPageTest private instance
+- [ ] parameterizing jmeter scenarios with jemter properties
+- [ ] sending jmeter test metrics to grafana(backend listener parameters)
+- [ ] Load Test Monitoring grafana dashboard structure
+- [ ] How to create own charts
+- [ ]
+
+
+**Done:**
 - [x] add script that adds jmeter database to influxdb
 - [x] use used_mem in % for memory graphs
 - [x] set jmeter log saving to jenkins workspace /var/jenkins_home/workspace/
@@ -25,15 +42,10 @@
 	jenkins-home:
 	influxdb:
 	grafana-home:
-
-- [ ] issue: jenkins is not replacing job with the same name as existing one. need to delete old one, and then docker-compose up
-
 - [x] change jmeter download link to http://www-eu.apache.org/dist//jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz
 - [x] add parameter-separator jenkins plugin
-Rejected- change backend job paramaters to persistent ones
+- [x] **Rejected** change backend job paramaters to persistent ones
 - [x] separate load generator server metrics and other servers
-- [ ] add test name filtering in grafana
 - [x] fix min and max values in aggregate table in grafana report
 - [x] add post build task to stop jmeter container in case of build abort
 - [x] run jmeter container in host network
-- [ ] investigate server metrics monitoring for windows(now telegraf shows container metrics, not host)
