@@ -32,3 +32,4 @@ DONE - add jenkins-home volume, influxdb home and grafana home
 DONE - add parameter-separator jenkins plugin
 Rejected- change backend job paramaters to persistent ones
 DONE - separate load generator server metrics and other servers
+- add test name filtering in grafana

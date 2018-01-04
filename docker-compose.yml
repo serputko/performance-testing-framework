@@ -73,7 +73,6 @@ services:
       environment:
         - GF_PASSWORD=admin
         - GF_USER=admin
-      restart: always
    docker-dind:
       image: docker:dind
       volumes:
