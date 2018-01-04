@@ -60,12 +60,8 @@ This job will start jmeter docker container and execute demo_scenario.jmx jmeter
 Jmeter test deliverables:
 - **jmeter log file**
 - **raw test results in report.log csv file**
-- **jmeter HTML report(available after test is finished)**
-
-![](https://github.com/serputko/performance-testing-framework/blob/master/docs/img/jenkins_backendjob_jmeter_html_report.png )
-- **grafana load test monitoring dashboard(real-time monitoring)**
-
-![](https://github.com/serputko/performance-testing-framework/blob/master/docs/img/grafana_load_test_dashboard.png)
+- **jmeter HTML report(available after test is finished)** ![](https://github.com/serputko/performance-testing-framework/blob/master/docs/img/jenkins_backendjob_jmeter_html_report.png )
+- **grafana load test monitoring dashboard(real-time monitoring)** ![](https://github.com/serputko/performance-testing-framework/blob/master/docs/img/grafana_load_test_dashboard.png)
 
 ### FrontendJob
 To run frontend test: **Open FrontendJob -> Build with Parameters -> Set build parameters -> Build**
