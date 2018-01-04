@@ -28,8 +28,12 @@ DONE - add jenkins-home volume, influxdb home and grafana home
 
 - issue: jenkins is not replacing job with the same name as existing one. need to delete old one, and then docker-compose up
 
-- change jmeter download link to http://www-eu.apache.org/dist//jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz
+DONE - change jmeter download link to http://www-eu.apache.org/dist//jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz
 DONE - add parameter-separator jenkins plugin
 Rejected- change backend job paramaters to persistent ones
 DONE - separate load generator server metrics and other servers
 - add test name filtering in grafana
+DONE - fix min and max values in aggregate table in grafana report
+DONE - add post build task to stop jmeter container in case of build abort
+DONE - run jmeter container in host network
+- investigate server metrics monitoring for windows(now telegraf shows container metrics, not host)

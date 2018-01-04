@@ -76,7 +76,7 @@ fi</command>
 ls
 sudo rm -f report.log &amp;&amp; sudo rm -rf report/
 sudo cp -r /var/lib/jmeter-scenarios/* $WORKSPACE
-docker run --name jmeter --rm --volumes-from=jenkins -e SCENARIO=$WORKSPACE/$SCENARIO -e WORKSPACE=$WORKSPACE -e USERS=$USERS -e RAMPUP=$RAMPUP -e DURATION=$DURATION jmeter 
+docker run --name jmeter --net=host --rm --volumes-from=jenkins -e SCENARIO=$WORKSPACE/$SCENARIO -e WORKSPACE=$WORKSPACE -e USERS=$USERS -e RAMPUP=$RAMPUP -e DURATION=$DURATION jmeter 
 </command>
     </hudson.tasks.Shell>
     <hudson.tasks.Shell>
@@ -84,6 +84,21 @@ docker run --name jmeter --rm --volumes-from=jenkins -e SCENARIO=$WORKSPACE/$SCE
     </hudson.tasks.Shell>
   </builders>
   <publishers>
+    <hudson.plugins.postbuildtask.PostbuildTask plugin="postbuild-task@1.8">
+      <tasks>
+        <hudson.plugins.postbuildtask.TaskProperties>
+          <logTexts>
+            <hudson.plugins.postbuildtask.LogProperties>
+              <logText>Build was aborted</logText>
+              <operator>AND</operator>
+            </hudson.plugins.postbuildtask.LogProperties>
+          </logTexts>
+          <EscalateStatus>false</EscalateStatus>
+          <RunIfJobSuccessful>false</RunIfJobSuccessful>
+          <script>docker container stop jmeter</script>
+        </hudson.plugins.postbuildtask.TaskProperties>
+      </tasks>
+    </hudson.plugins.postbuildtask.PostbuildTask>
     <htmlpublisher.HtmlPublisher plugin="htmlpublisher@1.14">
       <reportTargets>
         <htmlpublisher.HtmlPublisherTarget>

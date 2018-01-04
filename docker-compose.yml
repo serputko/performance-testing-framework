@@ -98,6 +98,10 @@ services:
         - jenkins-home:/var/jenkins_home
         # if you want to run local tests uncomment line below and replace <jmeter-scenarios> on dir to your tests 
         #- <path to local directory with tests>:/var/lib/jmeter-scenarios/
+        # you need to allow docker to access host drives
+        # https://blogs.msdn.microsoft.com/stevelasker/2016/06/14/configuring-docker-for-windows-volumes/
+        # currently tests will be fetched from ./jmeter/scenarios/ directory
+        - ./jmeter/scenarios/:/var/lib/jmeter-scenarios/
       restart: always
    portainer:
       image: portainer/portainer

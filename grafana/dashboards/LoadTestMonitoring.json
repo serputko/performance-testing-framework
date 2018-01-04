@@ -1199,7 +1199,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT\nsum(\"count\") as NumberOfSamples,\nlast(avg) as Average,\nlast(\"pct90.0\") as pct90,\nlast(\"pct95.0\") as pct95, \nlast(\"pct99.0\") as pct99,\nlast(min) as Min,\nlast(max) as Max,\nsum(countError)/sum(count) as Error\nFROM \"$measurement\"\nWHERE \"statut\"='all' and $timeFilter\nand transaction !~ /(all|\\/)/\nGROUP BY \"transaction\"\n",
+              "query": "SELECT\nsum(\"count\") as NumberOfSamples,\nlast(avg) as Average,\nlast(\"pct90.0\") as pct90,\nlast(\"pct95.0\") as pct95, \nlast(\"pct99.0\") as pct99,\nmin(min) as Min,\nmax(max) as Max,\nsum(countError)/sum(count) as Error\nFROM \"$measurement\"\nWHERE \"statut\"='all' and $timeFilter\nand transaction !~ /(all|\\/)/\nGROUP BY \"transaction\"\n",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
