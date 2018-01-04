@@ -2606,7 +2606,7 @@
         "multi": true,
         "name": "transactions",
         "options": [],
-        "query": "\tSHOW TAG VALUES WITH KEY = \"transaction\" where transaction !~ /(internal|all|\\/|Dummy)/",
+        "query": "\tSHOW TAG VALUES WITH KEY = \"transaction\" where transaction !~ /(internal|all|\\/)/",
         "refresh": 1,
         "regex": "",
         "sort": 0,
