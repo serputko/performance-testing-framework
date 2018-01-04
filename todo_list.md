@@ -11,7 +11,6 @@
 - [ ] sending jmeter test metrics to grafana(backend listener parameters)
 - [ ] Load Test Monitoring grafana dashboard structure
 - [ ] How to create own charts
-- [ ]
 
 
 **Done:**
