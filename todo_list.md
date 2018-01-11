@@ -2,16 +2,14 @@
 - [ ] add test name filtering in grafana
 - [ ] investigate server metrics monitoring for windows(now telegraf shows container metrics, not host)
 - [ ] move jmeter script invocation from entrypoint script to jenkins job
-- [ ] add or  "responseCode" !~ /(1|2|3)\d{2}/ to error message table in grafana
-- [ ] setup beanshell assertion for sending error messages to influxdb
-- [ ] add -e BUILD_NUMBER=$BUILD_NUMBER -e JOB_URL=$JOB_URL params to jenkins job and jmeter script 
-- [ ] jenkins job is not updated if exists
-- [ ] add jenkins build number and url to jmeter demo scenario backend listener 'title'
+- [ ] add or  "responseCode" =~ /(4|5)\\d{2}/ to error message table in grafana
+- [ ] jenkins job is not updated if exists. do not delete because history will be dropped- use update https://support.cloudbees.com/hc/en-us/articles/218353308-How-to-update-job-config-files-using-the-REST-API-and-cURL-
 - [ ] add log parser to jenkins
 - [ ] archive old builds logs with compress build log plugin
 - [ ] delete old logs
 - [ ] turn off log on build page
 - [ ] ? add count serie to response time over time graphs in grafana
+- [ ] set jenkins url
 
 
 **Update readme/wiki:**
@@ -59,3 +57,6 @@
 - [x] fix min and max values in aggregate table in grafana report
 - [x] add post build task to stop jmeter container in case of build abort
 - [x] run jmeter container in host network
+- [x] setup beanshell assertion for sending error messages to influxdb
+- [x] add -e BUILD_NUMBER=$BUILD_NUMBER -e BUILD_URL=$BUILD_URL params to jenkins job and jmeter script 
+- [x] add jenkins build number and url to jmeter demo scenario backend listener 'title'

@@ -51,15 +51,78 @@ without actual network activity. This helps debugging tests.</stringProp>
           <boolProp name="SUCCESFULL">false</boolProp>
           <stringProp name="RESPONSE_CODE">500</stringProp>
           <stringProp name="RESPONSE_MESSAGE">Service unavailable</stringProp>
-          <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
-without actual network activity. This helps debugging tests.</stringProp>
-          <stringProp name="RESPONSE_DATA">Service unavailable</stringProp>
+          <stringProp name="REQUEST_DATA">{
+    &quot;code&quot;: &quot;1234567&quot;
+}</stringProp>
+          <stringProp name="RESPONSE_DATA">&lt;div class=&quot;errorbox&quot;&gt;
+   &lt;h2&gt;Login error:&lt;/h2&gt;
+   Incorrect password or confirmation code entered. Please try again.
+ &lt;/div&gt;</stringProp>
           <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
           <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
           <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
-        <hashTree/>
+        <hashTree>
+          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+            <collectionProp name="Asserion.test_strings">
+              <stringProp name="-1867169789">success</stringProp>
+            </collectionProp>
+            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+            <boolProp name="Assertion.assume_success">false</boolProp>
+            <intProp name="Assertion.test_type">16</intProp>
+          </ResponseAssertion>
+          <hashTree/>
+        </hashTree>
       </hashTree>
+      <BeanShellAssertion guiclass="BeanShellAssertionGui" testclass="BeanShellAssertion" testname="BeanShell Assertion" enabled="true">
+        <stringProp name="BeanShellAssertion.query">String response_message = &quot;&quot;;
+String assertion_message = &quot;&quot;;
+//set response message and send it to influxdb
+//write detailed error responses to jmeter log
+if(!SampleResult.isSuccessful()) {
+	assertions = SampleResult.getAssertionResults();
+	if(assertions.length&gt;0){
+		for(int i=0; i&lt;assertions.length; i++){
+			assertion_message = &quot;Failed assertion #&quot; + String.valueOf(i+1) + &quot; message: \&quot;&quot; + assertions[i].getFailureMessage()+&quot;\&quot; | &quot;;
+			log.info(&quot;Failed assertion #&quot; + String.valueOf(i+1) + &quot;\n message: \&quot;&quot; + assertions[i].getFailureMessage()+&quot;\n&quot;);
+			response_message=response_message+assertion_message;
+		}
+		SampleResult.setResponseMessage(response_message);
+	} else{
+		response_message=&quot;Sample failed; Response message is: &quot;+SampleResult.getResponseMessage();
+		SampleResult.setResponseMessage(response_message);
+	}
+	print(&quot;&lt;=========================================================================================================&gt;\n&quot;+
+	SampleResult.toString()+&quot; FAILED REQUEST DETAILS\n&quot;+
+	&quot;&lt;=========================================================================================================&gt;\n&quot;+
+	&quot;ASSERTION RESULTS\n&quot; +
+	&quot;&lt;=========================================================================================================&gt;\n&quot;+
+	&quot;Failed assertions: &quot;+assertions.length+&quot;\n&quot;+
+	&quot;&lt;=========================================================================================================&gt;\n&quot;+
+	&quot;RESPONSE DATA\n&quot; +
+	&quot;&lt;=========================================================================================================&gt;\n&quot;+
+	&quot;Response message:\n&quot; +
+	SampleResult.getResponseMessage()+&quot;\n\n&quot;+
+	&quot;Response data:\n&quot;+
+	SampleResult.getResponseDataAsString()+&quot;\n&quot;+
+	&quot;&lt;=========================================================================================================&gt;\n&quot;+
+	&quot;REQUEST DATA\n&quot;+
+	&quot;&lt;=========================================================================================================&gt;\n&quot;+
+	&quot;URL\n&quot;+
+	SampleResult.getUrlAsString()+&quot;\n&quot;+
+	&quot;Request headers\n&quot;+
+	SampleResult.getRequestHeaders()+&quot;\n&quot;+
+	&quot;Sampler data\n&quot;+
+	SampleResult.getSamplerData()+&quot;\n&quot;+
+	&quot;&lt;=========================================================================================================&gt;\n&quot;+
+	&quot;&lt;=========================================================================================================&gt;\n\n\n&quot;);
+}
+</stringProp>
+        <stringProp name="BeanShellAssertion.filename"></stringProp>
+        <stringProp name="BeanShellAssertion.parameters"></stringProp>
+        <boolProp name="BeanShellAssertion.resetInterpreter">false</boolProp>
+      </BeanShellAssertion>
+      <hashTree/>
       <kg.apc.jmeter.reporters.ConsoleStatusLogger guiclass="kg.apc.jmeter.reporters.ConsoleStatusLoggerGui" testclass="kg.apc.jmeter.reporters.ConsoleStatusLogger" testname="jp@gc - Console Status Logger" enabled="true"/>
       <hashTree/>
       <BackendListener guiclass="BackendListenerGui" testclass="BackendListener" testname="Backend Listener" enabled="true">
@@ -102,7 +165,7 @@ without actual network activity. This helps debugging tests.</stringProp>
             </elementProp>
             <elementProp name="testTitle" elementType="Argument">
               <stringProp name="Argument.name">testTitle</stringProp>
-              <stringProp name="Argument.value">test scenario with ${__P(USERS)} users, ${__P(RAMPUP)} sec rampup and ${__P(DURATION)} sec duration was</stringProp>
+              <stringProp name="Argument.value">Jenkins build #${__P(BUILD_NUMBER)}(${__P(BUILD_URL)}) with demo scenario with ${__P(USERS)} users, ${__P(RAMPUP)} sec rampup and ${__P(DURATION)} sec duration was</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="eventTags" elementType="Argument">
