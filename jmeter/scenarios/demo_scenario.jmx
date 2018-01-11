@@ -107,7 +107,7 @@ without actual network activity. This helps debugging tests.</stringProp>
             </elementProp>
             <elementProp name="eventTags" elementType="Argument">
               <stringProp name="Argument.name">eventTags</stringProp>
-              <stringProp name="Argument.value">demo_scenario</stringProp>
+              <stringProp name="Argument.value">demo_scenario,scenario</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>

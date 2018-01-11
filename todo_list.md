@@ -2,6 +2,16 @@
 - [ ] add test name filtering in grafana
 - [ ] investigate server metrics monitoring for windows(now telegraf shows container metrics, not host)
 - [ ] move jmeter script invocation from entrypoint script to jenkins job
+- [ ] add or  "responseCode" !~ /(1|2|3)\d{2}/ to error message table in grafana
+- [ ] setup beanshell assertion for sending error messages to influxdb
+- [ ] add -e BUILD_NUMBER=$BUILD_NUMBER -e JOB_URL=$JOB_URL params to jenkins job and jmeter script 
+- [ ] jenkins job is not updated if exists
+- [ ] add jenkins build number and url to jmeter demo scenario backend listener 'title'
+- [ ] add log parser to jenkins
+- [ ] archive old builds logs with compress build log plugin
+- [ ] delete old logs
+- [ ] turn off log on build page
+- [ ] ? add count serie to response time over time graphs in grafana
 
 
 **Update readme/wiki:**
@@ -11,6 +21,7 @@
 - [ ] sending jmeter test metrics to grafana(backend listener parameters)
 - [ ] Load Test Monitoring grafana dashboard structure
 - [ ] How to create own charts
+- [ ] How to add processes to monitor in telegraf
 
 
 **Done:**
