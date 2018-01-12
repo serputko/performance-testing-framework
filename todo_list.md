@@ -2,15 +2,19 @@
 - [ ] add test name filtering in grafana
 - [ ] investigate server metrics monitoring for windows(now telegraf shows container metrics, not host)
 - [ ] move jmeter script invocation from entrypoint script to jenkins job
-- [ ] add or  "responseCode" =~ /(4|5)\\d{2}/ to error message table in grafana
 - [ ] jenkins job is not updated if exists. do not delete because history will be dropped- use update https://support.cloudbees.com/hc/en-us/articles/218353308-How-to-update-job-config-files-using-the-REST-API-and-cURL-
 - [ ] add log parser to jenkins
+- [ ] setup log parsing with log parsesr
 - [ ] archive old builds logs with compress build log plugin
 - [ ] delete old logs
 - [ ] turn off log on build page
 - [ ] ? add count serie to response time over time graphs in grafana
 - [ ] set jenkins url
-
+- [ ] make dashboard default for user
+- [ ] store user settings in docker volume
+- [ ] create job to do influxdb backups in jenkins
+- [ ] set default values for scenario-dependent values in backend listener
+- [ ] modify legend labels for response time over time graphs max_avg -> avg. question- https://community.grafana.com/t/is-it-possible-to-change-legend-using-alias-by-when-series-are-selected-with-variable/4818
 
 **Update readme/wiki:**
 - [ ] how to use Portainer
@@ -60,3 +64,6 @@
 - [x] setup beanshell assertion for sending error messages to influxdb
 - [x] add -e BUILD_NUMBER=$BUILD_NUMBER -e BUILD_URL=$BUILD_URL params to jenkins job and jmeter script 
 - [x] add jenkins build number and url to jmeter demo scenario backend listener 'title'
+- [x] parameterize all scenario-dependent values in backend listener
+- [x] add tags with available scenarios to transactions variable
+- [x] add or  "responseCode" =~ /(4|5)\\d{2}/ to error message table in grafana
