@@ -140,7 +140,7 @@ if(!SampleResult.isSuccessful()) {
             </elementProp>
             <elementProp name="application" elementType="Argument">
               <stringProp name="Argument.name">application</stringProp>
-              <stringProp name="Argument.value">${__P(SCENARIO_NAME)}</stringProp>
+              <stringProp name="Argument.value">${__P(SCENARIO_NAME, scenario is not specified)}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="measurement" elementType="Argument">
@@ -165,12 +165,12 @@ if(!SampleResult.isSuccessful()) {
             </elementProp>
             <elementProp name="testTitle" elementType="Argument">
               <stringProp name="Argument.name">testTitle</stringProp>
-              <stringProp name="Argument.value">Jenkins build #${__P(BUILD_NUMBER)} ${__P(BUILD_URL)} with ${__P(SCENARIO_NAME)} with ${__P(USERS)} users, ${__P(RAMPUP)} sec rampup and ${__P(DURATION)} sec duration was</stringProp>
+              <stringProp name="Argument.value">Jenkins build #${__P(BUILD_NUMBER, N/A)} ${__P(BUILD_URL, build url N/A)} with ${__P(SCENARIO_NAME, N/A)} with ${__P(USERS, N/A)} users, ${__P(RAMPUP, N/A)} sec rampup and ${__P(DURATION, N/A)} sec duration was</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="eventTags" elementType="Argument">
               <stringProp name="Argument.name">eventTags</stringProp>
-              <stringProp name="Argument.value">scenario ${__P(SCENARIO_NAME)},${__P(USERS)} users, ${__P(RAMPUP)} sec rampup, ${__P(DURATION)} sec duration,Jenkins build #${__P(BUILD_NUMBER)}</stringProp>
+              <stringProp name="Argument.value">scenario ${__P(SCENARIO_NAME, N/A)},${__P(USERS, N/A)} users, ${__P(RAMPUP, N/A)} sec rampup, ${__P(DURATION, N/A)} sec duration,Jenkins build #${__P(BUILD_NUMBER, N/A)}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>

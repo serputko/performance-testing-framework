@@ -9,7 +9,6 @@
 - [ ] make dashboard default for user
 - [ ] store user settings in docker volume
 - [ ] create job to do influxdb backups in jenkins
-- [ ] set default values for scenario-dependent values in backend listener
 - [ ] modify legend labels for response time over time graphs max_avg -> avg. question- https://community.grafana.com/t/is-it-possible-to-change-legend-using-alias-by-when-series-are-selected-with-variable/4818
 
 **Update readme/wiki:**
@@ -67,4 +66,5 @@
 - [x] jenkins job is not updated if exists. do not delete because history will be dropped- use update https://support.cloudbees.com/hc/en-us/articles/218353308-How-to-update-job-config-files-using-the-REST-API-and-cURL-
 - [x] add log parser to jenkins
 - [x] setup jenkins log parsing with log parser
+- [x] set default values for scenario-dependent values in backend listener
 
