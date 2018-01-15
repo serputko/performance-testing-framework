@@ -2,14 +2,14 @@
 - [ ] add test name filtering in grafana
 - [ ] investigate server metrics monitoring for windows(now telegraf shows container metrics, not host)
 - [ ] move jmeter script invocation from entrypoint script to jenkins job
-- [ ] jenkins job is not updated if exists. do not delete because history will be dropped- use update https://support.cloudbees.com/hc/en-us/articles/218353308-How-to-update-job-config-files-using-the-REST-API-and-cURL-
+- [x] jenkins job is not updated if exists. do not delete because history will be dropped- use update https://support.cloudbees.com/hc/en-us/articles/218353308-How-to-update-job-config-files-using-the-REST-API-and-cURL-
 - [ ] add log parser to jenkins
-- [ ] setup log parsing with log parsesr
+- [ ] setup log parsing with log parser
 - [ ] archive old builds logs with compress build log plugin
 - [ ] delete old logs
 - [ ] turn off log on build page
 - [ ] ? add count serie to response time over time graphs in grafana
-- [ ] set jenkins url
+- [x] set jenkins url
 - [ ] make dashboard default for user
 - [ ] store user settings in docker volume
 - [ ] create job to do influxdb backups in jenkins
