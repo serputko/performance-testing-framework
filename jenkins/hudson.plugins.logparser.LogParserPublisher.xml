@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<hudson.plugins.logparser.LogParserPublisher_-DescriptorImpl plugin="log-parser@2.0">
+  <parsingRulesGlobal>
+    <hudson.plugins.logparser.ParserRuleFile>
+      <name>error-parsing</name>
+      <path>/error_parsing</path>
+    </hudson.plugins.logparser.ParserRuleFile>
+  </parsingRulesGlobal>
+  <useLegacyFormatting>false</useLegacyFormatting>
+</hudson.plugins.logparser.LogParserPublisher_-DescriptorImpl>
