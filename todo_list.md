@@ -1,14 +1,10 @@
 **TODO:**
 - [ ] investigate server metrics monitoring for windows(now telegraf shows container metrics, not host)
 - [ ] move jmeter script invocation from entrypoint script to jenkins job
-- [ ] archive old builds logs with compress build log plugin
-- [ ] delete old logs
-- [ ] turn off log on build page
-- [ ] ? add count serie to response time over time graphs in grafana
 - [ ] make dashboard default for user
-- [ ] store user settings in docker volume
 - [ ] create job to do influxdb backups in jenkins
 - [ ] modify legend labels for response time over time graphs max_avg -> avg. question- https://community.grafana.com/t/is-it-possible-to-change-legend-using-alias-by-when-series-are-selected-with-variable/4818
+- [ ] distributed load testing, jenkins slaves, few backend listeners to one influxdb
 
 **Update readme/wiki:**
 - [ ] how to use Portainer
@@ -67,4 +63,5 @@
 - [x] setup jenkins log parsing with log parser
 - [x] set default values for scenario-dependent values in backend listener
 - [x] add test name filtering in grafana
+- [x] gzip builds logs with compress build log plugin
 
