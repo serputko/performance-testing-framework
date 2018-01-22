@@ -18,7 +18,6 @@ services:
        - GF_USERS_ALLOW_SIGN_UP=false
        - GF_USERS_ALLOW_ORG_CREATE=false
      volumes:
-       - grafana:/var/run/grafana/
        - grafana-home:/var/lib/grafana/
      restart: always 
    influxdb:
@@ -99,7 +98,6 @@ services:
         - /var/lib/sitespeed.io/:/var/lib/sitespeed.io/
         - docker-dind:/usr/local/bin/dind/
         - /var/run/docker.sock:/var/run/docker.sock
-        - jenkins-workspace:/var/jenkins_home/workspace/
         - jenkins-home:/var/jenkins_home
         # if you want to run local tests uncomment line below and replace <jmeter-scenarios> on dir to your tests 
         #- <path to local directory with tests>:/var/lib/jmeter-scenarios/
@@ -150,12 +148,10 @@ services:
      entrypoint:
        - cat
 volumes:
-    grafana:
     grafana-home:
     whisper:
     docker-dind:
     webpagetest:
-    jenkins-workspace:
     jenkins-home:
     influxdb:
     sitespeed:
