@@ -70,7 +70,7 @@ To run frontend test: **Open FrontendJob -> Build with Parameters -> Set build p
 This job will start sitespeed.io docker container and run test with parameters using WebPageTest private instance 
 
 Frontend test deliverables:
-- sitespeed.io HTML report
+- **sitespeed.io HTML report**
 ![](https://github.com/serputko/performance-testing-framework/blob/master/docs/img/jenkins_frontendjob_sitespeed_html_report.png)
-- grafana load test monitoring dashboard(real-time monitoring)
+- **webpagetest HTML report**
 ![](https://github.com/serputko/performance-testing-framework/blob/master/docs/img/jenkins_frontendjob_webpagetest_html_report.png)
