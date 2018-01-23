@@ -17,6 +17,7 @@ ENV PATH $PATH:$JMETER_BIN
 
 COPY plugins/lib/*.jar ${JMETER_HOME}/lib/
 COPY plugins/lib/ext/*.jar ${JMETER_HOME}/lib/ext/
+COPY jmeter.sh ${JMETER_HOME}/bin/
 
 COPY entrypoint.sh /
 
