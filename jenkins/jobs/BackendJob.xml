@@ -65,7 +65,14 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>docker container start telegraf
+      <command>check_telegraf=$(docker container ls -a| grep telegraf | awk '{ print $8 }')
+if [ "$check_telegraf" != "Up" ];
+then
+	echo "Starting Telegraf container"
+	docker container start telegraf
+else 
+	echo "Telegraf container is already running"
+fi
 if docker container ls -a| grep jmeter;
 then
 	docker container stop jmeter

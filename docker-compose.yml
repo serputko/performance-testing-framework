@@ -37,7 +37,8 @@ services:
      hostname: telegraf-loadgenerator
      container_name: telegraf
      #network_mode: "container:influxdb"
-     #volumes:
+     volumes:
+       - /var/run/docker.sock:/var/run/docker.sock
        # - "c:/:/rootfs/proc:ro"
    #environment:
        # - SYS_PATH_PREFIX=/rootfs
