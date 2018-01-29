@@ -87,7 +87,7 @@ if(!SampleResult.isSuccessful()) {
 			log.info(&quot;Failed assertion #&quot; + String.valueOf(i+1) + &quot;\n message: \&quot;&quot; + assertions[i].getFailureMessage()+&quot;\n&quot;);
 			response_message=response_message+assertion_message;
 		}
-		SampleResult.setResponseMessage(response_message);
+		SampleResult.setResponseMessage(&quot;Sample failed; Response message is: &quot;+SampleResult.getResponseMessage()+&quot; | &quot;+response_message);
 	} else{
 		response_message=&quot;Sample failed; Response message is: &quot;+SampleResult.getResponseMessage();
 		SampleResult.setResponseMessage(response_message);
