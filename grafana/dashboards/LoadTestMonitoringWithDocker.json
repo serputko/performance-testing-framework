@@ -2417,6 +2417,7 @@
             "current": true,
             "max": true,
             "min": true,
+            "rightSide": true,
             "show": true,
             "total": false,
             "values": true
@@ -2580,6 +2581,7 @@
             "current": true,
             "max": true,
             "min": true,
+            "rightSide": true,
             "show": true,
             "total": false,
             "values": true
@@ -2982,5 +2984,5 @@
   },
   "timezone": "",
   "title": "Load test monitoring With Docker Containers Monitoring",
-  "version": 7
+  "version": 10
 }
