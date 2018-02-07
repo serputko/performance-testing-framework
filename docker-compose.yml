@@ -123,6 +123,10 @@ services:
         #expose 4000 port instead of 80 when sitespeed will add webpagetest.port parameter https://github.com/sitespeedio/sitespeed.io/issues/1855
         #- "4000:80"
         - "80:80"
+      volumes:
+        - webpagetest-results:/var/www/html/results/
+        - webpagetest-settings:/var/www/html/settings/
+        - webpagetest-logs:/var/www/html/logs/
       restart: always
    webpagetestagent:
       image: webpagetest/agent
@@ -131,8 +135,6 @@ services:
         - webpagetestserver
       ports:
         - "4001:80"
-      volumes:
-        - webpagetest:/var/www/html/results/
       environment:
         - SERVER_URL=http://wptserver:80/work/
         - LOCATION=Test
@@ -152,7 +154,9 @@ volumes:
     grafana-home:
     whisper:
     docker-dind:
-    webpagetest:
+    webpagetest-results:
+    webpagetest-settings:
+    webpagetest-logs:
     jenkins-home:
     influxdb:
     sitespeed:

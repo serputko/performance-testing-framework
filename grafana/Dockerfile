@@ -1,4 +1,4 @@
-FROM grafana/grafana:latest
+FROM grafana/grafana:4.6.3
 
 RUN apt-get update && \
     apt-get install jq 

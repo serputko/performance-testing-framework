@@ -67,7 +67,7 @@
         "iconColor": "rgb(0, 245, 97)",
         "limit": 100,
         "name": "Test start",
-        "query": "SELECT * FROM \"events\"  WHERE \"text\" =~ /.* started/",
+        "query": "SELECT * FROM \"events\"  WHERE \"text\" =~ /.* started/ AND $timeFilter",
         "showIn": 0,
         "tagsColumn": "tags",
         "textColumn": "text",
@@ -81,7 +81,7 @@
         "iconColor": "rgb(251, 0, 0)",
         "limit": 100,
         "name": "Test ended",
-        "query": "SELECT * FROM \"events\"  WHERE \"text\" =~ /.* ended/",
+        "query": "SELECT * FROM \"events\"  WHERE \"text\" =~ /.* ended/ AND $timeFilter",
         "showIn": 0,
         "tagsColumn": "tags",
         "textColumn": "text",
@@ -96,7 +96,7 @@
   "hideControls": false,
   "id": null,
   "links": [],
-  "refresh": false,
+  "refresh": "30s",
   "rows": [
     {
       "collapse": false,
@@ -170,7 +170,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT last(\"startedT\") AS \"startedT\" FROM \"$measurement\" WHERE \"transaction\"='internal' and $timeFilter group by time($group_time)",
+              "query": "SELECT last(\"startedT\") AS \"startedT\" FROM \"$measurement\" WHERE \"transaction\"='internal' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -278,7 +278,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT last(\"minAT\") AS \"minAT\" FROM \"$measurement\" WHERE \"transaction\"='internal' and $timeFilter  group by time($group_time)",
+              "query": "SELECT last(\"minAT\") AS \"minAT\" FROM \"$measurement\" WHERE \"transaction\"='internal' AND $timeFilter  AND \"application\" =~ /$scenario/ group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -386,7 +386,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"count\") FROM \"$measurement\" WHERE \"transaction\"='all' and $timeFilter  group by time($group_time)",
+              "query": "SELECT sum(\"count\") FROM \"$measurement\" WHERE \"transaction\"='all' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -494,7 +494,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"countError\") FROM \"$measurement\" WHERE \"transaction\"='all' and $timeFilter  group by time($group_time)",
+              "query": "SELECT sum(\"countError\") FROM \"$measurement\" WHERE \"transaction\"='all' and $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -603,7 +603,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"countError\")/sum(\"count\")*100 as \"rate\" FROM \"$measurement\" WHERE \"transaction\"='all'  and $timeFilter",
+              "query": "SELECT sum(\"countError\")/sum(\"count\")*100 AS \"rate\" FROM \"$measurement\" WHERE \"transaction\"='all'  AND $timeFilter AND \"application\" =~ /$scenario/ ",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -634,6 +634,7 @@
         },
         {
           "aliasColors": {
+            "jmeter.activeThreads": "#e5ac0e",
             "jmeter.countError": "#BF1B00",
             "jmeter.minAT": "#EAB839"
           },
@@ -660,13 +661,21 @@
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
-          "seriesOverrides": [],
+          "seriesOverrides": [
+            {
+              "alias": "Active threads",
+              "color": "rgb(205, 255, 0)",
+              "dashes": true,
+              "fill": 3
+            }
+          ],
           "spaceLength": 10,
           "span": 2,
           "stack": false,
           "steppedLine": false,
           "targets": [
             {
+              "alias": "$col",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -684,7 +693,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT last(\"minAT\") AS \"minAT\" FROM \"$measurement\" WHERE \"transaction\"='internal' and $timeFilter  group by time($group_time)",
+              "query": "SELECT last(\"minAT\") as \"Active threads\" FROM \"$measurement\" WHERE \"transaction\"='internal' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time) ",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -729,7 +738,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": "0",
               "show": true
             },
             {
@@ -738,12 +747,15 @@
               "logBase": 1,
               "max": null,
               "min": null,
-              "show": true
+              "show": false
             }
           ]
         },
         {
-          "aliasColors": {},
+          "aliasColors": {
+            "cpu.usage": "#508642",
+            "mem.usage": "#eab839"
+          },
           "bars": false,
           "dashLength": 10,
           "dashes": false,
@@ -771,8 +783,14 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "alias": "mem.used",
-              "yaxis": 2
+              "alias": "CPU Usage",
+              "color": "rgb(0, 255, 11)",
+              "fill": 3
+            },
+            {
+              "alias": "Memory Usage",
+              "color": "rgb(0, 176, 255)",
+              "fill": 2
             }
           ],
           "spaceLength": 10,
@@ -781,6 +799,7 @@
           "steppedLine": false,
           "targets": [
             {
+              "alias": "$col",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -798,7 +817,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT 100-mean(usage_idle) as usage FROM cpu WHERE $timeFilter and host='telegraf-loadgenerator' group by time($group_time)",
+              "query": "SELECT 100-mean(usage_idle) as \"CPU Usage\" FROM cpu WHERE $timeFilter AND host='telegraf-loadgenerator' group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -819,6 +838,7 @@
               "tags": []
             },
             {
+              "alias": "$col",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -836,7 +856,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT 100-mean(available_percent) as used FROM mem WHERE $timeFilter and host='telegraf-loadgenerator' group by time($group_time)",
+              "query": "SELECT 100-mean(available_percent) as \"Memory Usage\" FROM mem WHERE $timeFilter AND host='telegraf-loadgenerator' group by time($group_time)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -860,7 +880,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Load generator metrics",
+          "title": "Server metrics",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -889,14 +909,13 @@
               "logBase": 1,
               "max": "100",
               "min": null,
-              "show": true
+              "show": false
             }
           ]
         },
         {
           "aliasColors": {
-            "jmeter.countError": "#BF1B00",
-            "jmeter.sum": "#bf1b00"
+            "jmeter.countError": "#BF1B00"
           },
           "bars": false,
           "dashLength": 10,
@@ -925,8 +944,9 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "alias": "jmeter.countError",
-              "yaxis": 1
+              "alias": "Error count",
+              "color": "rgb(255, 0, 0)",
+              "fill": 2
             }
           ],
           "spaceLength": 10,
@@ -935,6 +955,7 @@
           "steppedLine": false,
           "targets": [
             {
+              "alias": "$col",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -952,7 +973,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"countError\") FROM \"$measurement\" WHERE \"transaction\"='all' and $timeFilter group by time($group_time)",
+              "query": "SELECT sum(\"countError\") as \"Error count\" FROM \"$measurement\" WHERE \"transaction\"='all' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -997,7 +1018,7 @@
               "label": null,
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": "0",
               "show": true
             },
             {
@@ -1006,7 +1027,7 @@
               "logBase": 1,
               "max": null,
               "min": null,
-              "show": true
+              "show": false
             }
           ]
         }
@@ -1034,7 +1055,7 @@
           "interval": "",
           "legend": {
             "alignAsTable": true,
-            "avg": true,
+            "avg": false,
             "current": true,
             "hideEmpty": false,
             "hideZero": false,
@@ -1062,6 +1083,7 @@
           "steppedLine": false,
           "targets": [
             {
+              "alias": "$col",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -1080,7 +1102,7 @@
               "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT max(/$metric$/) FROM \"$measurement\" WHERE \"transaction\"='$transactions' AND \"statut\"='all' and $timeFilter group by time($group_time)",
+              "query": "SELECT max(/$metric$/)  FROM \"$measurement\" WHERE \"transaction\"='$transactions' AND \"statut\"='all' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1125,7 +1147,7 @@
               "label": "Response time",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": "0",
               "show": true
             },
             {
@@ -1205,7 +1227,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT\nsum(\"count\") as NumberOfSamples,\nlast(avg) as Average,\nlast(\"pct90.0\") as pct90,\nlast(\"pct95.0\") as pct95, \nlast(\"pct99.0\") as pct99,\nmin(min) as Min,\nmax(max) as Max,\nsum(countError)/sum(count) as Error\nFROM \"$measurement\"\nWHERE \"statut\"='all' and $timeFilter\nand transaction !~ /(all|\\/)/\nGROUP BY \"transaction\"\n",
+              "query": "SELECT\nsum(\"count\") as NumberOfSamples,\nlast(avg) as Average,\nlast(\"pct90.0\") as pct90,\nlast(\"pct95.0\") as pct95, \nlast(\"pct99.0\") as pct99,\nmin(min) as Min,\nmax(max) as Max,\nsum(countError)/sum(count) as Error\nFROM \"$measurement\"\nWHERE \"statut\"='all' \nAND $timeFilter\nAND transaction !~ /(all|\\/)/\nAND \"application\" =~ /$scenario/ \nGROUP BY \"transaction\"\n",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -1286,7 +1308,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(count) as errorCount FROM \"$measurement\" WHERE \"responseMessage\" <> '' or \"responseCode\" =~ /(4|5)\\d{2}/ and transaction !~ /.*(?i)transaction/ and $timeFilter GROUP BY transaction, responseCode, responseMessage",
+              "query": "SELECT sum(count) AS errorCount FROM \"$measurement\" WHERE (\"responseMessage\" <> '' OR  \"responseCode\" =~ /(4|5)\\\\d{2}/) AND transaction !~ /.*(?i)transaction/ AND $timeFilter AND \"application\" =~ /$scenario/  GROUP BY transaction, responseCode, responseMessage",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -1397,7 +1419,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT  last(\"count\")/5 FROM \"$measurement\" WHERE \"transaction\" = 'all' and $timeFilter GROUP BY time(5s) fill(null)",
+              "query": "SELECT  last(\"count\")/5 FROM \"$measurement\" WHERE \"transaction\" = 'all' AND $timeFilter AND \"application\" =~ /$scenario/ GROUP BY time(5s) fill(null)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1504,7 +1526,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT  last(\"count\")/5 FROM \"$measurement\" WHERE \"transaction\" = 'all' and $timeFilter GROUP BY time(5s) fill(null)",
+              "query": "SELECT  last(\"count\")/5 FROM \"$measurement\" WHERE \"transaction\" = 'all' AND $timeFilter AND \"application\" =~ /$scenario/  GROUP BY time(5s) fill(null)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1611,7 +1633,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT  last(\"count\")/5 FROM \"$measurement\" WHERE \"transaction\" = 'all' and $timeFilter GROUP BY time(5s) fill(null)",
+              "query": "SELECT  last(\"count\")/5 FROM \"$measurement\" WHERE \"transaction\" = 'all' AND $timeFilter AND \"application\" =~ /$scenario/ GROUP BY time(5s) fill(null)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1718,7 +1740,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT  last(\"count\")/5 FROM \"$measurement\" WHERE \"transaction\" = 'all' and $timeFilter GROUP BY time(5s) fill(null)",
+              "query": "SELECT  last(\"count\")/5 FROM \"$measurement\" WHERE \"transaction\" = 'all' AND $timeFilter AND \"application\" =~ /$scenario/ GROUP BY time(5s) fill(null)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1767,8 +1789,6 @@
             "alignAsTable": true,
             "avg": true,
             "current": true,
-            "hideEmpty": false,
-            "hideZero": false,
             "max": true,
             "min": true,
             "rightSide": false,
@@ -1786,7 +1806,8 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "alias": "jmeter.last",
+              "alias": "Throughput",
+              "color": "rgb(0, 218, 255)",
               "yaxis": 1
             }
           ],
@@ -1796,6 +1817,7 @@
           "steppedLine": false,
           "targets": [
             {
+              "alias": "$col",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -1813,7 +1835,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT last(\"count\")/5 FROM \"$measurement\" WHERE \"transaction\" = 'all' AND $timeFilter GROUP BY time(5s) fill(null)",
+              "query": "SELECT last(\"count\")/5 as \"Throughput\"FROM \"$measurement\" WHERE \"transaction\" = 'all' AND $timeFilter AND \"application\" =~ /$scenario/ GROUP BY time(5s) fill(null)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1916,19 +1938,23 @@
           "renderer": "flot",
           "seriesOverrides": [
             {
-              "alias": "jmeter.active_threads",
+              "alias": "Active threads",
+              "color": "rgb(255, 233, 0)",
               "yaxis": 2
             },
             {
-              "alias": "jmeter.countError",
+              "alias": "Errors count",
+              "color": "rgb(255, 0, 0)",
               "dashes": true,
               "yaxis": 2
             },
             {
-              "alias": "jmeter.avg"
+              "alias": "Average",
+              "color": "rgb(37, 255, 0)"
             },
             {
-              "alias": "jmeter.throughput",
+              "alias": "Throughput",
+              "color": "#70dbed",
               "yaxis": 2
             }
           ],
@@ -1938,6 +1964,7 @@
           "steppedLine": false,
           "targets": [
             {
+              "alias": "$col",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -1955,7 +1982,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT max(avg) as avg FROM \"$measurement\" WHERE \"transaction\"='all' AND \"statut\"='all' and $timeFilter  group by time($group_time)",
+              "query": "SELECT max(avg) as \"Average\"  FROM \"$measurement\" WHERE \"transaction\"='all' AND \"statut\"='all' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -1976,6 +2003,7 @@
               "tags": []
             },
             {
+              "alias": "$col",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -1993,7 +2021,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT last(\"minAT\") as active_threads FROM \"$measurement\" WHERE \"transaction\"='internal' and $timeFilter  group by time($group_time)",
+              "query": "SELECT last(\"minAT\") as \"Active threads\" FROM \"$measurement\" WHERE \"transaction\"='internal' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
@@ -2014,6 +2042,7 @@
               "tags": []
             },
             {
+              "alias": "$col",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -2031,7 +2060,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT sum(\"countError\") as countError FROM \"$measurement\" WHERE \"transaction\"='all' AND \"statut\"='all' and $timeFilter  group by time($group_time)",
+              "query": "SELECT sum(\"countError\") as \"Errors count\" FROM \"$measurement\" WHERE \"transaction\"='all' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
               "rawQuery": true,
               "refId": "C",
               "resultFormat": "time_series",
@@ -2052,6 +2081,7 @@
               "tags": []
             },
             {
+              "alias": "$col",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -2069,7 +2099,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT last(\"count\")/5 as throughput FROM \"$measurement\" WHERE \"transaction\" = 'all' AND $timeFilter GROUP BY time(5s) fill(null)",
+              "query": "SELECT last(\"count\")/5 as \"Throughput\" FROM \"$measurement\" WHERE \"transaction\" = 'all' AND $timeFilter AND \"application\" =~ /$scenario/ GROUP BY time(5s) fill(null)",
               "rawQuery": true,
               "refId": "D",
               "resultFormat": "time_series",
@@ -2093,7 +2123,7 @@
           "thresholds": [],
           "timeFrom": null,
           "timeShift": null,
-          "title": "Response time vs Active threads vs Error rate",
+          "title": "Response time vs Active threads vs Throughput vs Error rate",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -2113,7 +2143,7 @@
               "label": "Response time",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": "0",
               "show": true
             },
             {
@@ -2121,7 +2151,7 @@
               "label": "Count",
               "logBase": 1,
               "max": null,
-              "min": null,
+              "min": "0",
               "show": true
             }
           ]
@@ -2173,6 +2203,7 @@
           "steppedLine": false,
           "targets": [
             {
+              "alias": "$tag_host $col",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -2190,7 +2221,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT 100-mean(usage_idle) as usage FROM cpu WHERE $timeFilter GROUP BY host , time($group_time)",
+              "query": "SELECT 100-mean(usage_idle) as \"CPU Usage\" FROM cpu WHERE $timeFilter GROUP BY host , time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2233,7 +2264,7 @@
               "format": "short",
               "label": null,
               "logBase": 1,
-              "max": "100",
+              "max": null,
               "min": null,
               "show": true
             },
@@ -2241,9 +2272,9 @@
               "format": "short",
               "label": null,
               "logBase": 1,
-              "max": "100",
+              "max": null,
               "min": null,
-              "show": false
+              "show": true
             }
           ]
         },
@@ -2282,6 +2313,7 @@
           "steppedLine": false,
           "targets": [
             {
+              "alias": "$tag_host $col",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -2299,7 +2331,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT 100-mean(available_percent) as used FROM mem WHERE $timeFilter GROUP BY host, time($group_time)",
+              "query": "SELECT 100-mean(available_percent) as \"Memory Usage\" FROM mem WHERE $timeFilter GROUP BY host, time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2366,7 +2398,7 @@
     },
     {
       "collapse": true,
-      "height": 294,
+      "height": 250,
       "panels": [
         {
           "aliasColors": {
@@ -2385,25 +2417,34 @@
             "current": true,
             "max": true,
             "min": true,
-            "rightSide": true,
             "show": true,
-            "sortDesc": true,
             "total": false,
             "values": true
           },
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 6,
+          "minSpan": 12,
           "nullPointMode": "null",
           "percentage": false,
           "pointradius": 5,
           "points": false,
           "renderer": "flot",
           "repeat": "host",
-          "seriesOverrides": [],
+          "seriesOverrides": [
+            {
+              "alias": "CPU Usage",
+              "color": "rgb(0, 255, 11)",
+              "fill": 2
+            },
+            {
+              "alias": "Memory Usage",
+              "color": "rgb(0, 164, 255)",
+              "fill": 2
+            }
+          ],
           "spaceLength": 10,
-          "span": 6,
+          "span": 12,
           "stack": false,
           "steppedLine": false,
           "targets": [
@@ -2424,7 +2465,6 @@
                   "type": "fill"
                 }
               ],
-              "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
               "query": "SELECT 100-mean(usage_idle) as usage FROM cpu WHERE $timeFilter and host='$host'GROUP BY time($group_time)",
@@ -2448,7 +2488,7 @@
               "tags": []
             },
             {
-              "alias": "$tag_container_name cpu_usage",
+              "alias": "$tag_container_name $m usage",
               "dsType": "influxdb",
               "groupBy": [
                 {
@@ -2464,12 +2504,11 @@
                   "type": "fill"
                 }
               ],
-              "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
               "query": "SELECT mean(usage_percent)/$cores_number FROM \"docker_container_cpu\" WHERE $timeFilter and host='$host' GROUP BY time($group_time),container_name",
               "rawQuery": true,
-              "refId": "C",
+              "refId": "B",
               "resultFormat": "time_series",
               "select": [
                 [
@@ -2534,14 +2573,13 @@
           "dashes": false,
           "datasource": "${DS_TELEGRAF}",
           "fill": 1,
-          "id": 100,
+          "id": 91,
           "legend": {
             "alignAsTable": true,
             "avg": true,
             "current": true,
             "max": true,
             "min": true,
-            "rightSide": true,
             "show": true,
             "total": false,
             "values": true
@@ -2556,9 +2594,20 @@
           "points": false,
           "renderer": "flot",
           "repeat": "host",
-          "seriesOverrides": [],
+          "seriesOverrides": [
+            {
+              "alias": "CPU Usage",
+              "color": "rgb(0, 255, 11)",
+              "fill": 2
+            },
+            {
+              "alias": "Memory Usage",
+              "color": "rgb(0, 164, 255)",
+              "fill": 2
+            }
+          ],
           "spaceLength": 10,
-          "span": 6,
+          "span": 12,
           "stack": false,
           "steppedLine": false,
           "targets": [
@@ -2579,12 +2628,11 @@
                   "type": "fill"
                 }
               ],
-              "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
               "query": "SELECT  100-mean(available_percent) as \"usage\" FROM mem WHERE $timeFilter AND host='$host' group by time($group_time)",
               "rawQuery": true,
-              "refId": "C",
+              "refId": "A",
               "resultFormat": "time_series",
               "select": [
                 [
@@ -2619,12 +2667,11 @@
                   "type": "fill"
                 }
               ],
-              "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
               "query": "SELECT mean(usage_percent) FROM \"docker_container_mem\" WHERE $timeFilter and host='$host' GROUP BY container_name, time($group_time)",
               "rawQuery": true,
-              "refId": "A",
+              "refId": "B",
               "resultFormat": "time_series",
               "select": [
                 [
@@ -2775,15 +2822,20 @@
         "multi": true,
         "name": "transactions",
         "options": [],
-        "query": "SHOW TAG VALUES WITH KEY = \"transaction\" where  transaction !~ /(internal|all|\\/|Dummy)/",
+        "query": "SHOW TAG VALUES WITH KEY = \"transaction\" where transaction !~ /(internal|all|\\/)/",
         "refresh": 1,
         "regex": "",
         "sort": 0,
-        "tagValuesQuery": "SHOW TAG VALUES WITH KEY = \"transaction\" WHERE application = '$tag'",
-        "tags": [],
+        "tagValuesQuery": "SHOW TAG VALUES WITH KEY = \"transaction\" where transaction !~ /(internal|all|\\/)/ and application= '$tag'",
+        "tags": [
+          "1",
+          "demo_scenario.jmx",
+          "demo_scenario1.jmx",
+          "scenario is not specified"
+        ],
         "tagsQuery": "SHOW TAG VALUES WITH key = \"application\"",
         "type": "query",
-        "useTags": false
+        "useTags": true
       },
       {
         "allValue": null,
@@ -2860,10 +2912,30 @@
       {
         "allValue": null,
         "current": {},
+        "datasource": "${DS_JMETER}",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "scenario",
+        "options": [],
+        "query": "SHOW TAG VALUES WITH KEY = \"application\"",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
         "datasource": "${DS_TELEGRAF}",
         "hide": 0,
         "includeAll": false,
-        "label": "",
+        "label": null,
         "multi": false,
         "name": "cores_number",
         "options": [],
@@ -2880,8 +2952,8 @@
     ]
   },
   "time": {
-    "from": "2018-01-26T12:43:56.580Z",
-    "to": "2018-01-26T12:46:49.348Z"
+    "from": "now-30m",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -2910,5 +2982,5 @@
   },
   "timezone": "",
   "title": "Load test monitoring With Docker Containers Monitoring",
-  "version": 13
+  "version": 7
 }
