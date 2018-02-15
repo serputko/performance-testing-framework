@@ -278,7 +278,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT last(\"minAT\") AS \"minAT\" FROM \"$measurement\" WHERE \"transaction\"='internal' AND $timeFilter  AND \"application\" =~ /$scenario/ group by time($group_time)",
+              "query": "SELECT last(\"startedT\")-last(\"endedT\") AS \"minAT\" FROM \"$measurement\" WHERE \"transaction\"='internal' AND $timeFilter  AND \"application\" =~ /$scenario/ group by time($group_time)",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -308,7 +308,7 @@
             {
               "op": "=",
               "text": "No active threads",
-              "value": "1"
+              "value": "0"
             }
           ],
           "valueName": "current"
@@ -693,7 +693,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT last(\"minAT\") as \"Active threads\" FROM \"$measurement\" WHERE \"transaction\"='internal' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time) ",
+              "query": "SELECT last(\"startedT\")-last(\"endedT\") as \"Active threads\" FROM \"$measurement\" WHERE \"transaction\"='internal' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time) ",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "time_series",
@@ -2021,7 +2021,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT last(\"minAT\") as \"Active threads\" FROM \"$measurement\" WHERE \"transaction\"='internal' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
+              "query": "SELECT last(\"startedT\")-last(\"endedT\") as \"Active threads\" FROM \"$measurement\" WHERE \"transaction\"='internal' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "time_series",
