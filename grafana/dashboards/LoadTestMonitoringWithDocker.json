@@ -1227,7 +1227,7 @@
               ],
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT\nsum(\"count\") as NumberOfSamples,\nlast(avg) as Average,\nlast(\"pct90.0\") as pct90,\nlast(\"pct95.0\") as pct95, \nlast(\"pct99.0\") as pct99,\nmin(min) as Min,\nmax(max) as Max,\nsum(countError)/sum(count) as Error\nFROM \"$measurement\"\nWHERE \"statut\"='all' \nAND $timeFilter\nAND transaction !~ /(all|\\/)/\nAND \"application\" =~ /$scenario/ \nGROUP BY \"transaction\"\n",
+              "query": "SELECT\nsum(\"count\") as NumberOfSamples,\nmean(avg) as Average,\npercentile(\"pct90.0\", 90) as pct90,\npercentile(\"pct95.0\", 95) as pct95, \npercentile(\"pct99.0\", 99) as pct99,\nmin(min) as Min,\nmax(max) as Max,\nsum(countError)/sum(count) as Error\nFROM \"$measurement\"\nWHERE \"statut\"='all' \nAND $timeFilter\nAND transaction !~ /(all|\\/)/\nAND \"application\" =~ /$scenario/ \nGROUP BY \"transaction\"\n",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -2984,5 +2984,5 @@
   },
   "timezone": "",
   "title": "Load test monitoring With Docker Containers Monitoring",
-  "version": 10
+  "version": 16
 }
