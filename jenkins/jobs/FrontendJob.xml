@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
   <description></description>
@@ -18,33 +18,45 @@
     </com.sonyericsson.rebuild.RebuildSettings>
     <hudson.model.ParametersDefinitionProperty>
       <parameterDefinitions>
-        <com.gem.persistentparameter.PersistentStringParameterDefinition plugin="persistent-parameter@1.1">
+        <hudson.model.StringParameterDefinition>
           <name>URL</name>
           <description>Webpage url to test</description>
           <defaultValue>https://google.com/</defaultValue>
-          <successfulOnly>true</successfulOnly>
-        </com.gem.persistentparameter.PersistentStringParameterDefinition>
-        <com.gem.persistentparameter.PersistentChoiceParameterDefinition plugin="persistent-parameter@1.1">
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.ChoiceParameterDefinition>
           <name>browser</name>
           <description>Choose which Browser to use when you test.</description>
-          <choices>
-            <string>chrome</string>
-            <string>firefox</string>
+          <choices class="java.util.Arrays$ArrayList">
+            <a class="string-array">
+              <string>chrome</string>
+              <string>firefox</string>
+            </a>
           </choices>
-          <successfulOnly>true</successfulOnly>
-        </com.gem.persistentparameter.PersistentChoiceParameterDefinition>
-        <com.gem.persistentparameter.PersistentStringParameterDefinition plugin="persistent-parameter@1.1">
+        </hudson.model.ChoiceParameterDefinition>
+        <hudson.model.StringParameterDefinition>
           <name>run_number</name>
           <description>How many times you want to test each page</description>
           <defaultValue>3</defaultValue>
-          <successfulOnly>true</successfulOnly>
-        </com.gem.persistentparameter.PersistentStringParameterDefinition>
-        <com.gem.persistentparameter.PersistentStringParameterDefinition plugin="persistent-parameter@1.1">
+          <trim>false</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.StringParameterDefinition>
           <name>additional_args</name>
           <description>Add any valid sitespeed.io arguments. https://www.sitespeed.io/documentation/sitespeed.io/configuration/</description>
-          <defaultValue>--webpagetest.host localhost --webpagetest.location Test --webpagetest.runs 1</defaultValue>
-          <successfulOnly>true</successfulOnly>
-        </com.gem.persistentparameter.PersistentStringParameterDefinition>
+          <defaultValue>--webpagetest.host localhost --webpagetest.location Test --webpagetest.runs 3 --webpagetest.includeRepeatView true</defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
+        <hudson.model.BooleanParameterDefinition>
+          <name>execute_script</name>
+          <description>execute webpagetest script</description>
+          <defaultValue>true</defaultValue>
+        </hudson.model.BooleanParameterDefinition>
+        <hudson.model.StringParameterDefinition>
+          <name>script</name>
+          <description></description>
+          <defaultValue>setEventName\tOpen main page\nnavigate\thttp://www.webpagetest.org/\nsetEventName\tOpen History\nsetValue\tname=url\tfoo\nexecAndWait\tdocument.querySelector(\&quot;[title=&apos;Test History&apos;]\&quot;).click();</defaultValue>
+          <trim>true</trim>
+        </hudson.model.StringParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
@@ -58,10 +70,25 @@
   <builders>
     <hudson.tasks.Shell>
       <command>graphite_network=$(docker inspect --format=&apos;{{.HostConfig.NetworkMode}}&apos; graphite)
-docker run  --name sitespeed --network=host --privileged=true --shm-size=1g --rm -v &quot;/var/lib/sitespeed.io/&quot;:/sitespeed.io \
-sitespeedio/sitespeed.io --graphite.host localhost --graphite.port 2003 --graphite.httpPort 8080 --browsertime.browser $browser \
---browsertime.iterations $run_number $additional_args $URL
 
+run_sitespeed=&quot;docker run --name sitespeed --volumes-from=jenkins --network=host --privileged=true --shm-size=1g --rm -v \&quot;/var/lib/sitespeed.io/\&quot;:/sitespeed.io \sitespeedio/sitespeed.io \
+--graphite.host localhost --graphite.port 2003 --graphite.httpPort 8080 --browsertime.browser $browser \--browsertime.iterations $run_number \
+$additional_args $URL&quot;
+
+#remove &apos;|| true&apos; when https://github.com/sitespeedio/sitespeed.io/issues/1897 will be resolved
+
+run_sitespeed_with_wpt_script=&quot;docker run --name sitespeed --volumes-from=jenkins --network=host --privileged=true --shm-size=1g --rm -v \&quot;/var/lib/sitespeed.io/\&quot;:/sitespeed.io \sitespeedio/sitespeed.io \
+--graphite.host localhost --graphite.port 2003 --graphite.httpPort 8080 --browsertime.browser $browser \--browsertime.iterations $run_number \
+$additional_args --webpagetest.script \&quot;$script\&quot; $URL || true&quot;
+
+if ! $execute_script
+then
+	eval $run_sitespeed
+else
+	eval $run_sitespeed_with_wpt_script
+fi
+
+#--webpagetest.file $WORKSPACE/script1 
 report_dir_name=$(echo $URL | awk -F/ &apos;{print $3}&apos;)
 sudo rm -rf frontend_report &amp;&amp; sudo mkdir &quot;$WORKSPACE/frontend_report&quot;
 
