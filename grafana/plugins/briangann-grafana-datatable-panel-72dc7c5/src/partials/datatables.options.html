@@ -1,0 +1,143 @@
+<div class="editor-row">
+	<div class="section gf-form-group">
+		<h5 class="section-heading">Table Display</h5>
+		<div class="gf-form max-width-17">
+			<label class="gf-form-label width-6">Font size</label>
+			<div class="gf-form-select-wrapper max-width-15">
+				<select class="gf-form-input"
+						ng-model="ctrl.panel.fontSize"
+						ng-options="f for f in ctrl.fontSizes"
+						ng-change="ctrl.render()"></select>
+			</div>
+		</div>
+		<div class="gf-form">
+			<gf-form-switch class="gf-form" label-class="width-8"
+			  label="Scroll"
+				tooltip="Scroll instead of paging"
+				checked="ctrl.panel.scroll" on-change="ctrl.render()"></gf-form-switch>
+		</div>
+
+			<div ng-if="!ctrl.panel.scroll">
+				<div class="gf-form max-width-17">
+					<label class="gf-form-label width-8">Rows Per Page</label>
+					<input type="number" class="gf-form-input"
+						placeholder="5" data-placement="right"
+						ng-model="ctrl.panel.rowsPerPage"
+						ng-change="ctrl.render()"
+						ng-model-onblur>
+				</div>
+				<div class="gf-form">
+					<label class="gf-form-label width-8">Paging Type</label>
+					<div class="gf-form-select-wrapper max-width-35">
+						<select class="gf-form-input" ng-model="ctrl.panel.datatablePagingType" ng-options="f.value as f.text for f in ctrl.panel.pagingTypes" ng-change="ctrl.render()"></select>
+					</div>
+				</div>
+			</div>
+	</div>
+
+	<div class="section gf-form-group">
+		<h5 class="section-heading">Table Options</h5>
+		<div class="gf-form-inline">
+			<gf-form-switch class="gf-form" label-class="width-11"
+				label="Row Numbers"
+				tooltip="Display Row Numbers"
+				checked="ctrl.panel.rowNumbersEnabled" on-change="ctrl.render()"></gf-form-switch>
+			<gf-form-switch class="gf-form" label-class="width-14"
+				label="Length Change Enabled"
+				tooltip="Display Length Change selection"
+				checked="ctrl.panel.lengthChangeEnabled" on-change="ctrl.render()"></gf-form-switch>
+		</div>
+		<div class="gf-form-inline">
+			<gf-form-switch class="gf-form" label-class="width-11"
+				label="Search Enabled"
+				tooltip="Allow searching within table"
+				checked="ctrl.panel.searchEnabled" on-change="ctrl.render()"></gf-form-switch>
+				<!--	Search toggle https://datatables.net/reference/option/searching -->
+			<gf-form-switch class="gf-form" label-class="width-14"
+				label="Info Enabled"
+				tooltip="Display Showing N of N entries footer"
+				checked="ctrl.panel.infoEnabled" on-change="ctrl.render()"></gf-form-switch>
+		</div>
+		<div ng-if="ctrl.panel.datatableTheme === 'basic_theme'">
+			<div class="gf-form-inline">
+				<gf-form-switch class="gf-form" label-class="width-11"
+					label="Cell Borders"
+					tooltip="Show cell borders"
+					checked="ctrl.panel.showCellBorders" on-change="ctrl.showCellBordersChanged()"></gf-form-switch>
+				<gf-form-switch class="gf-form" label-class="width-11"
+					label="Row Borders"
+					tooltip="Show row borders (Requires Page Reload on toggle)"
+					checked="ctrl.panel.showRowBorders" on-change="ctrl.render()"></gf-form-switch>
+			</div>
+			<div class="gf-form-inline">
+				<gf-form-switch class="gf-form" label-class="width-11"
+					label="Compact Rows"
+					tooltip="Use compact rows"
+					checked="ctrl.panel.compactRowsEnabled" on-change="ctrl.render()"></gf-form-switch>
+				<gf-form-switch class="gf-form" label-class="width-11"
+					label="Striped Rows"
+					tooltip="Show stripes on rows (Requires Page Reload on toggle)"
+					checked="ctrl.panel.stripedRowsEnabled" on-change="ctrl.render()"></gf-form-switch>
+			</div>
+			<div class="gf-form-inline">
+				<gf-form-switch class="gf-form" label-class="width-11"
+					label="Order Column"
+					tooltip="Highlight the column that the table data is currently ordered on"
+					checked="ctrl.panel.orderColumnEnabled" on-change="ctrl.render()"></gf-form-switch>
+				<gf-form-switch class="gf-form" label-class="width-11"
+					label="Hover"
+					tooltip="Highlights row on hover (Requires Page Reload on toggle)"
+					checked="ctrl.panel.hoverEnabled" on-change="ctrl.render()"></gf-form-switch>
+			</div>
+		</div>
+
+	</div>
+
+</div>
+
+<div class="editor-row">
+	<div class="section gf-form-group">
+		<h5 class="section-heading">Theme Settings</h5>
+		<div class="gf-form">
+			<label class="gf-form-label width-8">Theme</label>
+			<div class="gf-form-select-wrapper max-width-15">
+				<select class="gf-form-input"
+					ng-model="ctrl.panel.datatableTheme"
+					ng-options="f.value as f.text disable when f.disabled for f in ctrl.panel.themes"
+					ng-change="ctrl.themeChanged()"></select>
+			</div>
+		</div>
+		<!--
+		<div ng-if="ctrl.panel.datatableTheme === 'basic_theme'">
+			<div class="gf-form-inline">
+				<gf-form-switch class="gf-form" label-class="width-12"
+					label="Cell Borders"
+					tooltip="Show cell borders"
+					checked="ctrl.panel.showCellBorders" on-change="ctrl.showCellBordersChanged()"></gf-form-switch>
+				<gf-form-switch class="gf-form" label-class="width-12"
+					label="Row Borders"
+					tooltip="Show row borders"
+					checked="ctrl.panel.showRowBorders" on-change="ctrl.render()"></gf-form-switch>
+				<gf-form-switch class="gf-form" label-class="width-12"
+					label="Order Column"
+					tooltip="Highlight the column that the table data is currently ordered on"
+					checked="ctrl.panel.orderColumnEnabled" on-change="ctrl.render()"></gf-form-switch>
+			</div>
+			<div class="gf-form-inline">
+				<gf-form-switch class="gf-form" label-class="width-12"
+					label="Compact Rows"
+					tooltip="Use compact rows"
+					checked="ctrl.panel.compactRowsEnabled" on-change="ctrl.render()"></gf-form-switch>
+				<gf-form-switch class="gf-form" label-class="width-12"
+					label="Striped Rows"
+					tooltip="Show stripes on rows"
+					checked="ctrl.panel.stripedRowsEnabled" on-change="ctrl.render()"></gf-form-switch>
+				<gf-form-switch class="gf-form" label-class="width-12"
+					label="Hover"
+					tooltip="Highlights row on hover"
+					checked="ctrl.panel.hoverEnabled" on-change="ctrl.render()"></gf-form-switch>
+			</div>
+		</div>
+	-->
+	</div>
+</div>

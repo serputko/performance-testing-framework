@@ -1,0 +1,43 @@
+{
+    "name": "datatables.net-buttons-zf",
+    "description": "Buttons for DataTables with styling for [Zurb Foundation](http://foundation.zurb.com/)",
+    "main": [
+        "js/buttons.foundation.js",
+        "css/buttons.foundation.css"
+    ],
+    "keywords": [
+        "buttons",
+        "excel",
+        "pdf",
+        "csv",
+        "column visibility",
+        "print",
+        "DataTables",
+        "jQuery",
+        "table",
+        "Foundation"
+    ],
+    "dependencies": {
+        "jquery": ">=1.7",
+        "datatables.net-zf": ">=1.10.9",
+        "datatables.net-buttons": ">=1.0.3"
+    },
+    "moduleType": [
+        "globals",
+        "amd",
+        "node"
+    ],
+    "ignore": [
+        "composer.json",
+        "datatables.json",
+        "package.json"
+    ],
+    "authors": [
+        {
+            "name": "SpryMedia Ltd",
+            "homepage": "https://datatables.net"
+        }
+    ],
+    "homepage": "https://datatables.net",
+    "license": "MIT"
+}

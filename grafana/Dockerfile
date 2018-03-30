@@ -5,6 +5,7 @@ RUN apt-get update && \
 
 COPY ./dashboards/ /dashboards/
 COPY ./datasources/ /datasources/
+COPY ./plugins/ /plugins
 
 COPY ./run1.sh /run1.sh
 

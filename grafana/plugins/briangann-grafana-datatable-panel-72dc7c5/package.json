@@ -1,0 +1,50 @@
+{
+  "name": "briangann-datatable-panel",
+  "private": true,
+  "version": "0.0.6",
+  "description": "Grafana Datatable Panel",
+  "main": "module.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/briangann/grafana-datatable-panel.git"
+  },
+  "author": "Brian Gann",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/briangann/grafana-datatable-panel/issues"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-module-resolver": "^2.7.1",
+    "babel-plugin-transform-es2015-for-of": "^6.23.0",
+    "babel-plugin-transform-es2015-modules-systemjs": "^6.24.1",
+    "babel-preset-es2015": "^6.24.1",
+    "browser-sync": "^2.23.6",
+    "del": "^2.2.2",
+    "grunt": "^0.4.5",
+    "grunt-babel": "^6.0.0",
+    "grunt-contrib-clean": "~0.6.0",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-copy": "~0.8.2",
+    "grunt-contrib-cssmin": "^1.0.2",
+    "grunt-contrib-jshint": "^1.1.0",
+    "grunt-contrib-uglify": "~0.11.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-css-selectors": "^1.3.0",
+    "grunt-execute": "~0.2.2",
+    "grunt-force-task": "^2.0.0",
+    "grunt-multi-dest": "^1.0.0",
+    "grunt-package-modules": "^0.1.3",
+    "grunt-systemjs-builder": "^0.2.5",
+    "grunt-ts": "^6.0.0-beta.17",
+    "load-grunt-tasks": "~3.2.0",
+    "lodash": "^4.17.5",
+    "minimatch": "3.0.2",
+    "typescript": "^2.7.2"
+  },
+  "dependencies": {},
+  "homepage": "https://github.com/briangann/grafana-datatable-panel"
+}

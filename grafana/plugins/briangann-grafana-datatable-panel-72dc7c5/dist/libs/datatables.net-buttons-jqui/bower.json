@@ -1,0 +1,43 @@
+{
+    "name": "datatables.net-buttons-jqui",
+    "description": "Buttons for DataTables with styling for [jQuery UI](http://jqueryui.com/)",
+    "main": [
+        "js/buttons.jqueryui.js",
+        "css/buttons.jqueryui.css"
+    ],
+    "keywords": [
+        "buttons",
+        "excel",
+        "pdf",
+        "csv",
+        "column visibility",
+        "print",
+        "DataTables",
+        "jQuery",
+        "table",
+        "jQuery UI"
+    ],
+    "dependencies": {
+        "jquery": ">=1.7",
+        "datatables.net-jqui": ">=1.10.9",
+        "datatables.net-buttons": ">=1.0.3"
+    },
+    "moduleType": [
+        "globals",
+        "amd",
+        "node"
+    ],
+    "ignore": [
+        "composer.json",
+        "datatables.json",
+        "package.json"
+    ],
+    "authors": [
+        {
+            "name": "SpryMedia Ltd",
+            "homepage": "https://datatables.net"
+        }
+    ],
+    "homepage": "https://datatables.net",
+    "license": "MIT"
+}

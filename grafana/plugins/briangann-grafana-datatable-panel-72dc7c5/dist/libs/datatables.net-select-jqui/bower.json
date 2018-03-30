@@ -1,0 +1,38 @@
+{
+    "name": "datatables.net-select-jqui",
+    "description": "Select for DataTables with styling for [jQuery UI](http://jqueryui.com/)",
+    "main": [
+        "css/select.jqueryui.css"
+    ],
+    "keywords": [
+        "select",
+        "selection",
+        "DataTables",
+        "jQuery",
+        "table",
+        "jQuery UI"
+    ],
+    "dependencies": {
+        "jquery": ">=1.7",
+        "datatables.net-jqui": ">=1.10.9",
+        "datatables.net-select": ">=1.0.1"
+    },
+    "moduleType": [
+        "globals",
+        "amd",
+        "node"
+    ],
+    "ignore": [
+        "composer.json",
+        "datatables.json",
+        "package.json"
+    ],
+    "authors": [
+        {
+            "name": "SpryMedia Ltd",
+            "homepage": "https://datatables.net"
+        }
+    ],
+    "homepage": "https://datatables.net",
+    "license": "MIT"
+}

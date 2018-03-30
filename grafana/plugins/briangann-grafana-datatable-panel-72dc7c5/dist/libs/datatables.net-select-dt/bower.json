@@ -1,0 +1,38 @@
+{
+    "name": "datatables.net-select-dt",
+    "description": "Select for DataTables ",
+    "main": [
+        "css/select.dataTables.css"
+    ],
+    "keywords": [
+        "select",
+        "selection",
+        "DataTables",
+        "jQuery",
+        "table",
+        "DataTables"
+    ],
+    "dependencies": {
+        "jquery": ">=1.7",
+        "datatables.net": ">=1.10.9",
+        "datatables.net-select": ">=1.0.1"
+    },
+    "moduleType": [
+        "globals",
+        "amd",
+        "node"
+    ],
+    "ignore": [
+        "composer.json",
+        "datatables.json",
+        "package.json"
+    ],
+    "authors": [
+        {
+            "name": "SpryMedia Ltd",
+            "homepage": "https://datatables.net"
+        }
+    ],
+    "homepage": "https://datatables.net",
+    "license": "MIT"
+}

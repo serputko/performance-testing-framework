@@ -1,0 +1,37 @@
+{
+    "name": "datatables.net-responsive-dt",
+    "description": "Responsive for DataTables ",
+    "main": [
+        "css/responsive.dataTables.css"
+    ],
+    "keywords": [
+        "responsive",
+        "DataTables",
+        "jQuery",
+        "table",
+        "DataTables"
+    ],
+    "dependencies": {
+        "jquery": ">=1.7",
+        "datatables.net": ">=1.10.9",
+        "datatables.net-responsive": ">=1.0.7"
+    },
+    "moduleType": [
+        "globals",
+        "amd",
+        "node"
+    ],
+    "ignore": [
+        "composer.json",
+        "datatables.json",
+        "package.json"
+    ],
+    "authors": [
+        {
+            "name": "SpryMedia Ltd",
+            "homepage": "https://datatables.net"
+        }
+    ],
+    "homepage": "https://datatables.net",
+    "license": "MIT"
+}

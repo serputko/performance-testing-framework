@@ -1,0 +1,56 @@
+{
+    "type": "panel",
+    "name": "Datatable Panel",
+    "id": "briangann-datatable-panel",
+    "info": {
+        "description": "Datatable panel for Grafana",
+        "author": {
+            "name": "Brian Gann (bkgann@gmail.com)",
+            "url": "https://github.com/briangann"
+        },
+        "keywords": ["table", "panel"],
+        "logos": {
+            "small": "img/nav-dt.png",
+            "large": "img/nav-dt.png"
+        },
+        "links": [{
+            "name": "Project site",
+            "url": "https://github.com/briangann/grafana-datatable-panel"
+        }, {
+            "name": "MIT License",
+            "url": "https://github.com/briangann/grafana-datatable-panel/blob/master/LICENSE"
+        }],
+        "screenshots": [{
+            "name": "Showcase Paging",
+            "path": "screenshots/datatable-default-paging.png"
+        }, {
+            "name": "Showcase Scrolling",
+            "path": "screenshots/datatable-scroll.png"
+        }, {
+            "name": "Showcase Compact Numbered",
+            "path": "screenshots/datatable-compact-numbered.png"
+        }, {
+            "name": "Options",
+            "path": "screenshots/datatable-options.png"
+        }, {
+            "name": "Datatable Options",
+            "path": "screenshots/datatable-dt-options.png"
+        }, {
+            "name": "Thresholding with Row Coloring",
+            "path": "screenshots/datatable-threshold-row.png"
+        }, {
+            "name": "Thresholding with Cell Coloring",
+            "path": "screenshots/datatable-threshold-cell.png"
+        }, {
+            "name": "Thresholding with Value Coloring",
+            "path": "screenshots/datatable-threshold-value.png"
+        }],
+        "version": "0.0.6",
+        "updated": "2018-02-27"
+    },
+
+    "dependencies": {
+        "grafanaVersion": "3.x.x",
+        "plugins": []
+    }
+}

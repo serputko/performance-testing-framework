@@ -21,6 +21,7 @@
 - [ ] How to add processes to monitor in telegraf
 - [ ] Add steps to change core # and RAM for linux VM on windows host
 - [ ] How to remove plugins from Jenkins(remove manually from jenkins and remove from plugins file)
+- [ ] How to make annotation on graph
 
 
 **Done:**

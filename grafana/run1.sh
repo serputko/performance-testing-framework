@@ -65,5 +65,7 @@ for dashboard in `ls -1 /dashboards/*.json`; do
   import_data "$dashboard" "$dashboard_json" "/dashboards/import"
 done
 
+mv /plugins/* /var/lib/grafana/plugins/
+
 print_header "Done!"
 wait $!
