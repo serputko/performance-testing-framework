@@ -1,3 +1,4 @@
 # Definitively text files 
 *.txt text eol=lf
 *.sh text eol=lf
+grafana/plugins/* linguist-vendored
