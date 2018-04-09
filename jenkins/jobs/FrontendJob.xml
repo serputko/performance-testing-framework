@@ -71,13 +71,13 @@
     <hudson.tasks.Shell>
       <command>graphite_network=$(docker inspect --format=&apos;{{.HostConfig.NetworkMode}}&apos; graphite)
 
-run_sitespeed=&quot;docker run --name sitespeed --volumes-from=jenkins --network=host --privileged=true --shm-size=1g --rm -v \&quot;/var/lib/sitespeed.io/\&quot;:/sitespeed.io \sitespeedio/sitespeed.io \
+run_sitespeed=&quot;docker run --name sitespeed --volumes-from=jenkins --network=host --privileged=true --shm-size=1g --rm -v \&quot;/tmp/sitespeed.io/\&quot;:/sitespeed.io \sitespeedio/sitespeed.io \
 --graphite.host localhost --graphite.port 2003 --graphite.httpPort 8080 --browsertime.browser $browser \--browsertime.iterations $run_number \
 $additional_args $URL&quot;
 
 #remove &apos;|| true&apos; when https://github.com/sitespeedio/sitespeed.io/issues/1897 will be resolved
 
-run_sitespeed_with_wpt_script=&quot;docker run --name sitespeed --volumes-from=jenkins --network=host --privileged=true --shm-size=1g --rm -v \&quot;/var/lib/sitespeed.io/\&quot;:/sitespeed.io \sitespeedio/sitespeed.io \
+run_sitespeed_with_wpt_script=&quot;docker run --name sitespeed --volumes-from=jenkins --network=host --privileged=true --shm-size=1g --rm -v \&quot;/tmp/sitespeed.io/\&quot;:/sitespeed.io \sitespeedio/sitespeed.io \
 --graphite.host localhost --graphite.port 2003 --graphite.httpPort 8080 --browsertime.browser $browser \--browsertime.iterations $run_number \
 $additional_args --webpagetest.script \&quot;$script\&quot; $URL || true&quot;
 

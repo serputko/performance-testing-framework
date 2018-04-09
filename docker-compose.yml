@@ -96,7 +96,7 @@ services:
       #environment:
       # - JENKINS_URL_CONFIG=http:\/\/127.0.0.1:8181\/
       volumes:
-        - /var/lib/sitespeed.io/:/var/lib/sitespeed.io/
+        - /tmp/sitespeed.io/:/var/lib/sitespeed.io/
         - docker-dind:/usr/local/bin/dind/
         - /var/run/docker.sock:/var/run/docker.sock
         - jenkins-home:/var/jenkins_home
