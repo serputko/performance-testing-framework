@@ -26,7 +26,7 @@ To run framework install docker: https://docs.docker.com/engine/installation/.
 
 You should be able to run ```docker run hello-world``` with no errors.
 
-For Windown share drives with docker: https://blogs.msdn.microsoft.com/stevelasker/2016/06/14/configuring-docker-for-windows-volumes/
+For Windows share drives with docker: https://blogs.msdn.microsoft.com/stevelasker/2016/06/14/configuring-docker-for-windows-volumes/
 
 ## Installing
 
