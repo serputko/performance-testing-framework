@@ -26,7 +26,10 @@ To run framework install docker: https://docs.docker.com/engine/installation/.
 
 You should be able to run ```docker run hello-world``` with no errors.
 
-**For Windows**: share drives with docker: https://blogs.msdn.microsoft.com/stevelasker/2016/06/14/configuring-docker-for-windows-volumes/
+**For Windows**:
+- share C:\ D:\ drives with docker: https://blogs.msdn.microsoft.com/stevelasker/2016/06/14/configuring-docker-for-windows-volumes/
+- starting from 18.0.3 docker version you need to set up windows user variable to handle linux VM path in docker-compose:
+start cmd as administrator and execute ```setx COMPOSE_CONVERT_WINDOWS_PATHS "1" /M``` or simply install older version of docker https://download.docker.com/win/stable/15139/Docker%20for%20Windows%20Installer.exe
 
 ## Installing
 
