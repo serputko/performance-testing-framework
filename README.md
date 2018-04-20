@@ -60,6 +60,8 @@ To run jmeter demo script: **Open BackendJob -> Build with Parameters -> Set bui
 This job will start jmeter docker container and execute demo_scenario.jmx jmeter scenario
 ![](https://github.com/serputko/performance-testing-framework/blob/master/docs/img/jmeter_demo_scenario.png)
 
+To open demo_scenario in local instance of Jmeter please install Plugin Manager https://jmeter-plugins.org/wiki/PluginsManager/. It will automatically install all required plugins.
+
 ### Jmeter test deliverables:
 - **jmeter log file**
 - **raw test results in report.log csv file**
