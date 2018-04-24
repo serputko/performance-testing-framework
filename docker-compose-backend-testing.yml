@@ -1,0 +1,94 @@
+version: '3'
+services:
+   grafana:
+     container_name: grafana
+     links:
+       - influxdb:influxdb
+     image: grafana
+     build: ./grafana
+     ports:
+       - "8857:3000"
+     environment:
+       - GF_SECURITY_ADMIN_PASSWORD=admin
+       - GF_SECURITY_ADMIN_USER=admin
+       - GF_AUTH_ANONYMOUS_ENABLED=true
+       - GF_USERS_ALLOW_SIGN_UP=false
+       - GF_USERS_ALLOW_ORG_CREATE=false
+     volumes:
+       - grafana-home:/var/lib/grafana/
+     restart: always 
+   influxdb:
+     image: influxdb
+     build: ./influxdb
+     container_name: influxdb
+     volumes:
+       - influxdb:/var/lib/influxdb
+     ports:
+       - "8653:8086"
+     expose:
+        - 8653
+     restart: always
+   telegraf:
+     image: telegraf
+     build: ./telegraf
+     hostname: telegraf-loadgenerator
+     container_name: telegraf
+     #network_mode: "container:influxdb"
+     volumes:
+       - /var/run/docker.sock:/var/run/docker.sock
+       # - "c:/:/rootfs/proc:ro"
+   #environment:
+       # - SYS_PATH_PREFIX=/rootfs
+     restart: always
+   docker-dind:
+      image: docker:dind
+      volumes:
+        - docker-dind:/usr/local/bin
+        - /var/run/docker.sock:/var/run/docker.sock
+      container_name: docker-dind
+      privileged: true
+      restart: always
+   jenkins:
+      image: jenkins
+      build: ./jenkins
+      depends_on:
+       - docker-dind
+      container_name: jenkins
+      ports:
+       - "8181:8080"
+       - "50000:50000"
+      # JENKINS_URL_CONFIG variable is used to set jenkins_url variable in jenkins global configuration.
+      # This url will be used to create links to jenkins builds in grafana dashboards, default is http://127.0.0.1:8181/
+      # Slash '/' should be escaped with '\' 
+      #environment:
+      # - JENKINS_URL_CONFIG=http:\/\/127.0.0.1:8181\/
+      volumes:
+        - docker-dind:/usr/local/bin/dind/
+        - /var/run/docker.sock:/var/run/docker.sock
+        - jenkins-home:/var/jenkins_home
+        # if you want to run local tests uncomment line below and replace <jmeter-scenarios> on dir to your tests 
+        #- <path to local directory with tests>:/var/lib/jmeter-scenarios/
+        # you need to allow docker to access host drives
+        # https://blogs.msdn.microsoft.com/stevelasker/2016/06/14/configuring-docker-for-windows-volumes/
+        # currently tests will be fetched from ./jmeter/scenarios/ directory
+        - ./jmeter/scenarios/:/var/lib/jmeter-scenarios/
+      restart: always
+   portainer:
+      image: portainer/portainer
+      container_name: portainer
+      ports:
+       - "9000:9000"
+      volumes:
+        - /var/run/docker.sock:/var/run/docker.sock
+      restart: always
+   jmeter:
+     container_name: jmeter
+     build: ./jmeter
+     image: jmeter
+     entrypoint:
+       - cat
+volumes:
+    grafana-home:
+    docker-dind:
+    jenkins-home:
+    influxdb:
