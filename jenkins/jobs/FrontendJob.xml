@@ -51,12 +51,22 @@
           <description>execute webpagetest script</description>
           <defaultValue>true</defaultValue>
         </hudson.model.BooleanParameterDefinition>
-        <hudson.model.StringParameterDefinition>
+        <alex.jenkins.plugins.FileSystemListParameterDefinition plugin="filesystem-list-parameter-plugin@0.0.3">
           <name>script</name>
-          <description></description>
-          <defaultValue>setEventName\tOpen main page\nnavigate\thttp://www.webpagetest.org/\nsetEventName\tOpen History\nsetValue\tname=url\tfoo\nexecAndWait\tdocument.querySelector(\&quot;[title=&apos;Test History&apos;]\&quot;).click();</defaultValue>
-          <trim>true</trim>
-        </hudson.model.StringParameterDefinition>
+          <description>Select script to run</description>
+          <path>/var/lib/wpt-scripts/</path>
+          <selectedType>FILE</selectedType>
+          <sortByLastModified>false</sortByLastModified>
+          <sortReverseOrder>false</sortReverseOrder>
+          <selectedEnumType>FILE</selectedEnumType>
+          <regexIncludePattern>.+\.txt</regexIncludePattern>
+          <regexExcludePattern></regexExcludePattern>
+          <formatter>
+            <a class="string-builder"></a>
+            <l>en</l>
+            <zero>0</zero>
+          </formatter>
+        </alex.jenkins.plugins.FileSystemListParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
   </properties>
@@ -79,7 +89,7 @@ $additional_args $URL&quot;
 
 run_sitespeed_with_wpt_script=&quot;docker run --name sitespeed --volumes-from=jenkins --network=host --privileged=true --shm-size=1g --rm -v \&quot;/tmp/sitespeed.io/\&quot;:/sitespeed.io \sitespeedio/sitespeed.io \
 --graphite.host localhost --graphite.port 2003 --graphite.httpPort 8080 --browsertime.browser $browser \--browsertime.iterations $run_number \
-$additional_args --webpagetest.script \&quot;$script\&quot; $URL || true&quot;
+$additional_args --webpagetest.file /var/lib/wpt-scripts/$script $URL || true&quot;
 
 if ! $execute_script
 then

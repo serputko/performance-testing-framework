@@ -1,0 +1,5 @@
+setEventName	Open main page
+navigate	http://www.webpagetest.org/
+setEventName	Open History
+setValue	name=url	foo
+execAndWait	document.querySelector("[title='Test History']").click();
