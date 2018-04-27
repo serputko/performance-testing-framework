@@ -47,6 +47,9 @@ if ! grep "<jenkinsUrl>$JENKINS_URL_CONFIG</jenkinsUrl>" $LOCATION_CONFIG; then
 	else echo "jenkins_url is $JENKINS_URL_CONFIG";
 fi
 
+echo "Move security.groovy to init.groovy.d/"
+cp /usr/share/jenkins/ref/init.groovy.d/security.groovy /var/jenkins_home/init.groovy.d/security.groovy
+
 echo "Restarting Jenkins"
 
 curl -X POST "$JENKINS_API/restart"
