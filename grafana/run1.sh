@@ -3,8 +3,8 @@ echo 'Starting Grafana...'
 /run.sh "$@" &
 
 GF_API=${GF_API:-http://grafana:3000/api}
-GF_USER=${GF_USER:-admin}
-GF_PASSWORD=${GF_PASSWORD:-admin}
+GF_USER=${GF_SECURITY_ADMIN_USER:-admin}
+GF_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD:-admin}
 
 print_header() {
   echo " "

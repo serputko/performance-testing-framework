@@ -10,3 +10,5 @@ postbuild-task
 parameter-separator
 log-parser
 compress-buildlog
+groovy-postbuild
+antisamy-markup-formatter

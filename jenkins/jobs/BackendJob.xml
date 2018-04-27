@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.1' encoding='UTF-8'?>
 <project>
   <actions/>
   <description></description>
@@ -13,7 +13,7 @@
         <artifactNumToKeep>-1</artifactNumToKeep>
       </strategy>
     </jenkins.model.BuildDiscarderProperty>
-    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.27">
+    <com.sonyericsson.rebuild.RebuildSettings plugin="rebuild@1.28">
       <autoRebuild>false</autoRebuild>
       <rebuildDisabled>false</rebuildDisabled>
     </com.sonyericsson.rebuild.RebuildSettings>
@@ -37,7 +37,7 @@
           <defaultValue>600</defaultValue>
           <trim>false</trim>
         </hudson.model.StringParameterDefinition>
-        <alex.jenkins.plugins.FileSystemListParameterDefinition plugin="filesystem-list-parameter-plugin@0.0.3">
+        <alex.jenkins.plugins.FileSystemListParameterDefinition plugin="filesystem-list-parameter-plugin@0.0.4">
           <name>SCENARIO</name>
           <description>Select scenario to run</description>
           <path>/var/lib/jmeter-scenarios/</path>
@@ -47,11 +47,6 @@
           <selectedEnumType>FILE</selectedEnumType>
           <regexIncludePattern>.+\.jmx</regexIncludePattern>
           <regexExcludePattern></regexExcludePattern>
-          <formatter>
-            <a class="string-builder"></a>
-            <l>en</l>
-            <zero>0</zero>
-          </formatter>
         </alex.jenkins.plugins.FileSystemListParameterDefinition>
       </parameterDefinitions>
     </hudson.model.ParametersDefinitionProperty>
@@ -65,13 +60,13 @@
   <concurrentBuild>false</concurrentBuild>
   <builders>
     <hudson.tasks.Shell>
-      <command>check_telegraf=$(docker container ls -a| grep telegraf | awk '{ print $8 }')
-if [ "$check_telegraf" != "Up" ];
+      <command>check_telegraf=$(docker container ls -a| grep telegraf | awk &apos;{ print $8 }&apos;)
+if [ &quot;$check_telegraf&quot; != &quot;Up&quot; ];
 then
-	echo "Starting Telegraf container"
+	echo &quot;Starting Telegraf container&quot;
 	docker container start telegraf
 else 
-	echo "Telegraf container is already running"
+	echo &quot;Telegraf container is already running&quot;
 fi
 if docker container ls -a| grep jmeter;
 then
@@ -114,7 +109,7 @@ docker run --name jmeter --net=host --rm --volumes-from=jenkins -e SCENARIO=$WOR
         </hudson.plugins.postbuildtask.TaskProperties>
       </tasks>
     </hudson.plugins.postbuildtask.PostbuildTask>
-    <htmlpublisher.HtmlPublisher plugin="htmlpublisher@1.14">
+    <htmlpublisher.HtmlPublisher plugin="htmlpublisher@1.16">
       <reportTargets>
         <htmlpublisher.HtmlPublisherTarget>
           <reportName>Load Test Report</reportName>
@@ -128,6 +123,42 @@ docker run --name jmeter --net=host --rm --volumes-from=jenkins -e SCENARIO=$WOR
         </htmlpublisher.HtmlPublisherTarget>
       </reportTargets>
     </htmlpublisher.HtmlPublisher>
+    <org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder plugin="groovy-postbuild@2.4">
+      <script plugin="script-security@1.44">
+        <script>import hudson.model.*
+
+//get current build
+def build = Thread.currentThread().executable
+
+def grafana_url = System.getenv(&quot;JENKINS_GRAFANA_URL&quot;)
+
+if(!grafana_url){
+println &apos;JENKINS_GRAFANA_URL is not specified&apos;
+grafana_url = &quot;127.0.0.1:8857&quot;
+}
+
+// grafana url for aggregate dashboard - replace time stamp with %s
+def perfResult = &quot;http://%s/dashboard/db/load-test-monitoring-with-docker-containers-monitoring?from=%s&amp;to=%s&quot;
+
+// get build start and end time
+def start = build.getStartTimeInMillis();
+def end = start + build.getExecutor().getElapsedTime();
+
+// replace time
+perfResult = String.format(perfResult, grafana_url, start, end);
+
+//build the string to be added as description.
+def link = &quot;&lt;a href=&apos;%s&apos;&gt;%s&lt;/a&gt;&lt;br/&gt;&quot;;
+def sb = new StringBuilder();
+sb.append(String.format(link, perfResult, &quot;Grafana Performance Result&quot;))
+
+// set build description
+build.setDescription(sb.toString());</script>
+        <sandbox>false</sandbox>
+      </script>
+      <behavior>1</behavior>
+      <runForMatrixParent>false</runForMatrixParent>
+    </org.jvnet.hudson.plugins.groovypostbuild.GroovyPostbuildRecorder>
   </publishers>
   <buildWrappers/>
 </project>

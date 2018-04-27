@@ -50,6 +50,9 @@ fi
 echo "Move security.groovy to init.groovy.d/"
 cp /usr/share/jenkins/ref/init.groovy.d/security.groovy /var/jenkins_home/init.groovy.d/security.groovy
 
+echo "configure-markup-formatter.groovy to init.groovy.d/"
+cp /usr/share/jenkins/ref/init.groovy.d/configure-markup-formatter.groovy /var/jenkins_home/init.groovy.d/configure-markup-formatter.groovy
+
 echo "Restarting Jenkins"
 
 curl -X POST "$JENKINS_API/restart"
