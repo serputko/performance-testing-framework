@@ -60,8 +60,10 @@ services:
       # JENKINS_URL_CONFIG variable is used to set jenkins_url variable in jenkins global configuration.
       # This url will be used to create links to jenkins builds in grafana dashboards, default is http://127.0.0.1:8181/
       # Slash '/' should be escaped with '\' 
-      #environment:
+      environment:
       # - JENKINS_URL_CONFIG=http:\/\/127.0.0.1:8181\/
+      - JENKINS_ADMIN_LOGIN=admin
+      - JENKINS_ADMIN_PASS=admin
       volumes:
         - docker-dind:/usr/local/bin/dind/
         - /var/run/docker.sock:/var/run/docker.sock
