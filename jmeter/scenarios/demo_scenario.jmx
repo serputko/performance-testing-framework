@@ -83,21 +83,21 @@ without actual network activity. This helps debugging tests.</stringProp>
 String assertion_message = &quot;&quot;;
 //set response message and send it to influxdb
 //write detailed error responses to jmeter log
-if(!SampleResult.isSuccessful()) {
-	assertions = SampleResult.getAssertionResults();
+if(!sampleResult.isSuccessful()) {
+	assertions = sampleResult.getAssertionResults();
 	if(assertions.length&gt;0){
 		for(int i=0; i&lt;assertions.length; i++){
 			assertion_message = &quot;Failed assertion #&quot; + String.valueOf(i+1) + &quot; message: \&quot;&quot; + assertions[i].getFailureMessage()+&quot;\&quot; | &quot;;
 			log.info(&quot;Failed assertion #&quot; + String.valueOf(i+1) + &quot;\n message: \&quot;&quot; + assertions[i].getFailureMessage()+&quot;\n&quot;);
 			response_message=response_message+assertion_message;
 		}
-		SampleResult.setResponseMessage(&quot;Sample failed; Response message is: &quot;+SampleResult.getResponseMessage()+&quot; | &quot;+response_message);
+		sampleResult.setResponseMessage(&quot;Sample failed; Response message is: &quot;+sampleResult.getResponseMessage()+&quot; | &quot;+response_message);
 	} else{
-		response_message=&quot;Sample failed; Response message is: &quot;+SampleResult.getResponseMessage();
-		SampleResult.setResponseMessage(response_message);
+		response_message=&quot;Sample failed; Response message is: &quot;+sampleResult.getResponseMessage();
+		sampleResult.setResponseMessage(response_message);
 	}
 	print(&quot;&lt;=========================================================================================================&gt;\n&quot;+
-	SampleResult.toString()+&quot; FAILED REQUEST DETAILS\n&quot;+
+	sampleResult.toString()+&quot; FAILED REQUEST DETAILS\n&quot;+
 	&quot;&lt;=========================================================================================================&gt;\n&quot;+
 	&quot;ASSERTION RESULTS\n&quot; +
 	&quot;&lt;=========================================================================================================&gt;\n&quot;+
@@ -106,18 +106,18 @@ if(!SampleResult.isSuccessful()) {
 	&quot;RESPONSE DATA\n&quot; +
 	&quot;&lt;=========================================================================================================&gt;\n&quot;+
 	&quot;Response message:\n&quot; +
-	SampleResult.getResponseMessage()+&quot;\n\n&quot;+
+	sampleResult.getResponseMessage()+&quot;\n\n&quot;+
 	&quot;Response data:\n&quot;+
-	SampleResult.getResponseDataAsString()+&quot;\n&quot;+
+	sampleResult.getResponseDataAsString()+&quot;\n&quot;+
 	&quot;&lt;=========================================================================================================&gt;\n&quot;+
 	&quot;REQUEST DATA\n&quot;+
 	&quot;&lt;=========================================================================================================&gt;\n&quot;+
 	&quot;URL\n&quot;+
-	SampleResult.getUrlAsString()+&quot;\n&quot;+
+	sampleResult.getUrlAsString()+&quot;\n&quot;+
 	&quot;Request headers\n&quot;+
-	SampleResult.getRequestHeaders()+&quot;\n&quot;+
+	sampleResult.getRequestHeaders()+&quot;\n&quot;+
 	&quot;Sampler data\n&quot;+
-	SampleResult.getSamplerData()+&quot;\n&quot;+
+	sampleResult.getSamplerData()+&quot;\n&quot;+
 	&quot;&lt;=========================================================================================================&gt;\n&quot;+
 	&quot;&lt;=========================================================================================================&gt;\n\n\n&quot;);
 }
