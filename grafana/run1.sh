@@ -67,5 +67,9 @@ done
 
 mv /plugins/* /var/lib/grafana/plugins/
 
+print_header "Setting default dashboard"
+
+curl -s -S -H 'Content-Type:application/json' -u $GF_USER:$GF_PASSWORD -X PUT -d '{"theme": "","homeDashboardId":2,"timezone":"utc"}' ${GF_API}/org/preferences
+
 print_header "Done!"
 wait $!
