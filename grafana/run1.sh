@@ -37,7 +37,7 @@ import_data() {
 
 # $1 = filename
 wrap_dashboard_json() {
-  cat $1 | jq '.id = null | { dashboard:., inputs:[.__inputs[] | .value = .label | del(.label)], overwrite: true }'
+  cat $1 | jq '.id = null | { dashboard:., inputs:[.__inputs[] | .value = .label | del(.label)], overwrite: true }' &> /dev/null
 }
 
 # -----------
