@@ -1,13 +1,14 @@
 #!/bin/sh
-bash -x /usr/local/bin/jenkins.sh &
 
-JENKINS_USER="admin";
-JENKINS_PASSWORD="admin";
+JENKINS_USER=${JENKINS_ADMIN_LOGIN:-admin};
+JENKINS_PASSWORD=${JENKINS_ADMIN_PASSWORD:-admin};
 JENKINS_HOST="localhost";
 JENKINS_PORT="8080";
 JENKINS_API="http://$JENKINS_USER:$JENKINS_PASSWORD@$JENKINS_HOST:$JENKINS_PORT";
 LOCATION_CONFIG="/var/jenkins_home/jenkins.model.JenkinsLocationConfiguration.xml";
 JENKINS_URL_CONFIG=${JENKINS_URL_CONFIG:-"http:\\/\\/127.0.0.1:8181\\/"};
+
+bash -x /usr/local/bin/jenkins.sh &
 
 echo "Waiting Jenkins to start"
 
