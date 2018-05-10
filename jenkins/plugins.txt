@@ -1,4 +1,3 @@
-display-console-output
 greenballs
 htmlpublisher
 show-build-parameters
@@ -12,3 +11,4 @@ log-parser
 compress-buildlog
 groovy-postbuild
 antisamy-markup-formatter
+ssh-slaves
