@@ -93,8 +93,45 @@ services:
      image: jmeter
      entrypoint:
        - cat
+   elasticsearch:
+    image: elasticsearch:5.1.2
+    container_name: elasticsearch
+    environment:
+      - ES_JAVA_OPTS=-Xms1g -Xmx1g
+    #ports:
+    #  - 9200:9200
+    #  - 9300:9300
+    volumes:
+      - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+      - "es-data:/usr/share/elasticsearch/data"
+  # indexer
+   logstash:
+    image: logstash:5.1.2
+    container_name: logstash
+    command: logstash -f /config/
+    environment:
+      - JAVA_OPTS=-Xms1g -Xmx1g
+    volumes:
+      - ./logstash/config:/config
+    #ports:
+    #  - 5044:5044
+    depends_on:
+      - elasticsearch
+   filebeat:
+    image: filebeat
+    build: ./filebeat
+    container_name: filebeat
+    depends_on:
+       - logstash
+    volumes:
+      - jenkins-home:/var/jenkins_home/
+    #volumes:
+    #  - influxdb:/var/lib/influxdb
+    restart: always
 volumes:
     grafana-home:
     docker-dind:
     jenkins-home:
     influxdb:
+    es-data:
+

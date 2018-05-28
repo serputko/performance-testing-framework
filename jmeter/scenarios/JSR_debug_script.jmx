@@ -4,6 +4,7 @@
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
       <boolProp name="TestPlan.functional_mode">false</boolProp>
+      <boolProp name="TestPlan.tearDown_on_shutdown">true</boolProp>
       <boolProp name="TestPlan.serialize_threadgroups">false</boolProp>
       <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
         <collectionProp name="Arguments.arguments"/>
@@ -15,97 +16,139 @@
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
           <boolProp name="LoopController.continue_forever">false</boolProp>
-          <intProp name="LoopController.loops">-1</intProp>
+          <stringProp name="LoopController.loops">20</stringProp>
         </elementProp>
-        <stringProp name="ThreadGroup.num_threads">${__P(USERS, 60)}</stringProp>
-        <stringProp name="ThreadGroup.ramp_time">${__P(RAMPUP, 60)}</stringProp>
-        <longProp name="ThreadGroup.start_time">1515063650000</longProp>
-        <longProp name="ThreadGroup.end_time">1515063650000</longProp>
-        <boolProp name="ThreadGroup.scheduler">true</boolProp>
-        <stringProp name="ThreadGroup.duration">${__P(DURATION, 60)}</stringProp>
+        <stringProp name="ThreadGroup.num_threads">10</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">1</stringProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
+        <stringProp name="ThreadGroup.duration"></stringProp>
         <stringProp name="ThreadGroup.delay"></stringProp>
       </ThreadGroup>
       <hashTree>
-        <LoopController guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
-          <boolProp name="LoopController.continue_forever">true</boolProp>
-          <stringProp name="LoopController.loops">1</stringProp>
-        </LoopController>
-        <hashTree>
-          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="jp@gc - Dummy Sampler failed" enabled="true">
-            <boolProp name="WAITING">true</boolProp>
-            <boolProp name="SUCCESFULL">true</boolProp>
-            <stringProp name="RESPONSE_CODE">500</stringProp>
-            <stringProp name="RESPONSE_MESSAGE">Service unavailable</stringProp>
-            <stringProp name="REQUEST_DATA">{
-    &quot;code&quot;: &quot;1234567&quot;
-}</stringProp>
-            <stringProp name="RESPONSE_DATA">&lt;div class=&quot;errorbox&quot;&gt;
-   &lt;h2&gt;Login error:&lt;/h2&gt;
-   Incorrect password or confirmation code entered. Please try again.
- &lt;/div&gt;</stringProp>
-            <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
-            <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
-            <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
-          </kg.apc.jmeter.samplers.DummySampler>
-          <hashTree>
-            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
-              <collectionProp name="Asserion.test_strings">
-                <stringProp name="-1867169789">success</stringProp>
-              </collectionProp>
-              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-              <boolProp name="Assertion.assume_success">false</boolProp>
-              <intProp name="Assertion.test_type">16</intProp>
-              <stringProp name="Assertion.custom_message"></stringProp>
-            </ResponseAssertion>
-            <hashTree/>
-          </hashTree>
-          <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Transaction Controller" enabled="true">
-            <boolProp name="TransactionController.includeTimers">false</boolProp>
-            <boolProp name="TransactionController.parent">true</boolProp>
-          </TransactionController>
-          <hashTree>
-            <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="jp@gc - Dummy Sampler" enabled="true">
-              <boolProp name="WAITING">true</boolProp>
-              <boolProp name="SUCCESFULL">false</boolProp>
-              <stringProp name="RESPONSE_CODE">200</stringProp>
-              <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
-              <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
-without actual network activity. This helps debugging tests.</stringProp>
-              <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
-without actual network activity. This helps debugging tests.</stringProp>
-              <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
-              <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
-              <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
-            </kg.apc.jmeter.samplers.DummySampler>
-            <hashTree/>
-          </hashTree>
-        </hashTree>
-        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="jp@gc - Dummy Sampler failed" enabled="true">
+        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Just Sample" enabled="true">
           <boolProp name="WAITING">true</boolProp>
-          <boolProp name="SUCCESFULL">true</boolProp>
-          <stringProp name="RESPONSE_CODE">500</stringProp>
-          <stringProp name="RESPONSE_MESSAGE">Service unavailable</stringProp>
-          <stringProp name="REQUEST_DATA">{
-    &quot;code&quot;: &quot;1234567&quot;
-}</stringProp>
-          <stringProp name="RESPONSE_DATA">&lt;div class=&quot;errorbox&quot;&gt;
-   &lt;h2&gt;Login error:&lt;/h2&gt;
-   Incorrect password or confirmation code entered. Please try again.
- &lt;/div&gt;</stringProp>
+          <boolProp name="SUCCESFULL">false</boolProp>
+          <stringProp name="RESPONSE_CODE">200</stringProp>
+          <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+          <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+          <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
           <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
           <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
           <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
         </kg.apc.jmeter.samplers.DummySampler>
         <hashTree>
+          <DebugPostProcessor guiclass="TestBeanGUI" testclass="DebugPostProcessor" testname="Debug PostProcessor" enabled="true">
+            <boolProp name="displayJMeterProperties">false</boolProp>
+            <boolProp name="displayJMeterVariables">true</boolProp>
+            <boolProp name="displaySamplerProperties">true</boolProp>
+            <boolProp name="displaySystemProperties">false</boolProp>
+          </DebugPostProcessor>
+          <hashTree/>
           <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="-1867169789">success</stringProp>
-            </collectionProp>
+            <collectionProp name="Asserion.test_strings"/>
+            <stringProp name="Assertion.custom_message"></stringProp>
             <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
             <boolProp name="Assertion.assume_success">false</boolProp>
             <intProp name="Assertion.test_type">16</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
           </ResponseAssertion>
+          <hashTree/>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers"/>
+          </HeaderManager>
+          <hashTree/>
+          <ConstantTimer guiclass="ConstantTimerGui" testclass="ConstantTimer" testname="Constant Timer" enabled="true">
+            <stringProp name="ConstantTimer.delay">300</stringProp>
+          </ConstantTimer>
+          <hashTree/>
+        </hashTree>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once only controller" enabled="true"/>
+        <hashTree>
+          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Sample 1 in once only controller" enabled="true">
+            <boolProp name="WAITING">true</boolProp>
+            <boolProp name="SUCCESFULL">false</boolProp>
+            <stringProp name="RESPONSE_CODE">200</stringProp>
+            <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+            <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+            <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+            <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
+            <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
+            <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
+          </kg.apc.jmeter.samplers.DummySampler>
+          <hashTree/>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Transaction Controller parent" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">true</boolProp>
+        </TransactionController>
+        <hashTree>
+          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Sample 1 in transaction controller parent" enabled="true">
+            <boolProp name="WAITING">true</boolProp>
+            <boolProp name="SUCCESFULL">false</boolProp>
+            <stringProp name="RESPONSE_CODE">200</stringProp>
+            <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+            <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+            <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+            <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
+            <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
+            <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
+          </kg.apc.jmeter.samplers.DummySampler>
+          <hashTree/>
+          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Sample 2 in transaction controller parent" enabled="true">
+            <boolProp name="WAITING">true</boolProp>
+            <boolProp name="SUCCESFULL">false</boolProp>
+            <stringProp name="RESPONSE_CODE">200</stringProp>
+            <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+            <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+            <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+            <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
+            <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
+            <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
+          </kg.apc.jmeter.samplers.DummySampler>
+          <hashTree/>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Transaction Controller no parent" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">false</boolProp>
+        </TransactionController>
+        <hashTree>
+          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Sample 1 in transaction controller no parent" enabled="true">
+            <boolProp name="WAITING">true</boolProp>
+            <boolProp name="SUCCESFULL">false</boolProp>
+            <stringProp name="RESPONSE_CODE">200</stringProp>
+            <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+            <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+            <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+            <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
+            <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
+            <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
+          </kg.apc.jmeter.samplers.DummySampler>
+          <hashTree/>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Simple Controller" enabled="true"/>
+        <hashTree>
+          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="Sample in simple controller" enabled="true">
+            <boolProp name="WAITING">true</boolProp>
+            <boolProp name="SUCCESFULL">false</boolProp>
+            <stringProp name="RESPONSE_CODE">200</stringProp>
+            <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+            <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+            <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+            <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
+            <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
+            <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
+          </kg.apc.jmeter.samplers.DummySampler>
           <hashTree/>
         </hashTree>
       </hashTree>
@@ -195,12 +238,13 @@ def generateResponseTrace(SampleResult sample) {
 */
 def generateAssertionTrace(AssertionResult[] assertions) {
 	def assertionLogMessage = &quot;&quot;;
+	
 	assertionLogMessage = &quot;Assertion results:\n&quot; +
 	&quot;Number of failed assertions: &quot;+assertions.length+&quot;\n&quot;+assertionLogMessage;
 	if(assertions.length&gt;0){
 		for(int j=0; j&lt;assertions.length; j++){
-			assertionLogMessage = assertionLogMessage + assertions[j].getName() + &quot; Failed; \n&quot; +
-			&quot;Failure Message: &quot; + assertions[j].getFailureMessage()+&quot;;\n&quot;;
+			assertionLogMessage = assertionLogMessage + assertions[j].getName() + &quot; Failed; \n&quot; + 
+			&quot;Failure Message: &quot; + assertions[j].getFailureMessage()+&quot;;\n&quot;
 		}
 	}
 	return assertionLogMessage
@@ -208,116 +252,14 @@ def generateAssertionTrace(AssertionResult[] assertions) {
 
 def postTraceToLog(SampleResult sample, AssertionResult[] assertions) {
 	print(generateResponseTrace(sample)+&quot;\n&quot;+generateAssertionTrace(assertions));
-	}</stringProp>
+	}
+
+
+</stringProp>
         <stringProp name="scriptLanguage">groovy</stringProp>
       </JSR223Listener>
       <hashTree/>
-      <JSR223Listener guiclass="TestBeanGUI" testclass="JSR223Listener" testname="JSR223 Listener" enabled="false">
-        <stringProp name="cacheKey">true</stringProp>
-        <stringProp name="filename"></stringProp>
-        <stringProp name="parameters"></stringProp>
-        <stringProp name="script">import org.apache.jmeter.samplers.SampleResult;
-import org.apache.jmeter.assertions.AssertionResult;
-
-/*
-set response message and send it to influxdb
-write detailed error responses to jmeter log
-*/ 
-
-def transactionController = sampler.getThreadContext().getPreviousResult().getParent();
-
-/*
-	Check if previous failed sampler has parent and parent does not have sampler data. That means that parent is transaction controller.
-*/
-if(!sampleResult.isSuccessful()){
-	if(transactionController &amp;&amp; !transactionController.getSamplerData()){
-		handleParentTransactionController(transactionController);
-	}else if(sampleResult.getSamplerData()){
-		handleSampler(transactionController);
-	}	
-}
-
-/*
-	Change responseMessage for all sub samplers of Transaction controller and set them to Transaction controller response message
-	Post all sub samplers trace to log
-*/
-def handleParentTransactionController(SampleResult transactionSampleResult) {
-	def transactionResponseMessage = &quot;\n&quot;+transactionSampleResult.getResponseMessage()+&quot;\n&quot;;
-	def subResults = transactionSampleResult.getSubResults();
-	def assertions;
-	if(subResults){
-		for (int i=0; i&lt;subResults.length; i++){
-			if(!subResults[i].isSuccessful()){
-				assertions = subResults[i].getAssertionResults();
-				updateSampleResponseMessage(subResults[i], assertions.length);
-				transactionResponseMessage = transactionResponseMessage+subResults[i].getSampleLabel()+&quot;; &quot;+subResults[i].getResponseMessage();
-				transactionSampleResult.setResponseMessage(transactionResponseMessage);
-				postTraceToLog(subResults[i], assertions);
-			}
-		}
-	}
-}
-
-/*
-	Change responseMessage for sampler and post trace to log
-*/
-def handleSampler(SampleResult transactionSampleResult) {
-	def assertions = sampleResult.getAssertionResults();
-		updateSampleResponseMessage(sampleResult, assertions.length);
-		postTraceToLog(sampleResult, assertions);
-}
-
-def updateSampleResponseMessage(SampleResult sampleResult, int numberOfFailedAssertions) {
-	def responseMessage = sampleResult.getResponseMessage();
-	sampleResult.setResponseMessage(&quot;Response message: &quot;+sampleResult.getResponseMessage()+&quot;; Status code: &quot;+sampleResult.getResponseCode()+&quot;; Number of failed assertions: &quot;+numberOfFailedAssertions+&quot;\n&quot;);
-}
-
-def generateResponseTrace(SampleResult sample) {
-	def sampleResult = sample;
-	def prefix = &quot;--- &quot;;
-	def responseLogMessage = &quot;\n\n&quot;+ prefix +
-		&quot;Sample Failed: &quot;+sampleResult.toString()+&quot;\n&quot;+ prefix +
-		&quot;Started at: &quot;+new Date(sampleResult.getStartTime())+&quot;\n&quot;+ prefix +
-		&quot;Finished at: &quot;+new Date(sampleResult.getEndTime())+&quot;\n\n&quot;+ prefix +
-		&quot;Request:\n&quot;+ prefix +
-		sampleResult.getSamplerData()+&quot;\n&quot;+ prefix +
-		&quot;REQUEST DATA\n&quot;+ prefix +
-		&quot;URL: &quot;+ prefix +
-		sampleResult.getUrlAsString()+&quot;\n&quot;+ prefix +
-		&quot;Request headers: \n&quot;+ prefix +
-		sampleResult.getRequestHeaders()+&quot;\n&quot;+ prefix +
-		&quot;Response: \n&quot; + prefix +
-		sampleResult.getResponseMessage()+&quot;\n&quot;+ prefix +
-		&quot;Response code:&quot; + sampleResult.getResponseCode()+&quot;\n\n&quot;+ prefix +
-		&quot;Response data:\n&quot;+ prefix +
-		sampleResult.getResponseDataAsString()+&quot;\n&quot;+ prefix;
-	return responseLogMessage;
-}
-
-/*
-	Generate log trace for all failed assertions of sampler
-*/
-def generateAssertionTrace(AssertionResult[] assertions) {
-	def assertionLogMessage = &quot;&quot;;
-	def prefix = &quot;--- &quot;;
-	assertionLogMessage = prefix+&quot;Assertion results:\n&quot; + prefix +
-	&quot;Number of failed assertions: &quot;+assertions.length+&quot;\n&quot;+assertionLogMessage;
-	if(assertions.length&gt;0){
-		for(int j=0; j&lt;assertions.length; j++){
-			assertionLogMessage = assertionLogMessage + assertions[j].getName() + &quot; Failed; \n&quot; +  prefix +
-			&quot;Failure Message: &quot; + assertions[j].getFailureMessage()+&quot;;\n&quot;+ prefix;
-		}
-	}
-	return assertionLogMessage
-}
-
-def postTraceToLog(SampleResult sample, AssertionResult[] assertions) {
-	print(generateResponseTrace(sample)+&quot;\n&quot;+generateAssertionTrace(assertions));
-	}</stringProp>
-        <stringProp name="scriptLanguage">groovy</stringProp>
-      </JSR223Listener>
-      <hashTree/>
-      <kg.apc.jmeter.reporters.ConsoleStatusLogger guiclass="kg.apc.jmeter.reporters.ConsoleStatusLoggerGui" testclass="kg.apc.jmeter.reporters.ConsoleStatusLogger" testname="jp@gc - Console Status Logger" enabled="true"/>
+      <kg.apc.jmeter.reporters.ConsoleStatusLogger guiclass="kg.apc.jmeter.reporters.ConsoleStatusLoggerGui" testclass="kg.apc.jmeter.reporters.ConsoleStatusLogger" testname="jp@gc - Console Status Logger" enabled="false"/>
       <hashTree/>
       <BackendListener guiclass="BackendListenerGui" testclass="BackendListener" testname="Backend Listener" enabled="true">
         <elementProp name="arguments" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" enabled="true">
@@ -334,7 +276,7 @@ def postTraceToLog(SampleResult sample, AssertionResult[] assertions) {
             </elementProp>
             <elementProp name="application" elementType="Argument">
               <stringProp name="Argument.name">application</stringProp>
-              <stringProp name="Argument.value">${__P(SCENARIO_NAME, scenario is not specified)}</stringProp>
+              <stringProp name="Argument.value">${__groovy(import org.apache.jmeter.services.FileServer; def scriptName = FileServer.getFileServer().getScriptName();  return scriptName; ,scenario_name)}1</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="measurement" elementType="Argument">
@@ -359,12 +301,12 @@ def postTraceToLog(SampleResult sample, AssertionResult[] assertions) {
             </elementProp>
             <elementProp name="testTitle" elementType="Argument">
               <stringProp name="Argument.name">testTitle</stringProp>
-              <stringProp name="Argument.value">Jenkins build #${__P(BUILD_NUMBER, N/A)} ${__P(BUILD_URL, build url N/A)} with ${__P(SCENARIO_NAME, N/A)} with ${__P(USERS, N/A)} users, ${__P(RAMPUP, N/A)} sec rampup and ${__P(DURATION, N/A)} sec duration was</stringProp>
+              <stringProp name="Argument.value">Jenkins build #${__P(BUILD_NUMBER, N/A)} ${__P(BUILD_URL, build url N/A)} with ${scenario_name} scenario with ${USERS} users, ${RAMPUP} sec rampup and ${DURATION} sec duration was</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="eventTags" elementType="Argument">
               <stringProp name="Argument.name">eventTags</stringProp>
-              <stringProp name="Argument.value">scenario ${__P(SCENARIO_NAME, N/A)},${__P(USERS, N/A)} users, ${__P(RAMPUP, N/A)} sec rampup, ${__P(DURATION, N/A)} sec duration,Jenkins build #${__P(BUILD_NUMBER, N/A)}</stringProp>
+              <stringProp name="Argument.value">scenario ${scenario_name},${USERS} users, ${RAMPUP} sec rampup, ${DURATION} sec duration,Jenkins build #${__P(BUILD_NUMBER, N/A)}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
