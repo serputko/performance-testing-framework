@@ -1,0 +1,1 @@
+{"name":"Elasticsearch","type":"elasticsearch","typeLogoUrl":"","access":"proxy","url":"http://elasticsearch:9200","password":"","user":"","database":"logstash-*","basicAuth":false,"basicAuthUser":"","basicAuthPassword":"","withCredentials":false,"isDefault":false,"jsonData":{"timeField":"StartedAt"},"secureJsonFields":{}}

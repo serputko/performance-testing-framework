@@ -15,9 +15,23 @@
       "type": "datasource",
       "pluginId": "influxdb",
       "pluginName": "InfluxDB"
+    },
+    {
+      "name": "DS_ELASTICSEARCH",
+      "label": "Elasticsearch",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "elasticsearch",
+      "pluginName": "Elasticsearch"
     }
   ],
   "__requires": [
+    {
+      "type": "datasource",
+      "id": "elasticsearch",
+      "name": "Elasticsearch",
+      "version": "3.0.0"
+    },
     {
       "type": "grafana",
       "id": "grafana",
@@ -1332,6 +1346,142 @@
           "title": "Errors details",
           "transform": "table",
           "transparent": false,
+          "type": "table"
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": true,
+      "title": "Errors summary",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": true,
+      "height": 377,
+      "panels": [
+        {
+          "columns": [
+            {
+              "text": "SampleName",
+              "value": "SampleName"
+            },
+            {
+              "text": "StartedAt",
+              "value": "StartedAt"
+            },
+            {
+              "text": "message",
+              "value": "message"
+            }
+          ],
+          "datasource": "${DS_ELASTICSEARCH}",
+          "fontSize": "100%",
+          "id": 101,
+          "links": [],
+          "pageSize": null,
+          "scroll": true,
+          "showHeader": true,
+          "sort": {
+            "col": 0,
+            "desc": true
+          },
+          "span": 12,
+          "styles": [
+            {
+              "alias": "Time",
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "pattern": "Time",
+              "type": "date"
+            },
+            {
+              "alias": "",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "pattern": "StartedAt",
+              "thresholds": [],
+              "type": "date",
+              "unit": "short"
+            },
+            {
+              "alias": "",
+              "colorMode": null,
+              "colors": [
+                "rgba(245, 54, 54, 0.9)",
+                "rgba(237, 129, 40, 0.89)",
+                "rgba(50, 172, 45, 0.97)"
+              ],
+              "dateFormat": "YYYY-MM-DD HH:mm:ss",
+              "decimals": 2,
+              "pattern": "message",
+              "preserveFormat": true,
+              "sanitize": true,
+              "thresholds": [],
+              "type": "string",
+              "unit": "short"
+            }
+          ],
+          "targets": [
+            {
+              "bucketAggs": [],
+              "dsType": "elasticsearch",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "metrics": [
+                {
+                  "field": "select field",
+                  "id": "1",
+                  "meta": {},
+                  "settings": {
+                    "size": 500
+                  },
+                  "type": "raw_document"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [],
+              "timeField": "StartedAt"
+            }
+          ],
+          "title": "Error details",
+          "transform": "json",
           "type": "table"
         }
       ],
@@ -2830,9 +2980,6 @@
         "sort": 0,
         "tagValuesQuery": "SHOW TAG VALUES WITH KEY = \"transaction\" where transaction !~ /(internal|all|\\/)/ and application= '$tag'",
         "tags": [
-          "1",
-          "demo_scenario.jmx",
-          "demo_scenario1.jmx",
           "scenario is not specified"
         ],
         "tagsQuery": "SHOW TAG VALUES WITH key = \"application\"",
@@ -2984,5 +3131,5 @@
   },
   "timezone": "",
   "title": "Load test monitoring With Docker Containers Monitoring",
-  "version": 16
+  "version": 26
 }

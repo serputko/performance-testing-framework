@@ -167,95 +167,92 @@ write detailed error responses to jmeter log
 def transactionController = sampler.getThreadContext().getPreviousResult().getParent();
 
 /*
-	Check if previous failed sampler has parent and parent does not have sampler data. That means that parent is transaction controller.
+ Check if previous failed sampler has parent and parent does not have sampler data. That means that parent is transaction controller.
 */
 if(!sampleResult.isSuccessful()){
-	if(transactionController &amp;&amp; !transactionController.getSamplerData()){
-		handleParentTransactionController(transactionController);
-	}else if(sampleResult.getSamplerData()){
-		handleSampler(transactionController);
-	}	
+ if(transactionController &amp;&amp; !transactionController.getSamplerData()){
+  handleParentTransactionController(transactionController);
+ }else if(sampleResult.getSamplerData()){
+  handleSampler(transactionController);
+ } 
 }
 
 /*
-	Change responseMessage for all sub samplers of Transaction controller and set them to Transaction controller response message
-	Post all sub samplers trace to log
+ Change responseMessage for all sub samplers of Transaction controller and set them to Transaction controller response message
+ Post all sub samplers trace to log
 */
 def handleParentTransactionController(SampleResult transactionSampleResult) {
-	def transactionResponseMessage = &quot;\n&quot;+transactionSampleResult.getResponseMessage()+&quot;\n&quot;;
-	def subResults = transactionSampleResult.getSubResults();
-	def assertions;
-	if(subResults){
-		for (int i=0; i&lt;subResults.length; i++){
-			if(!subResults[i].isSuccessful()){
-				assertions = subResults[i].getAssertionResults();
-				updateSampleResponseMessage(subResults[i], assertions.length);
-				transactionResponseMessage = transactionResponseMessage+subResults[i].getSampleLabel()+&quot;; &quot;+subResults[i].getResponseMessage();
-				transactionSampleResult.setResponseMessage(transactionResponseMessage);
-				postTraceToLog(subResults[i], assertions);
-			}
-		}
-	}
+ def transactionResponseMessage = &quot;\r&quot;+transactionSampleResult.getResponseMessage()+&quot;\r&quot;;
+ def subResults = transactionSampleResult.getSubResults();
+ def assertions;
+ if(subResults){
+  for (int i=0; i&lt;subResults.length; i++){
+   if(!subResults[i].isSuccessful()){
+    assertions = subResults[i].getAssertionResults();
+    updateSampleResponseMessage(subResults[i], assertions.length);
+    transactionResponseMessage = transactionResponseMessage+subResults[i].getSampleLabel()+&quot;; &quot;+subResults[i].getResponseMessage()+&quot;\r&quot;;
+    postTraceToLog(subResults[i], assertions);
+   }
+  }
+  transactionSampleResult.setResponseMessage(transactionResponseMessage);
+ }
 }
 
 /*
-	Change responseMessage for sampler and post trace to log
+ Change responseMessage for sampler and post trace to log
 */
 def handleSampler(SampleResult transactionSampleResult) {
-	def assertions = sampleResult.getAssertionResults();
-		updateSampleResponseMessage(sampleResult, assertions.length);
-		postTraceToLog(sampleResult, assertions);
+ def assertions = sampleResult.getAssertionResults();
+  updateSampleResponseMessage(sampleResult, assertions.length);
+  postTraceToLog(sampleResult, assertions);
 }
 
 def updateSampleResponseMessage(SampleResult sampleResult, int numberOfFailedAssertions) {
-	def responseMessage = sampleResult.getResponseMessage();
-	sampleResult.setResponseMessage(&quot;Response message: &quot;+sampleResult.getResponseMessage()+&quot;; Status code: &quot;+sampleResult.getResponseCode()+&quot;; Number of failed assertions: &quot;+numberOfFailedAssertions+&quot;\n&quot;);
+ def responseMessage = sampleResult.getResponseMessage();
+ sampleResult.setResponseMessage(&quot;Response message: &quot;+sampleResult.getResponseMessage()+&quot;; Status code: &quot;+sampleResult.getResponseCode()+&quot;; Number of failed assertions: &quot;+numberOfFailedAssertions+&quot;&quot;);
 }
 
 def generateResponseTrace(SampleResult sample) {
-	def sampleResult = sample;
-	def responseLogMessage = &quot;\n\n&quot;+
-		&quot;Sample Failed: &quot;+sampleResult.toString()+&quot;\n&quot;+
-		&quot;Started at: &quot;+new Date(sampleResult.getStartTime())+&quot;\n&quot;+
-		&quot;Finished at: &quot;+new Date(sampleResult.getEndTime())+&quot;\n\n&quot;+
-		&quot;Request:\n&quot;+
-		sampleResult.getSamplerData()+&quot;\n&quot;+
-		&quot;REQUEST DATA\n&quot;+
-		&quot;URL: &quot;+
-		sampleResult.getUrlAsString()+&quot;\n&quot;+
-		&quot;Request headers: \n&quot;+
-		sampleResult.getRequestHeaders()+&quot;\n&quot;+
-		&quot;Response: \n&quot; +
-		sampleResult.getResponseMessage()+&quot;\n&quot;+
-		&quot;Response code:&quot; + sampleResult.getResponseCode()+&quot;\n\n&quot;+
-		&quot;Response data:\n&quot;+
-		sampleResult.getResponseDataAsString()+&quot;\n&quot;;
-	return responseLogMessage;
+ def sampleResult = sample;
+ def responseLogMessage = &quot;\n\n&quot;+
+  &quot;Sample Failed: &quot;+sampleResult.toString()+&quot;\n&quot;+
+  &quot;Started at: &quot;+new Date(sampleResult.getStartTime())+&quot;\n&quot;+
+  &quot;Finished at: &quot;+new Date(sampleResult.getEndTime())+&quot;\n\n&quot;+
+  &quot;Request:\n&quot;+
+  sampleResult.getSamplerData()+&quot;\n&quot;+
+  &quot;REQUEST DATA\n&quot;+
+  &quot;URL: &quot;+
+  sampleResult.getUrlAsString()+&quot;\n&quot;+
+  &quot;Request headers: \n&quot;+
+  sampleResult.getRequestHeaders()+&quot;\n&quot;+
+  &quot;Response: \n&quot; +
+  sampleResult.getResponseMessage()+&quot;\n&quot;+
+  &quot;Response code:&quot; + sampleResult.getResponseCode()+&quot;\n\n&quot;+
+  &quot;Response data:\n&quot;+
+  sampleResult.getResponseDataAsString()+&quot;\n&quot;;
+ return responseLogMessage;
 }
 
 /*
-	Generate log trace for all failed assertions of sampler
+ Generate log trace for all failed assertions of sampler
 */
 def generateAssertionTrace(AssertionResult[] assertions) {
-	def assertionLogMessage = &quot;&quot;;
-	
-	assertionLogMessage = &quot;Assertion results:\n&quot; +
-	&quot;Number of failed assertions: &quot;+assertions.length+&quot;\n&quot;+assertionLogMessage;
-	if(assertions.length&gt;0){
-		for(int j=0; j&lt;assertions.length; j++){
-			assertionLogMessage = assertionLogMessage + assertions[j].getName() + &quot; Failed; \n&quot; + 
-			&quot;Failure Message: &quot; + assertions[j].getFailureMessage()+&quot;;\n&quot;
-		}
-	}
-	return assertionLogMessage
+ def assertionLogMessage = &quot;&quot;;
+ 
+ assertionLogMessage = &quot;Assertion results:\n&quot; +
+ &quot;Number of failed assertions: &quot;+assertions.length+&quot;\n&quot;+assertionLogMessage;
+ if(assertions.length&gt;0){
+  for(int j=0; j&lt;assertions.length; j++){
+   assertionLogMessage = assertionLogMessage + assertions[j].getName() + &quot; Failed; \n&quot; + 
+   &quot;Failure Message: &quot; + assertions[j].getFailureMessage()+&quot;;\n&quot;
+  }
+ }
+ return assertionLogMessage
 }
 
 def postTraceToLog(SampleResult sample, AssertionResult[] assertions) {
-	print(generateResponseTrace(sample)+&quot;\n&quot;+generateAssertionTrace(assertions));
-	}
-
-
-</stringProp>
+ print(generateResponseTrace(sample)+&quot;\n&quot;+generateAssertionTrace(assertions));
+ }</stringProp>
         <stringProp name="scriptLanguage">groovy</stringProp>
       </JSR223Listener>
       <hashTree/>

@@ -1,4 +1,4 @@
-start /FAILED REQUEST DETAILS/
-error /ASSERTION RESULTS/
-error /RESPONSE DATA/
-error /REQUEST DATA/
+start /Sample Failed:/
+error /Request:/
+error /Response:/
+error /Assertion results:/
