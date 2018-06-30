@@ -9,6 +9,7 @@ services:
        - graphite
      image: grafana
      build: ./grafana
+     user: "104"
      ports:
        - "8857:3000"
      environment:
@@ -20,6 +21,7 @@ services:
        - GF_INSTALL_PLUGINS=briangann-datatable-panel
      volumes:
        - grafana-home:/var/lib/grafana/
+       - grafana-conf:/etc/grafana/
      restart: always 
    influxdb:
      image: influxdb
@@ -159,6 +161,7 @@ services:
        - cat
 volumes:
     grafana-home:
+    grafana-conf:
     whisper:
     docker-dind:
     webpagetest-results:

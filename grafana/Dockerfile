@@ -1,8 +1,10 @@
-FROM grafana/grafana:4.6.3
+FROM grafana/grafana:latest
 
+USER root
 RUN apt-get update && \
     apt-get install jq 
 
+USER grafana
 COPY ./dashboards/ /dashboards/
 COPY ./datasources/ /datasources/
 
