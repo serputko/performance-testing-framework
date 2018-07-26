@@ -1,0 +1,15 @@
+Install nodejs
+	- brew install node
+
+Install and run influxdb-timeshift-proxy
+	- git clone https://github.com/maxsivanov/influxdb-timeshift-proxy.git
+	- cd influxdb-timeshift-proxy
+	- npm i
+
+INFLUXDB argument is url of influxdb server
+timeshift-proxy will start on 8089 port
+	- INFLUXDB=127.0.0.1:8653 npm run start
+
+Go to grafana -> datasource -> Add new influxdb datasource
+	type = InfluxDB
+	url http://localhost:8089

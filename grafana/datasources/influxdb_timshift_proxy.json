@@ -1,0 +1,1 @@
+{"name":"influxdb_timeshift_proxy","type":"influxdb","url":"http://influxdb-timeshift-proxy:8089","access":"proxy","isDefault":false,"database":"jmeter","user":"","password":""}

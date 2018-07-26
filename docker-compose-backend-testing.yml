@@ -95,6 +95,20 @@ services:
      image: jmeter
      entrypoint:
        - cat
+   influxdb-timeshift-proxy:
+     container_name: influxdb-timeshift-proxy
+     image: "node:alpine"
+     user: "node"
+     depends_on:
+       - influxdb
+     working_dir: /influxdb-timeshift-proxy/
+     environment:
+       - INFLUXDB=influxdb:8086
+     volumes:
+       - ./influxdb-timeshift-proxy/:/influxdb-timeshift-proxy/
+     expose:
+       - "8989"
+     command: "npm run start"
 volumes:
     grafana-home:
     grafana-conf:

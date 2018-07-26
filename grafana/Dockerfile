@@ -1,4 +1,4 @@
-FROM grafana/grafana:latest
+FROM grafana/grafana:5.1.5
 
 USER root
 RUN apt-get update && \
@@ -7,6 +7,7 @@ RUN apt-get update && \
 USER grafana
 COPY ./dashboards/ /dashboards/
 COPY ./datasources/ /datasources/
+COPY ./scripted_dashboards/ /usr/share/grafana/public/dashboards/
 
 COPY ./run1.sh /run1.sh
 
