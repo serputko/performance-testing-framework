@@ -31,97 +31,177 @@
           <stringProp name="LoopController.loops">10</stringProp>
         </LoopController>
         <hashTree>
-          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="jp@gc - Dummy Sampler" enabled="true">
+          <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Simple Controller" enabled="true"/>
+          <hashTree>
+            <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="jp@gc - Dummy Sampler" enabled="true">
+              <boolProp name="WAITING">true</boolProp>
+              <boolProp name="SUCCESFULL">true</boolProp>
+              <stringProp name="RESPONSE_CODE">200</stringProp>
+              <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
+              <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+              <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
+without actual network activity. This helps debugging tests.</stringProp>
+              <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
+              <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
+              <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
+            </kg.apc.jmeter.samplers.DummySampler>
+            <hashTree/>
+          </hashTree>
+        </hashTree>
+        <TransactionController guiclass="TransactionControllerGui" testclass="TransactionController" testname="Failed Transaction" enabled="true">
+          <boolProp name="TransactionController.includeTimers">false</boolProp>
+          <boolProp name="TransactionController.parent">true</boolProp>
+        </TransactionController>
+        <hashTree>
+          <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="jp@gc - Dummy Sampler failed" enabled="true">
             <boolProp name="WAITING">true</boolProp>
-            <boolProp name="SUCCESFULL">true</boolProp>
-            <stringProp name="RESPONSE_CODE">200</stringProp>
-            <stringProp name="RESPONSE_MESSAGE">OK</stringProp>
-            <stringProp name="REQUEST_DATA">Dummy Sampler used to simulate requests and responses
-without actual network activity. This helps debugging tests.</stringProp>
-            <stringProp name="RESPONSE_DATA">Dummy Sampler used to simulate requests and responses
-without actual network activity. This helps debugging tests.</stringProp>
+            <boolProp name="SUCCESFULL">false</boolProp>
+            <stringProp name="RESPONSE_CODE">401</stringProp>
+            <stringProp name="RESPONSE_MESSAGE">Unauthorized</stringProp>
+            <stringProp name="REQUEST_DATA">{
+    &quot;code&quot;: &quot;1234567&quot;
+}</stringProp>
+            <stringProp name="RESPONSE_DATA">{
+   &quot;Error message&quot;: &quot;Incorrect password or confirmation code entered. Please try again.&quot;
+}</stringProp>
             <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
             <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
             <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
           </kg.apc.jmeter.samplers.DummySampler>
-          <hashTree/>
-        </hashTree>
-        <kg.apc.jmeter.samplers.DummySampler guiclass="kg.apc.jmeter.samplers.DummySamplerGui" testclass="kg.apc.jmeter.samplers.DummySampler" testname="jp@gc - Dummy Sampler failed" enabled="true">
-          <boolProp name="WAITING">true</boolProp>
-          <boolProp name="SUCCESFULL">false</boolProp>
-          <stringProp name="RESPONSE_CODE">500</stringProp>
-          <stringProp name="RESPONSE_MESSAGE">Service unavailable</stringProp>
-          <stringProp name="REQUEST_DATA">{
-    &quot;code&quot;: &quot;1234567&quot;
-}</stringProp>
-          <stringProp name="RESPONSE_DATA">&lt;div class=&quot;errorbox&quot;&gt;
-   &lt;h2&gt;Login error:&lt;/h2&gt;
-   Incorrect password or confirmation code entered. Please try again.
- &lt;/div&gt;</stringProp>
-          <stringProp name="RESPONSE_TIME">${__Random(50,500)}</stringProp>
-          <stringProp name="LATENCY">${__Random(1,50)}</stringProp>
-          <stringProp name="CONNECT">${__Random(1,5)}</stringProp>
-        </kg.apc.jmeter.samplers.DummySampler>
-        <hashTree>
-          <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
-            <collectionProp name="Asserion.test_strings">
-              <stringProp name="-1867169789">success</stringProp>
-            </collectionProp>
-            <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
-            <boolProp name="Assertion.assume_success">false</boolProp>
-            <intProp name="Assertion.test_type">16</intProp>
-            <stringProp name="Assertion.custom_message"></stringProp>
-          </ResponseAssertion>
-          <hashTree/>
+          <hashTree>
+            <ResponseAssertion guiclass="AssertionGui" testclass="ResponseAssertion" testname="Response Assertion" enabled="true">
+              <collectionProp name="Asserion.test_strings">
+                <stringProp name="-1867169789">success</stringProp>
+              </collectionProp>
+              <stringProp name="Assertion.test_field">Assertion.response_data</stringProp>
+              <boolProp name="Assertion.assume_success">false</boolProp>
+              <intProp name="Assertion.test_type">16</intProp>
+              <stringProp name="Assertion.custom_message"></stringProp>
+            </ResponseAssertion>
+            <hashTree/>
+          </hashTree>
         </hashTree>
       </hashTree>
       <JSR223Listener guiclass="TestBeanGUI" testclass="JSR223Listener" testname="JSR223 Listener" enabled="true">
         <stringProp name="cacheKey">true</stringProp>
         <stringProp name="filename"></stringProp>
         <stringProp name="parameters"></stringProp>
-        <stringProp name="script">String response_message = &quot;&quot;;
-String assertion_message = &quot;&quot;;
-//set response message and send it to influxdb
-//write detailed error responses to jmeter log
-if(!sampleResult.isSuccessful()) {
-	assertions = sampleResult.getAssertionResults();
-	if(assertions.length&gt;0){
-		for(int i=0; i&lt;assertions.length; i++){
-			assertion_message = &quot;Failed assertion #&quot; + String.valueOf(i+1) + &quot; message: \&quot;&quot; + assertions[i].getFailureMessage()+&quot;\&quot; | &quot;;
-			log.info(&quot;Failed assertion #&quot; + String.valueOf(i+1) + &quot;\n message: \&quot;&quot; + assertions[i].getFailureMessage()+&quot;\n&quot;);
-			response_message=response_message+assertion_message;
-		}
-		sampleResult.setResponseMessage(&quot;Sample failed; Response message is: &quot;+sampleResult.getResponseMessage()+&quot; | &quot;+response_message);
-	} else{
-		response_message=&quot;Sample failed; Response message is: &quot;+sampleResult.getResponseMessage();
-		sampleResult.setResponseMessage(response_message);
-	}
-	print(&quot;&lt;=========================================================================================================&gt;\n&quot;+
-	sampleResult.toString()+&quot; FAILED REQUEST DETAILS\n&quot;+
-	&quot;&lt;=========================================================================================================&gt;\n&quot;+
-	&quot;ASSERTION RESULTS\n&quot; +
-	&quot;&lt;=========================================================================================================&gt;\n&quot;+
-	&quot;Failed assertions: &quot;+assertions.length+&quot;\n&quot;+
-	&quot;&lt;=========================================================================================================&gt;\n&quot;+
-	&quot;RESPONSE DATA\n&quot; +
-	&quot;&lt;=========================================================================================================&gt;\n&quot;+
-	&quot;Response message:\n&quot; +
-	sampleResult.getResponseMessage()+&quot;\n\n&quot;+
-	&quot;Response data:\n&quot;+
-	sampleResult.getResponseDataAsString()+&quot;\n&quot;+
-	&quot;&lt;=========================================================================================================&gt;\n&quot;+
-	&quot;REQUEST DATA\n&quot;+
-	&quot;&lt;=========================================================================================================&gt;\n&quot;+
-	&quot;URL\n&quot;+
-	sampleResult.getUrlAsString()+&quot;\n&quot;+
-	&quot;Request headers\n&quot;+
-	sampleResult.getRequestHeaders()+&quot;\n&quot;+
-	&quot;Sampler data\n&quot;+
-	sampleResult.getSamplerData()+&quot;\n&quot;+
-	&quot;&lt;=========================================================================================================&gt;\n&quot;+
-	&quot;&lt;=========================================================================================================&gt;\n\n\n&quot;);
+        <stringProp name="script">/*
+	Copyright © 2017-2018 Anton Serputko. Contacts: serputko.a@gmail.com
+	  
+	Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
+	you may not use this file except in compliance with the License.
+	You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing, software
+	distributed under the License is distributed on an &quot;AS IS&quot; BASIS,
+	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	See the License for the specific language governing permissions and
+	limitations under the License.
+*/
+
+import org.apache.jmeter.samplers.SampleResult;
+import org.apache.jmeter.assertions.AssertionResult;
+
+/*
+	Set response message and send it to influxdb
+	Write detailed error responses to jmeter log
+*/ 
+
+def transactionController = sampler.getThreadContext().getPreviousResult().getParent();
+
+/*
+	Check if previous failed sampler has parent and parent does not have sampler data. That means that parent is transaction controller.
+*/
+if(!sampleResult.isSuccessful()){
+	if(transactionController &amp;&amp; !transactionController.getSamplerData()){
+		handleParentTransactionController(transactionController);
+	}else if(sampleResult.getSamplerData()){
+		handleSampler(sampleResult);
+	}	
 }
-</stringProp>
+
+/*
+	Change responseMessage for all sub samplers of Transaction controller and set them to Transaction controller response message
+	Post all sub samplers trace to log
+*/
+def handleParentTransactionController(SampleResult transactionSampleResult) {
+	def transactionResponseMessage = &quot;\r&quot;+transactionSampleResult.getResponseMessage()+&quot;\r&quot;;
+	def subResults = transactionSampleResult.getSubResults();
+	def assertions;
+	if(subResults){
+		for (int i=0; i&lt;subResults.length; i++){
+			if(!subResults[i].isSuccessful()){
+				assertions = subResults[i].getAssertionResults();
+				updateSampleResponseMessage(subResults[i], assertions);
+				transactionResponseMessage = transactionResponseMessage+subResults[i].getSampleLabel()+&quot;; &quot;+subResults[i].getResponseMessage();
+				postTraceToLog(subResults[i], assertions);
+			}
+		}
+		transactionSampleResult.setResponseMessage(transactionResponseMessage.replaceAll(&quot;\n&quot;, &quot;\r&quot;));
+	}
+}
+
+/*
+	Change responseMessage for sampler and post trace to log
+*/
+def handleSampler(SampleResult sampleResult) {
+	def assertions = sampleResult.getAssertionResults();
+		updateSampleResponseMessage(sampleResult, assertions);
+		sampleResult.setResponseMessage(sampleResult.getResponseMessage().replaceAll(&quot;\n&quot;, &quot;\r&quot;));
+		postTraceToLog(sampleResult, assertions);
+}
+
+def updateSampleResponseMessage(SampleResult sampleResult, AssertionResult[] assertions) {
+	def responseMessage = sampleResult.getResponseMessage();
+	sampleResult.setResponseMessage(&quot;Response message: &quot;+sampleResult.getResponseMessage()+&quot;;&quot;+&quot;\rStatus code: &quot;+sampleResult.getResponseCode()+
+		&quot;;&quot;+&quot;\rNumber of failed assertions: &quot;+assertions.length+&quot;\r&quot;+generateResponseTrace(sampleResult)+&quot;\r&quot;+generateAssertionTrace(assertions))+&quot;;&quot;;
+}
+
+def generateResponseTrace(SampleResult sample) {
+	def sampleResult = sample;
+	def responseLogMessage = &quot;\r&quot;+
+		&quot;Sample Failed: &quot;+sampleResult.toString()+&quot;\r&quot;+
+		&quot;Started at: &quot;+new Date(sampleResult.getStartTime())+&quot;\r&quot;+
+		&quot;Finished at: &quot;+new Date(sampleResult.getEndTime())+&quot;\r&quot;+
+		&quot;Request:\r&quot;+
+		sampleResult.getSamplerData()+&quot;\r&quot;+
+		&quot;REQUEST DATA\r&quot;+
+		&quot;URL: &quot;+
+		sampleResult.getUrlAsString()+&quot;\r&quot;+
+		&quot;Request headers: \r&quot;+
+		sampleResult.getRequestHeaders()+&quot;\r&quot;+
+		&quot;Response: \r&quot; +
+		sampleResult.getResponseMessage()+&quot;\r&quot;+
+		&quot;Response code:&quot; + sampleResult.getResponseCode()+&quot;\r\r&quot;+
+		&quot;Response data:\r&quot;+
+		sampleResult.getResponseDataAsString()+&quot;\r&quot;;
+	return responseLogMessage;
+}
+
+/*
+	Generate log trace for all failed assertions of sampler
+*/
+def generateAssertionTrace(AssertionResult[] assertions) {
+	def assertionLogMessage = &quot;&quot;;
+	
+	assertionLogMessage = &quot;Assertion results:\r&quot; +
+	&quot;Number of failed assertions: &quot;+assertions.length+&quot;\r&quot;+assertionLogMessage;
+	if(assertions.length&gt;0){
+		for(int j=0; j&lt;assertions.length; j++){
+			assertionLogMessage = assertionLogMessage + assertions[j].getName() + &quot; Failed; \r&quot; + 
+			&quot;Failure Message: &quot; + assertions[j].getFailureMessage()+&quot;;\r&quot;
+		}
+	}
+	return assertionLogMessage+&quot;\r\r&quot;
+}
+
+def postTraceToLog(SampleResult sample, AssertionResult[] assertions) {
+	print(generateResponseTrace(sample)+&quot;\r&quot;+generateAssertionTrace(assertions));
+	}</stringProp>
         <stringProp name="scriptLanguage">groovy</stringProp>
       </JSR223Listener>
       <hashTree/>
@@ -142,7 +222,7 @@ if(!sampleResult.isSuccessful()) {
             </elementProp>
             <elementProp name="application" elementType="Argument">
               <stringProp name="Argument.name">application</stringProp>
-              <stringProp name="Argument.value">${__P(SCENARIO_NAME, scenario is not specified)}</stringProp>
+              <stringProp name="Argument.value">${__groovy(import org.apache.jmeter.services.FileServer; def scriptName = FileServer.getFileServer().getScriptName(); return scriptName+&quot; @ &quot;+props.get(&quot;BUILD_NUMBER&quot;)+&quot; @ &quot;+new Date(),)}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="measurement" elementType="Argument">
@@ -167,12 +247,12 @@ if(!sampleResult.isSuccessful()) {
             </elementProp>
             <elementProp name="testTitle" elementType="Argument">
               <stringProp name="Argument.name">testTitle</stringProp>
-              <stringProp name="Argument.value">Jenkins build #${__P(BUILD_NUMBER, N/A)} ${__P(BUILD_URL, build url N/A)} with ${__P(SCENARIO_NAME, N/A)} with ${__P(USERS, N/A)} users, ${__P(RAMPUP, N/A)} sec rampup and ${__P(DURATION, N/A)} sec duration was</stringProp>
+              <stringProp name="Argument.value">Jenkins build #${__P(BUILD_NUMBER, N/A)} ${__P(BUILD_URL, build url N/A)} with ${scenario_name} scenario with ${USERS} users, ${RAMPUP} sec rampup and ${DURATION} sec duration was</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="eventTags" elementType="Argument">
               <stringProp name="Argument.name">eventTags</stringProp>
-              <stringProp name="Argument.value">scenario ${__P(SCENARIO_NAME, N/A)},${__P(USERS, N/A)} users, ${__P(RAMPUP, N/A)} sec rampup, ${__P(DURATION, N/A)} sec duration,Jenkins build #${__P(BUILD_NUMBER, N/A)}</stringProp>
+              <stringProp name="Argument.value">scenario ${__groovy(import org.apache.jmeter.services.FileServer; def scriptName = FileServer.getFileServer().getScriptName(); return scriptName,)},${USERS} users, ${RAMPUP} sec rampup, ${DURATION} sec duration,Jenkins build #${__P(BUILD_NUMBER, N/A)}${__P(ADDITIONAL_TAGS, )}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
