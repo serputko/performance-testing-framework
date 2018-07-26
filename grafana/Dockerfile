@@ -2,7 +2,7 @@ FROM grafana/grafana:latest
 
 USER root
 RUN apt-get update && \
-    apt-get install jq 
+    apt-get -y install jq 
 
 USER grafana
 COPY ./dashboards/ /dashboards/
