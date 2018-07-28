@@ -61,7 +61,7 @@
         "iconColor": "rgb(0, 245, 97)",
         "limit": 100,
         "name": "Test start",
-        "query": "SELECT * FROM \"events\"  WHERE \"text\" =~ /.* started/ AND $timeFilter",
+        "query": "SELECT * FROM \"events\"  WHERE \"text\" =~ /.* started/ AND application =~ /$scenario/ AND $timeFilter",
         "showIn": 0,
         "tagsColumn": "tags",
         "textColumn": "text",
@@ -75,7 +75,7 @@
         "iconColor": "rgb(251, 0, 0)",
         "limit": 100,
         "name": "Test ended",
-        "query": "SELECT * FROM \"events\"  WHERE \"text\" =~ /.* ended/ AND $timeFilter",
+        "query": "SELECT * FROM \"events\"  WHERE \"text\" =~ /.* ended/ AND application =~ /$scenario/ AND $timeFilter",
         "showIn": 0,
         "tagsColumn": "tags",
         "textColumn": "text",
@@ -88,7 +88,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1532774010499,
+  "iteration": 1532777022924,
   "links": [],
   "panels": [
     {
@@ -1244,7 +1244,7 @@
             "y": 16
           },
           "height": "350",
-          "id": 100,
+          "id": 145,
           "interval": "",
           "legend": {
             "alignAsTable": true,
@@ -1270,7 +1270,279 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532600029212,
+          "repeatIteration": 1532777022923,
+          "repeatPanelId": 20,
+          "scopedVars": {
+            "transactions": {
+              "selected": false,
+              "text": "Buy item",
+              "value": "Buy item"
+            }
+          },
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$col",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT max(/$metric$/)  FROM \"$measurement\" WHERE \"transaction\"='$transactions' AND \"statut\"='all' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "$transactions",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "transparent": false,
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "ms",
+              "label": "Response time",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "jmeter",
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 25
+          },
+          "height": "350",
+          "id": 146,
+          "interval": "",
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "hideEmpty": false,
+            "hideZero": false,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "minSpan": 12,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532777022923,
+          "repeatPanelId": 20,
+          "scopedVars": {
+            "transactions": {
+              "selected": false,
+              "text": "Clear cart",
+              "value": "Clear cart"
+            }
+          },
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$col",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT max(/$metric$/)  FROM \"$measurement\" WHERE \"transaction\"='$transactions' AND \"statut\"='all' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "$transactions",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "transparent": false,
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "ms",
+              "label": "Response time",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "jmeter",
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 25
+          },
+          "height": "350",
+          "id": 147,
+          "interval": "",
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "hideEmpty": false,
+            "hideZero": false,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "minSpan": 12,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532777022923,
           "repeatPanelId": 20,
           "scopedVars": {
             "transactions": {
@@ -1377,10 +1649,10 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 25
+            "y": 34
           },
           "height": "350",
-          "id": 101,
+          "id": 148,
           "interval": "",
           "legend": {
             "alignAsTable": true,
@@ -1406,7 +1678,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532600029212,
+          "repeatIteration": 1532777022923,
           "repeatPanelId": 20,
           "scopedVars": {
             "transactions": {
@@ -1513,10 +1785,10 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 25
+            "y": 34
           },
           "height": "350",
-          "id": 102,
+          "id": 149,
           "interval": "",
           "legend": {
             "alignAsTable": true,
@@ -1542,13 +1814,13 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532600029212,
+          "repeatIteration": 1532777022923,
           "repeatPanelId": 20,
           "scopedVars": {
             "transactions": {
               "selected": false,
-              "text": "Open category page",
-              "value": "Open category page"
+              "text": "Open category",
+              "value": "Open category"
             }
           },
           "seriesOverrides": [],
@@ -1649,10 +1921,10 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 34
+            "y": 43
           },
           "height": "350",
-          "id": 103,
+          "id": 150,
           "interval": "",
           "legend": {
             "alignAsTable": true,
@@ -1678,829 +1950,13 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532600029212,
+          "repeatIteration": 1532777022923,
           "repeatPanelId": 20,
           "scopedVars": {
             "transactions": {
               "selected": false,
               "text": "Open main page",
               "value": "Open main page"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "hide": false,
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT max(/$metric$/)  FROM \"$measurement\" WHERE \"transaction\"='$transactions' AND \"statut\"='all' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "$transactions",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "transparent": false,
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "ms",
-              "label": "Response time",
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": "",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "jmeter",
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 12,
-            "y": 34
-          },
-          "height": "350",
-          "id": 104,
-          "interval": "",
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": true,
-            "hideEmpty": false,
-            "hideZero": false,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "minSpan": 12,
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "h",
-          "repeatIteration": 1532600029212,
-          "repeatPanelId": 20,
-          "scopedVars": {
-            "transactions": {
-              "selected": false,
-              "text": "Open product page",
-              "value": "Open product page"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "hide": false,
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT max(/$metric$/)  FROM \"$measurement\" WHERE \"transaction\"='$transactions' AND \"statut\"='all' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "$transactions",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "transparent": false,
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "ms",
-              "label": "Response time",
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": "",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "jmeter",
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 0,
-            "y": 43
-          },
-          "height": "350",
-          "id": 105,
-          "interval": "",
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": true,
-            "hideEmpty": false,
-            "hideZero": false,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "minSpan": 12,
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "h",
-          "repeatIteration": 1532600029212,
-          "repeatPanelId": 20,
-          "scopedVars": {
-            "transactions": {
-              "selected": false,
-              "text": "Order page",
-              "value": "Order page"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "hide": false,
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT max(/$metric$/)  FROM \"$measurement\" WHERE \"transaction\"='$transactions' AND \"statut\"='all' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "$transactions",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "transparent": false,
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "ms",
-              "label": "Response time",
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": "",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "jmeter",
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 12,
-            "y": 43
-          },
-          "height": "350",
-          "id": 106,
-          "interval": "",
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": true,
-            "hideEmpty": false,
-            "hideZero": false,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "minSpan": 12,
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "h",
-          "repeatIteration": 1532600029212,
-          "repeatPanelId": 20,
-          "scopedVars": {
-            "transactions": {
-              "selected": false,
-              "text": "Pay",
-              "value": "Pay"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "hide": false,
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT max(/$metric$/)  FROM \"$measurement\" WHERE \"transaction\"='$transactions' AND \"statut\"='all' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "$transactions",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "transparent": false,
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "ms",
-              "label": "Response time",
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": "",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "jmeter",
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 0,
-            "y": 52
-          },
-          "height": "350",
-          "id": 107,
-          "interval": "",
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": true,
-            "hideEmpty": false,
-            "hideZero": false,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "minSpan": 12,
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "h",
-          "repeatIteration": 1532600029212,
-          "repeatPanelId": 20,
-          "scopedVars": {
-            "transactions": {
-              "selected": false,
-              "text": "Transaction Controller",
-              "value": "Transaction Controller"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "hide": false,
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT max(/$metric$/)  FROM \"$measurement\" WHERE \"transaction\"='$transactions' AND \"statut\"='all' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "$transactions",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "transparent": false,
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "ms",
-              "label": "Response time",
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": "",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "jmeter",
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 12,
-            "y": 52
-          },
-          "height": "350",
-          "id": 108,
-          "interval": "",
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": true,
-            "hideEmpty": false,
-            "hideZero": false,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "minSpan": 12,
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "h",
-          "repeatIteration": 1532600029212,
-          "repeatPanelId": 20,
-          "scopedVars": {
-            "transactions": {
-              "selected": false,
-              "text": "jp@gc - Dummy Sampler",
-              "value": "jp@gc - Dummy Sampler"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "hide": false,
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT max(/$metric$/)  FROM \"$measurement\" WHERE \"transaction\"='$transactions' AND \"statut\"='all' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "$transactions",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "transparent": false,
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "ms",
-              "label": "Response time",
-              "logBase": 1,
-              "max": null,
-              "min": "0",
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": "",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "jmeter",
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 0,
-            "y": 61
-          },
-          "height": "350",
-          "id": 109,
-          "interval": "",
-          "legend": {
-            "alignAsTable": true,
-            "avg": false,
-            "current": true,
-            "hideEmpty": false,
-            "hideZero": false,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "minSpan": 12,
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "h",
-          "repeatIteration": 1532600029212,
-          "repeatPanelId": 20,
-          "scopedVars": {
-            "transactions": {
-              "selected": false,
-              "text": "jp@gc - Dummy Sampler failed",
-              "value": "jp@gc - Dummy Sampler failed"
             }
           },
           "seriesOverrides": [],
@@ -2883,7 +2339,7 @@
             "h": 3,
             "w": 6,
             "x": 0,
-            "y": 6
+            "y": 19
           },
           "id": 35,
           "interval": null,
@@ -2995,7 +2451,7 @@
             "h": 3,
             "w": 6,
             "x": 6,
-            "y": 6
+            "y": 19
           },
           "id": 29,
           "interval": null,
@@ -3107,7 +2563,7 @@
             "h": 3,
             "w": 6,
             "x": 12,
-            "y": 6
+            "y": 19
           },
           "id": 30,
           "interval": null,
@@ -3219,7 +2675,7 @@
             "h": 3,
             "w": 6,
             "x": 18,
-            "y": 6
+            "y": 19
           },
           "id": 31,
           "interval": null,
@@ -3322,7 +2778,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 9
+            "y": 22
           },
           "height": "350",
           "id": 28,
@@ -3464,7 +2920,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 20
+            "y": 32
           },
           "height": "350",
           "id": 112,
@@ -3601,10 +3057,10 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 20
+            "y": 32
           },
           "height": "350",
-          "id": 113,
+          "id": 134,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -3627,7 +3083,146 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532602561461,
+          "repeatIteration": 1532775124448,
+          "repeatPanelId": 112,
+          "scopedVars": {
+            "transactions": {
+              "selected": false,
+              "text": "Failed Transaction",
+              "value": "Failed Transaction"
+            }
+          },
+          "seriesOverrides": [
+            {
+              "alias": "Throughput",
+              "color": "rgb(0, 218, 255)",
+              "yaxis": 1
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$col",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT last(\"count\")/5 as \"Throughput\" FROM \"$measurement\" WHERE \"transaction\" = '$transactions' AND $timeFilter AND \"application\" =~ /$scenario/ GROUP BY time(5s) fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Throughput for $transactions",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "ops",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "jmeter.last": "#6ED0E0"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "jmeter",
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 0,
+            "y": 41
+          },
+          "height": "350",
+          "id": 135,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": 12,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532775124448,
           "repeatPanelId": 112,
           "scopedVars": {
             "transactions": {
@@ -3739,11 +3334,11 @@
           "gridPos": {
             "h": 9,
             "w": 12,
-            "x": 0,
-            "y": 29
+            "x": 12,
+            "y": 41
           },
           "height": "350",
-          "id": 114,
+          "id": 136,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -3766,7 +3361,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532602561461,
+          "repeatIteration": 1532775124448,
           "repeatPanelId": 112,
           "scopedVars": {
             "transactions": {
@@ -3878,11 +3473,11 @@
           "gridPos": {
             "h": 9,
             "w": 12,
-            "x": 12,
-            "y": 29
+            "x": 0,
+            "y": 50
           },
           "height": "350",
-          "id": 115,
+          "id": 137,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -3905,7 +3500,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532602561461,
+          "repeatIteration": 1532775124448,
           "repeatPanelId": 112,
           "scopedVars": {
             "transactions": {
@@ -4017,11 +3612,11 @@
           "gridPos": {
             "h": 9,
             "w": 12,
-            "x": 0,
-            "y": 38
+            "x": 12,
+            "y": 50
           },
           "height": "350",
-          "id": 116,
+          "id": 138,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -4044,7 +3639,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532602561461,
+          "repeatIteration": 1532775124448,
           "repeatPanelId": 112,
           "scopedVars": {
             "transactions": {
@@ -4156,11 +3751,11 @@
           "gridPos": {
             "h": 9,
             "w": 12,
-            "x": 12,
-            "y": 38
+            "x": 0,
+            "y": 59
           },
           "height": "350",
-          "id": 117,
+          "id": 139,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -4183,7 +3778,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532602561461,
+          "repeatIteration": 1532775124448,
           "repeatPanelId": 112,
           "scopedVars": {
             "transactions": {
@@ -4295,11 +3890,11 @@
           "gridPos": {
             "h": 9,
             "w": 12,
-            "x": 0,
-            "y": 47
+            "x": 12,
+            "y": 59
           },
           "height": "350",
-          "id": 118,
+          "id": 140,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -4322,7 +3917,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532602561461,
+          "repeatIteration": 1532775124448,
           "repeatPanelId": 112,
           "scopedVars": {
             "transactions": {
@@ -4434,11 +4029,11 @@
           "gridPos": {
             "h": 9,
             "w": 12,
-            "x": 12,
-            "y": 47
+            "x": 0,
+            "y": 68
           },
           "height": "350",
-          "id": 119,
+          "id": 141,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -4461,7 +4056,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532602561461,
+          "repeatIteration": 1532775124448,
           "repeatPanelId": 112,
           "scopedVars": {
             "transactions": {
@@ -4573,11 +4168,11 @@
           "gridPos": {
             "h": 9,
             "w": 12,
-            "x": 0,
-            "y": 56
+            "x": 12,
+            "y": 68
           },
           "height": "350",
-          "id": 120,
+          "id": 142,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -4600,7 +4195,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532602561461,
+          "repeatIteration": 1532775124448,
           "repeatPanelId": 112,
           "scopedVars": {
             "transactions": {
@@ -4712,11 +4307,11 @@
           "gridPos": {
             "h": 9,
             "w": 12,
-            "x": 12,
-            "y": 56
+            "x": 0,
+            "y": 77
           },
           "height": "350",
-          "id": 121,
+          "id": 143,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -4739,7 +4334,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532602561461,
+          "repeatIteration": 1532775124448,
           "repeatPanelId": 112,
           "scopedVars": {
             "transactions": {
@@ -4851,11 +4446,11 @@
           "gridPos": {
             "h": 9,
             "w": 12,
-            "x": 0,
-            "y": 65
+            "x": 12,
+            "y": 77
           },
           "height": "350",
-          "id": 122,
+          "id": 144,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -4878,7 +4473,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532602561461,
+          "repeatIteration": 1532775124448,
           "repeatPanelId": 112,
           "scopedVars": {
             "transactions": {
@@ -5007,7 +4602,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 21
+            "y": 87
           },
           "height": "350",
           "id": 37,
@@ -5279,7 +4874,7 @@
             "h": 10,
             "w": 24,
             "x": 0,
-            "y": 22
+            "y": 88
           },
           "height": "400",
           "id": 86,
@@ -5398,7 +4993,7 @@
             "h": 10,
             "w": 24,
             "x": 0,
-            "y": 32
+            "y": 98
           },
           "height": "400",
           "id": 87,
@@ -5565,6 +5160,11 @@
               "selected": false,
               "text": "telegraf-loadgenerator",
               "value": "telegraf-loadgenerator"
+            },
+            "server_measurements": {
+              "selected": false,
+              "text": "cpu",
+              "value": "cpu"
             }
           },
           "seriesOverrides": [
@@ -5678,6 +5278,1794 @@
             "w": 24,
             "x": 0,
             "y": 30
+          },
+          "id": 151,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": 24,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532777022923,
+          "repeatPanelId": 88,
+          "scopedVars": {
+            "host": {
+              "selected": false,
+              "text": "telegraf-loadgenerator",
+              "value": "telegraf-loadgenerator"
+            },
+            "server_measurements": {
+              "selected": false,
+              "text": "disk",
+              "value": "disk"
+            }
+          },
+          "seriesOverrides": [
+            {
+              "alias": "CPU Usage",
+              "color": "rgb(0, 255, 11)",
+              "fill": 2
+            },
+            {
+              "alias": "Memory Usage",
+              "color": "rgb(0, 164, 255)",
+              "fill": 2
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT * FROM \"$server_measurements\" WHERE $timeFilter and host='$host' ",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "$server_measurements",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "cpu.usage": "#65c5db",
+            "mem.usage": "#ea6460"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "telegraf",
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 37
+          },
+          "id": 152,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": 24,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532777022923,
+          "repeatPanelId": 88,
+          "scopedVars": {
+            "host": {
+              "selected": false,
+              "text": "telegraf-loadgenerator",
+              "value": "telegraf-loadgenerator"
+            },
+            "server_measurements": {
+              "selected": false,
+              "text": "diskio",
+              "value": "diskio"
+            }
+          },
+          "seriesOverrides": [
+            {
+              "alias": "CPU Usage",
+              "color": "rgb(0, 255, 11)",
+              "fill": 2
+            },
+            {
+              "alias": "Memory Usage",
+              "color": "rgb(0, 164, 255)",
+              "fill": 2
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT * FROM \"$server_measurements\" WHERE $timeFilter and host='$host' ",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "$server_measurements",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "cpu.usage": "#65c5db",
+            "mem.usage": "#ea6460"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "telegraf",
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 44
+          },
+          "id": 153,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": 24,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532777022923,
+          "repeatPanelId": 88,
+          "scopedVars": {
+            "host": {
+              "selected": false,
+              "text": "telegraf-loadgenerator",
+              "value": "telegraf-loadgenerator"
+            },
+            "server_measurements": {
+              "selected": false,
+              "text": "docker",
+              "value": "docker"
+            }
+          },
+          "seriesOverrides": [
+            {
+              "alias": "CPU Usage",
+              "color": "rgb(0, 255, 11)",
+              "fill": 2
+            },
+            {
+              "alias": "Memory Usage",
+              "color": "rgb(0, 164, 255)",
+              "fill": 2
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT * FROM \"$server_measurements\" WHERE $timeFilter and host='$host' ",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "$server_measurements",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "cpu.usage": "#65c5db",
+            "mem.usage": "#ea6460"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "telegraf",
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 51
+          },
+          "id": 154,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": 24,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532777022923,
+          "repeatPanelId": 88,
+          "scopedVars": {
+            "host": {
+              "selected": false,
+              "text": "telegraf-loadgenerator",
+              "value": "telegraf-loadgenerator"
+            },
+            "server_measurements": {
+              "selected": false,
+              "text": "docker_container_blkio",
+              "value": "docker_container_blkio"
+            }
+          },
+          "seriesOverrides": [
+            {
+              "alias": "CPU Usage",
+              "color": "rgb(0, 255, 11)",
+              "fill": 2
+            },
+            {
+              "alias": "Memory Usage",
+              "color": "rgb(0, 164, 255)",
+              "fill": 2
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT * FROM \"$server_measurements\" WHERE $timeFilter and host='$host' ",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "$server_measurements",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "cpu.usage": "#65c5db",
+            "mem.usage": "#ea6460"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "telegraf",
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 58
+          },
+          "id": 155,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": 24,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532777022923,
+          "repeatPanelId": 88,
+          "scopedVars": {
+            "host": {
+              "selected": false,
+              "text": "telegraf-loadgenerator",
+              "value": "telegraf-loadgenerator"
+            },
+            "server_measurements": {
+              "selected": false,
+              "text": "docker_container_cpu",
+              "value": "docker_container_cpu"
+            }
+          },
+          "seriesOverrides": [
+            {
+              "alias": "CPU Usage",
+              "color": "rgb(0, 255, 11)",
+              "fill": 2
+            },
+            {
+              "alias": "Memory Usage",
+              "color": "rgb(0, 164, 255)",
+              "fill": 2
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT * FROM \"$server_measurements\" WHERE $timeFilter and host='$host' ",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "$server_measurements",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "cpu.usage": "#65c5db",
+            "mem.usage": "#ea6460"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "telegraf",
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 65
+          },
+          "id": 156,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": 24,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532777022923,
+          "repeatPanelId": 88,
+          "scopedVars": {
+            "host": {
+              "selected": false,
+              "text": "telegraf-loadgenerator",
+              "value": "telegraf-loadgenerator"
+            },
+            "server_measurements": {
+              "selected": false,
+              "text": "docker_container_mem",
+              "value": "docker_container_mem"
+            }
+          },
+          "seriesOverrides": [
+            {
+              "alias": "CPU Usage",
+              "color": "rgb(0, 255, 11)",
+              "fill": 2
+            },
+            {
+              "alias": "Memory Usage",
+              "color": "rgb(0, 164, 255)",
+              "fill": 2
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT * FROM \"$server_measurements\" WHERE $timeFilter and host='$host' ",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "$server_measurements",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "cpu.usage": "#65c5db",
+            "mem.usage": "#ea6460"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "telegraf",
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 72
+          },
+          "id": 157,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": 24,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532777022923,
+          "repeatPanelId": 88,
+          "scopedVars": {
+            "host": {
+              "selected": false,
+              "text": "telegraf-loadgenerator",
+              "value": "telegraf-loadgenerator"
+            },
+            "server_measurements": {
+              "selected": false,
+              "text": "docker_container_net",
+              "value": "docker_container_net"
+            }
+          },
+          "seriesOverrides": [
+            {
+              "alias": "CPU Usage",
+              "color": "rgb(0, 255, 11)",
+              "fill": 2
+            },
+            {
+              "alias": "Memory Usage",
+              "color": "rgb(0, 164, 255)",
+              "fill": 2
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT * FROM \"$server_measurements\" WHERE $timeFilter and host='$host' ",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "$server_measurements",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "cpu.usage": "#65c5db",
+            "mem.usage": "#ea6460"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "telegraf",
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 79
+          },
+          "id": 158,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": 24,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532777022923,
+          "repeatPanelId": 88,
+          "scopedVars": {
+            "host": {
+              "selected": false,
+              "text": "telegraf-loadgenerator",
+              "value": "telegraf-loadgenerator"
+            },
+            "server_measurements": {
+              "selected": false,
+              "text": "kernel",
+              "value": "kernel"
+            }
+          },
+          "seriesOverrides": [
+            {
+              "alias": "CPU Usage",
+              "color": "rgb(0, 255, 11)",
+              "fill": 2
+            },
+            {
+              "alias": "Memory Usage",
+              "color": "rgb(0, 164, 255)",
+              "fill": 2
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT * FROM \"$server_measurements\" WHERE $timeFilter and host='$host' ",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "$server_measurements",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "cpu.usage": "#65c5db",
+            "mem.usage": "#ea6460"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "telegraf",
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 86
+          },
+          "id": 159,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": 24,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532777022923,
+          "repeatPanelId": 88,
+          "scopedVars": {
+            "host": {
+              "selected": false,
+              "text": "telegraf-loadgenerator",
+              "value": "telegraf-loadgenerator"
+            },
+            "server_measurements": {
+              "selected": false,
+              "text": "mem",
+              "value": "mem"
+            }
+          },
+          "seriesOverrides": [
+            {
+              "alias": "CPU Usage",
+              "color": "rgb(0, 255, 11)",
+              "fill": 2
+            },
+            {
+              "alias": "Memory Usage",
+              "color": "rgb(0, 164, 255)",
+              "fill": 2
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT * FROM \"$server_measurements\" WHERE $timeFilter and host='$host' ",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "$server_measurements",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "cpu.usage": "#65c5db",
+            "mem.usage": "#ea6460"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "telegraf",
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 93
+          },
+          "id": 160,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": 24,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532777022923,
+          "repeatPanelId": 88,
+          "scopedVars": {
+            "host": {
+              "selected": false,
+              "text": "telegraf-loadgenerator",
+              "value": "telegraf-loadgenerator"
+            },
+            "server_measurements": {
+              "selected": false,
+              "text": "processes",
+              "value": "processes"
+            }
+          },
+          "seriesOverrides": [
+            {
+              "alias": "CPU Usage",
+              "color": "rgb(0, 255, 11)",
+              "fill": 2
+            },
+            {
+              "alias": "Memory Usage",
+              "color": "rgb(0, 164, 255)",
+              "fill": 2
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT * FROM \"$server_measurements\" WHERE $timeFilter and host='$host' ",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "$server_measurements",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "cpu.usage": "#65c5db",
+            "mem.usage": "#ea6460"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "telegraf",
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 100
+          },
+          "id": 161,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": 24,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532777022923,
+          "repeatPanelId": 88,
+          "scopedVars": {
+            "host": {
+              "selected": false,
+              "text": "telegraf-loadgenerator",
+              "value": "telegraf-loadgenerator"
+            },
+            "server_measurements": {
+              "selected": false,
+              "text": "swap",
+              "value": "swap"
+            }
+          },
+          "seriesOverrides": [
+            {
+              "alias": "CPU Usage",
+              "color": "rgb(0, 255, 11)",
+              "fill": 2
+            },
+            {
+              "alias": "Memory Usage",
+              "color": "rgb(0, 164, 255)",
+              "fill": 2
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT * FROM \"$server_measurements\" WHERE $timeFilter and host='$host' ",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "$server_measurements",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "cpu.usage": "#65c5db",
+            "mem.usage": "#ea6460"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "telegraf",
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 107
+          },
+          "id": 162,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": true,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": 24,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532777022923,
+          "repeatPanelId": 88,
+          "scopedVars": {
+            "host": {
+              "selected": false,
+              "text": "telegraf-loadgenerator",
+              "value": "telegraf-loadgenerator"
+            },
+            "server_measurements": {
+              "selected": false,
+              "text": "system",
+              "value": "system"
+            }
+          },
+          "seriesOverrides": [
+            {
+              "alias": "CPU Usage",
+              "color": "rgb(0, 255, 11)",
+              "fill": 2
+            },
+            {
+              "alias": "Memory Usage",
+              "color": "rgb(0, 164, 255)",
+              "fill": 2
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT * FROM \"$server_measurements\" WHERE $timeFilter and host='$host' ",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "$server_measurements",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "cpu.usage": "#65c5db",
+            "mem.usage": "#ea6460"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "telegraf",
+          "fill": 1,
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 114
           },
           "id": 91,
           "legend": {
@@ -5856,24 +7244,56 @@
   "templating": {
     "list": [
       {
-        "allValue": null,
-        "current": {},
-        "datasource": "${DS_JMETER}",
+        "auto": true,
+        "auto_count": 30,
+        "auto_min": "1s",
+        "current": {
+          "text": "30s",
+          "value": "30s"
+        },
         "hide": 0,
-        "includeAll": false,
         "label": null,
-        "multi": false,
-        "name": "measurement",
-        "options": [],
-        "query": "SHOW MEASUREMENTS",
-        "refresh": 1,
-        "regex": "",
-        "sort": 2,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "name": "group_time",
+        "options": [
+          {
+            "selected": false,
+            "text": "auto",
+            "value": "$__auto_interval_group_time"
+          },
+          {
+            "selected": false,
+            "text": "5s",
+            "value": "5s"
+          },
+          {
+            "selected": false,
+            "text": "10s",
+            "value": "10s"
+          },
+          {
+            "selected": true,
+            "text": "30s",
+            "value": "30s"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "15m",
+            "value": "15m"
+          }
+        ],
+        "query": "5s,10s,30s,1m,5m,15m",
+        "refresh": 2,
+        "type": "interval"
       },
       {
         "allValue": null,
@@ -5935,21 +7355,57 @@
         "includeAll": true,
         "label": null,
         "multi": true,
+        "name": "scenario",
+        "options": [],
+        "query": "SHOW TAG VALUES WITH KEY = \"application\"",
+        "refresh": 1,
+        "regex": "/(.*) @ .* @ /",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_JMETER}",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
         "name": "transactions",
         "options": [],
-        "query": "SHOW TAG VALUES WITH KEY = \"transaction\" where transaction !~ /(internal|all|\\/)/",
+        "query": "SHOW TAG VALUES WITH KEY = \"transaction\" where transaction !~ /(internal|all|\\/)/ AND application =~ /$scenario/",
         "refresh": 1,
         "regex": "",
         "sort": 0,
         "tagValuesQuery": "SHOW TAG VALUES WITH KEY = \"transaction\" where transaction !~ /(internal|all|\\/)/ and application= '$tag'",
-        "tags": [
-          "demo_scenario.jmx @ 17 @ Sat Jul 28 09:35:37 UTC 2018",
-          "demo_scenario.jmx @ 18 @ Sat Jul 28 09:44:26 UTC 2018",
-          "scenario is not specified"
-        ],
+        "tags": [],
         "tagsQuery": "SHOW TAG VALUES WITH key = \"application\"",
         "type": "query",
-        "useTags": true
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {},
+        "datasource": "${DS_TELEGRAF}",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "server_measurements",
+        "options": [],
+        "query": "SHOW MEASUREMENTS",
+        "refresh": 1,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
       },
       {
         "allValue": null,
@@ -5972,91 +7428,19 @@
         "useTags": false
       },
       {
-        "auto": true,
-        "auto_count": 30,
-        "auto_min": "1s",
-        "current": {
-          "text": "30s",
-          "value": "30s"
-        },
-        "hide": 0,
-        "label": null,
-        "name": "group_time",
-        "options": [
-          {
-            "selected": false,
-            "text": "auto",
-            "value": "$__auto_interval_group_time"
-          },
-          {
-            "selected": false,
-            "text": "5s",
-            "value": "5s"
-          },
-          {
-            "selected": false,
-            "text": "10s",
-            "value": "10s"
-          },
-          {
-            "selected": true,
-            "text": "30s",
-            "value": "30s"
-          },
-          {
-            "selected": false,
-            "text": "1m",
-            "value": "1m"
-          },
-          {
-            "selected": false,
-            "text": "5m",
-            "value": "5m"
-          },
-          {
-            "selected": false,
-            "text": "15m",
-            "value": "15m"
-          }
-        ],
-        "query": "5s,10s,30s,1m,5m,15m",
-        "refresh": 2,
-        "type": "interval"
-      },
-      {
         "allValue": null,
         "current": {},
         "datasource": "${DS_JMETER}",
-        "hide": 0,
-        "includeAll": true,
+        "hide": 2,
+        "includeAll": false,
         "label": null,
-        "multi": true,
-        "name": "scenario",
-        "options": [],
-        "query": "SHOW TAG VALUES WITH KEY = \"application\"",
-        "refresh": 1,
-        "regex": "",
-        "sort": 0,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
-      },
-      {
-        "allValue": null,
-        "current": {},
-        "datasource": "${DS_TELEGRAF}",
-        "hide": 0,
-        "includeAll": true,
-        "label": null,
-        "multi": true,
-        "name": "server_measurements",
+        "multi": false,
+        "name": "measurement",
         "options": [],
         "query": "SHOW MEASUREMENTS",
         "refresh": 1,
         "regex": "",
-        "sort": 0,
+        "sort": 2,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
@@ -6097,5 +7481,5 @@
   "timezone": "",
   "title": "Load test monitoring",
   "uid": "rxKcwpFmk",
-  "version": 15
+  "version": 6
 }
