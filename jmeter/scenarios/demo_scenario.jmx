@@ -247,12 +247,12 @@ def postTraceToLog(SampleResult sample, AssertionResult[] assertions) {
             </elementProp>
             <elementProp name="testTitle" elementType="Argument">
               <stringProp name="Argument.name">testTitle</stringProp>
-              <stringProp name="Argument.value">Jenkins build #${__P(BUILD_NUMBER, N/A)} ${__P(BUILD_URL, build url N/A)} with ${scenario_name} scenario with ${USERS} users, ${RAMPUP} sec rampup and ${DURATION} sec duration was</stringProp>
+              <stringProp name="Argument.value">Jenkins build #${__P(BUILD_NUMBER, N/A)} ${__P(BUILD_URL, build url N/A)} with ${__groovy(import org.apache.jmeter.services.FileServer; def scriptName = FileServer.getFileServer().getScriptName(); return scriptName,)} scenario with ${__P(USERS,N/A)} users, ${__P(RAMPUP, N/A)} sec rampup and ${__P(DURATION, N/A)} sec duration was</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
             <elementProp name="eventTags" elementType="Argument">
               <stringProp name="Argument.name">eventTags</stringProp>
-              <stringProp name="Argument.value">scenario ${__groovy(import org.apache.jmeter.services.FileServer; def scriptName = FileServer.getFileServer().getScriptName(); return scriptName,)},${USERS} users, ${RAMPUP} sec rampup, ${DURATION} sec duration,Jenkins build #${__P(BUILD_NUMBER, N/A)}${__P(ADDITIONAL_TAGS, )}</stringProp>
+              <stringProp name="Argument.value">scenario ${__groovy(import org.apache.jmeter.services.FileServer; def scriptName = FileServer.getFileServer().getScriptName(); return scriptName,)},${__P(USERS,N/A)} users, ${__P(RAMPUP, N/A)} sec rampup, ${__P(DURATION, N/A)} sec duration,Jenkins build #${__P(BUILD_NUMBER, N/A)}${__P(ADDITIONAL_TAGS, )}</stringProp>
               <stringProp name="Argument.metadata">=</stringProp>
             </elementProp>
           </collectionProp>
