@@ -22,7 +22,7 @@
       "type": "grafana",
       "id": "grafana",
       "name": "Grafana",
-      "version": "5.2.1"
+      "version": "5.1.5"
     },
     {
       "type": "panel",
@@ -40,12 +40,6 @@
       "type": "panel",
       "id": "singlestat",
       "name": "Singlestat",
-      "version": "5.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
       "version": "5.0.0"
     }
   ],
@@ -94,7 +88,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1532607252339,
+  "iteration": 1532774010499,
   "links": [],
   "panels": [
     {
@@ -1107,7 +1101,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -1241,7 +1235,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -1377,7 +1371,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -1513,7 +1507,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -1649,7 +1643,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -1785,7 +1779,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -1921,7 +1915,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -2057,7 +2051,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -2193,7 +2187,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -2329,7 +2323,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -2465,7 +2459,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -2613,7 +2607,7 @@
       "panels": [
         {
           "columns": [],
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fontSize": "100%",
           "gridPos": {
             "h": 7,
@@ -2714,7 +2708,7 @@
       "panels": [
         {
           "columns": [],
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fontSize": "100%",
           "gridPos": {
             "h": 8,
@@ -2876,7 +2870,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "format": "ops",
           "gauge": {
             "maxValue": 100,
@@ -2988,7 +2982,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "format": "ops",
           "gauge": {
             "maxValue": 100,
@@ -3100,7 +3094,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "format": "ops",
           "gauge": {
             "maxValue": 100,
@@ -3212,7 +3206,7 @@
             "rgba(237, 129, 40, 0.89)",
             "rgba(50, 172, 45, 0.97)"
           ],
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "format": "ops",
           "gauge": {
             "maxValue": 100,
@@ -3322,7 +3316,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -3464,7 +3458,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -3601,7 +3595,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -3740,7 +3734,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -3879,7 +3873,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -4018,7 +4012,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -4157,7 +4151,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -4296,7 +4290,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -4435,7 +4429,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -4574,7 +4568,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -4713,7 +4707,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -4852,7 +4846,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -5007,7 +5001,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_JMETER}",
+          "datasource": "jmeter",
           "fill": 1,
           "gridPos": {
             "h": 9,
@@ -5279,7 +5273,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_TELEGRAF}",
+          "datasource": "telegraf",
           "fill": 1,
           "gridPos": {
             "h": 10,
@@ -5398,7 +5392,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_TELEGRAF}",
+          "datasource": "telegraf",
           "fill": 1,
           "gridPos": {
             "h": 10,
@@ -5535,7 +5529,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_TELEGRAF}",
+          "datasource": "telegraf",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -5677,7 +5671,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "${DS_TELEGRAF}",
+          "datasource": "telegraf",
           "fill": 1,
           "gridPos": {
             "h": 7,
@@ -5855,7 +5849,7 @@
       "type": "row"
     }
   ],
-  "refresh": false,
+  "refresh": "10s",
   "schemaVersion": 16,
   "style": "dark",
   "tags": [],
@@ -5949,8 +5943,8 @@
         "sort": 0,
         "tagValuesQuery": "SHOW TAG VALUES WITH KEY = \"transaction\" where transaction !~ /(internal|all|\\/)/ and application= '$tag'",
         "tags": [
-          "demo_scenario.jmx @ null @ Thu Jul 26 14:35:49 MSK 2018",
-          "demo_scenario.jmx @ null @ Thu Jul 26 14:37:09 MSK 2018",
+          "demo_scenario.jmx @ 17 @ Sat Jul 28 09:35:37 UTC 2018",
+          "demo_scenario.jmx @ 18 @ Sat Jul 28 09:44:26 UTC 2018",
           "scenario is not specified"
         ],
         "tagsQuery": "SHOW TAG VALUES WITH key = \"application\"",
@@ -5982,7 +5976,6 @@
         "auto_count": 30,
         "auto_min": "1s",
         "current": {
-          "selected": true,
           "text": "30s",
           "value": "30s"
         },
@@ -6073,8 +6066,8 @@
     ]
   },
   "time": {
-    "from": "2018-07-26T11:36:56.850Z",
-    "to": "2018-07-26T11:38:34.955Z"
+    "from": "now-15m",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -6104,5 +6097,5 @@
   "timezone": "",
   "title": "Load test monitoring With Docker Containers Monitoring",
   "uid": "rxKcwpFmk",
-  "version": 10
+  "version": 15
 }
