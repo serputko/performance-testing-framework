@@ -14,7 +14,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 -->
 
-# Docker based performance testing framework
+# Performance testing framework
 
 This framework could be used both for backend load testing with Apache Jmeter and frontend load test with sitespeed.io + webpagetest private instance.
 
