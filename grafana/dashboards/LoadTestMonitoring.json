@@ -88,7 +88,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1532777022924,
+  "iteration": 1532944878987,
   "links": [],
   "panels": [
     {
@@ -1244,7 +1244,7 @@
             "y": 16
           },
           "height": "350",
-          "id": 145,
+          "id": 199,
           "interval": "",
           "legend": {
             "alignAsTable": true,
@@ -1270,7 +1270,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 20,
           "scopedVars": {
             "transactions": {
@@ -1380,7 +1380,7 @@
             "y": 25
           },
           "height": "350",
-          "id": 146,
+          "id": 200,
           "interval": "",
           "legend": {
             "alignAsTable": true,
@@ -1406,7 +1406,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 20,
           "scopedVars": {
             "transactions": {
@@ -1516,7 +1516,7 @@
             "y": 25
           },
           "height": "350",
-          "id": 147,
+          "id": 201,
           "interval": "",
           "legend": {
             "alignAsTable": true,
@@ -1542,7 +1542,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 20,
           "scopedVars": {
             "transactions": {
@@ -1652,7 +1652,7 @@
             "y": 34
           },
           "height": "350",
-          "id": 148,
+          "id": 202,
           "interval": "",
           "legend": {
             "alignAsTable": true,
@@ -1678,7 +1678,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 20,
           "scopedVars": {
             "transactions": {
@@ -1788,7 +1788,7 @@
             "y": 34
           },
           "height": "350",
-          "id": 149,
+          "id": 203,
           "interval": "",
           "legend": {
             "alignAsTable": true,
@@ -1814,7 +1814,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 20,
           "scopedVars": {
             "transactions": {
@@ -1924,7 +1924,7 @@
             "y": 43
           },
           "height": "350",
-          "id": 150,
+          "id": 204,
           "interval": "",
           "legend": {
             "alignAsTable": true,
@@ -1950,7 +1950,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 20,
           "scopedVars": {
             "transactions": {
@@ -2069,7 +2069,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 17
+            "y": 53
           },
           "id": 8,
           "links": [],
@@ -2119,11 +2119,51 @@
                   "type": "fill"
                 }
               ],
+              "hide": false,
               "orderByTime": "ASC",
               "policy": "default",
-              "query": "SELECT\nsum(\"count\") as NumberOfSamples,\nmean(avg) as Average,\npercentile(\"pct90.0\", 90) as pct90,\npercentile(\"pct95.0\", 95) as pct95, \npercentile(\"pct99.0\", 99) as pct99,\nmin(min) as Min,\nmax(max) as Max,\nsum(countError)/sum(count) as Error\nFROM \"$measurement\"\nWHERE \"statut\"='all' \nAND $timeFilter\nAND transaction !~ /(all|\\/)/\nAND \"application\" =~ /$scenario/ \nGROUP BY \"transaction\"\n",
+              "query": "SELECT\nsum(\"count\") as NumberOfSamples,\nmean(avg) as Average,\npercentile(\"pct90.0\", 90) as pct90,\npercentile(\"pct95.0\", 95) as pct95, \npercentile(\"pct99.0\", 99) as pct99,\nmin(min) as Min,\nmax(max) as Max\nFROM \"$measurement\"\nWHERE \"statut\"='all' \nAND $timeFilter\nAND transaction !~ /(all|\\/)/\nAND \"application\" =~ /$scenario/ \nGROUP BY \"transaction\"\n",
               "rawQuery": true,
               "refId": "A",
+              "resultFormat": "table",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT\nsum(count) as \"Error Count\"\nFROM \"$measurement\"\nWHERE $timeFilter\nAND \"statut\"='ko' \nAND \"application\" =~ /$scenario/ \nGROUP BY \"transaction\"\n",
+              "rawQuery": true,
+              "refId": "B",
               "resultFormat": "table",
               "select": [
                 [
@@ -2165,16 +2205,16 @@
         {
           "columns": [],
           "datasource": "jmeter",
-          "fontSize": "100%",
+          "fontSize": "90%",
           "gridPos": {
-            "h": 8,
+            "h": 12,
             "w": 24,
             "x": 0,
-            "y": 18
+            "y": 54
           },
           "id": 33,
           "links": [],
-          "pageSize": 50,
+          "pageSize": 10,
           "scroll": true,
           "showHeader": true,
           "sort": {
@@ -2315,6 +2355,191 @@
         "x": 0,
         "y": 18
       },
+      "id": 167,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "jmeter",
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 24,
+            "x": 0,
+            "y": 67
+          },
+          "height": "350",
+          "id": 174,
+          "interval": "",
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": false,
+            "hideEmpty": false,
+            "hideZero": false,
+            "max": false,
+            "min": false,
+            "rightSide": false,
+            "show": true,
+            "total": true,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "minSpan": 12,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeatDirection": "h",
+          "seriesOverrides": [
+            {
+              "alias": "Total error count",
+              "color": "#bf1b00"
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$tag_transaction",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"count\") FROM \"$measurement\" WHERE \"statut\"='ko' AND $timeFilter AND \"application\" =~ /$scenario/ group by transaction, time($group_time)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            },
+            {
+              "alias": "$col",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT sum(\"countError\") as \"Total error count\" FROM \"$measurement\" WHERE \"transaction\"='all' AND $timeFilter AND \"application\" =~ /$scenario/ group by time($group_time)",
+              "rawQuery": true,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Errors count per transaction",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "transparent": false,
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "Number of errors",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        }
+      ],
+      "title": "Errors per transaction",
+      "type": "row"
+    },
+    {
+      "collapsed": true,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 19
+      },
       "id": 96,
       "panels": [
         {
@@ -2339,7 +2564,7 @@
             "h": 3,
             "w": 6,
             "x": 0,
-            "y": 19
+            "y": 77
           },
           "id": 35,
           "interval": null,
@@ -2451,7 +2676,7 @@
             "h": 3,
             "w": 6,
             "x": 6,
-            "y": 19
+            "y": 77
           },
           "id": 29,
           "interval": null,
@@ -2563,7 +2788,7 @@
             "h": 3,
             "w": 6,
             "x": 12,
-            "y": 19
+            "y": 77
           },
           "id": 30,
           "interval": null,
@@ -2675,7 +2900,7 @@
             "h": 3,
             "w": 6,
             "x": 18,
-            "y": 19
+            "y": 77
           },
           "id": 31,
           "interval": null,
@@ -2778,7 +3003,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 22
+            "y": 80
           },
           "height": "350",
           "id": 28,
@@ -2903,7 +3128,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 20
       },
       "id": 111,
       "panels": [
@@ -2920,7 +3145,7 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 32
+            "y": 90
           },
           "height": "350",
           "id": 112,
@@ -3057,10 +3282,10 @@
             "h": 9,
             "w": 12,
             "x": 12,
-            "y": 32
+            "y": 90
           },
           "height": "350",
-          "id": 134,
+          "id": 205,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -3083,13 +3308,13 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532775124448,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 112,
           "scopedVars": {
             "transactions": {
               "selected": false,
-              "text": "Failed Transaction",
-              "value": "Failed Transaction"
+              "text": "Buy item",
+              "value": "Buy item"
             }
           },
           "seriesOverrides": [
@@ -3196,10 +3421,10 @@
             "h": 9,
             "w": 12,
             "x": 0,
-            "y": 41
+            "y": 99
           },
           "height": "350",
-          "id": 135,
+          "id": 206,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -3222,7 +3447,146 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532775124448,
+          "repeatIteration": 1532867432954,
+          "repeatPanelId": 112,
+          "scopedVars": {
+            "transactions": {
+              "selected": false,
+              "text": "Clear cart",
+              "value": "Clear cart"
+            }
+          },
+          "seriesOverrides": [
+            {
+              "alias": "Throughput",
+              "color": "rgb(0, 218, 255)",
+              "yaxis": 1
+            }
+          ],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$col",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$__interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "orderByTime": "ASC",
+              "policy": "default",
+              "query": "SELECT last(\"count\")/5 as \"Throughput\" FROM \"$measurement\" WHERE \"transaction\" = '$transactions' AND $timeFilter AND \"application\" =~ /$scenario/ GROUP BY time(5s) fill(null)",
+              "rawQuery": true,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": []
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Throughput for $transactions",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "ops",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {
+            "jmeter.last": "#6ED0E0"
+          },
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "jmeter",
+          "fill": 1,
+          "gridPos": {
+            "h": 9,
+            "w": 12,
+            "x": 12,
+            "y": 99
+          },
+          "height": "350",
+          "id": 207,
+          "legend": {
+            "alignAsTable": true,
+            "avg": true,
+            "current": true,
+            "max": true,
+            "min": true,
+            "rightSide": false,
+            "show": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "minSpan": 12,
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "repeat": null,
+          "repeatDirection": "h",
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 112,
           "scopedVars": {
             "transactions": {
@@ -3334,11 +3698,11 @@
           "gridPos": {
             "h": 9,
             "w": 12,
-            "x": 12,
-            "y": 41
+            "x": 0,
+            "y": 108
           },
           "height": "350",
-          "id": 136,
+          "id": 208,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -3361,7 +3725,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532775124448,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 112,
           "scopedVars": {
             "transactions": {
@@ -3473,11 +3837,11 @@
           "gridPos": {
             "h": 9,
             "w": 12,
-            "x": 0,
-            "y": 50
+            "x": 12,
+            "y": 108
           },
           "height": "350",
-          "id": 137,
+          "id": 209,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -3500,13 +3864,13 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532775124448,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 112,
           "scopedVars": {
             "transactions": {
               "selected": false,
-              "text": "Open category page",
-              "value": "Open category page"
+              "text": "Open category",
+              "value": "Open category"
             }
           },
           "seriesOverrides": [
@@ -3612,11 +3976,11 @@
           "gridPos": {
             "h": 9,
             "w": 12,
-            "x": 12,
-            "y": 50
+            "x": 0,
+            "y": 117
           },
           "height": "350",
-          "id": 138,
+          "id": 210,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -3639,847 +4003,13 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532775124448,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 112,
           "scopedVars": {
             "transactions": {
               "selected": false,
               "text": "Open main page",
               "value": "Open main page"
-            }
-          },
-          "seriesOverrides": [
-            {
-              "alias": "Throughput",
-              "color": "rgb(0, 218, 255)",
-              "yaxis": 1
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT last(\"count\")/5 as \"Throughput\" FROM \"$measurement\" WHERE \"transaction\" = '$transactions' AND $timeFilter AND \"application\" =~ /$scenario/ GROUP BY time(5s) fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Throughput for $transactions",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "ops",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {
-            "jmeter.last": "#6ED0E0"
-          },
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "jmeter",
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 0,
-            "y": 59
-          },
-          "height": "350",
-          "id": 139,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "minSpan": 12,
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "h",
-          "repeatIteration": 1532775124448,
-          "repeatPanelId": 112,
-          "scopedVars": {
-            "transactions": {
-              "selected": false,
-              "text": "Open product page",
-              "value": "Open product page"
-            }
-          },
-          "seriesOverrides": [
-            {
-              "alias": "Throughput",
-              "color": "rgb(0, 218, 255)",
-              "yaxis": 1
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT last(\"count\")/5 as \"Throughput\" FROM \"$measurement\" WHERE \"transaction\" = '$transactions' AND $timeFilter AND \"application\" =~ /$scenario/ GROUP BY time(5s) fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Throughput for $transactions",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "ops",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {
-            "jmeter.last": "#6ED0E0"
-          },
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "jmeter",
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 12,
-            "y": 59
-          },
-          "height": "350",
-          "id": 140,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "minSpan": 12,
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "h",
-          "repeatIteration": 1532775124448,
-          "repeatPanelId": 112,
-          "scopedVars": {
-            "transactions": {
-              "selected": false,
-              "text": "Order page",
-              "value": "Order page"
-            }
-          },
-          "seriesOverrides": [
-            {
-              "alias": "Throughput",
-              "color": "rgb(0, 218, 255)",
-              "yaxis": 1
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT last(\"count\")/5 as \"Throughput\" FROM \"$measurement\" WHERE \"transaction\" = '$transactions' AND $timeFilter AND \"application\" =~ /$scenario/ GROUP BY time(5s) fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Throughput for $transactions",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "ops",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {
-            "jmeter.last": "#6ED0E0"
-          },
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "jmeter",
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 0,
-            "y": 68
-          },
-          "height": "350",
-          "id": 141,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "minSpan": 12,
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "h",
-          "repeatIteration": 1532775124448,
-          "repeatPanelId": 112,
-          "scopedVars": {
-            "transactions": {
-              "selected": false,
-              "text": "Pay",
-              "value": "Pay"
-            }
-          },
-          "seriesOverrides": [
-            {
-              "alias": "Throughput",
-              "color": "rgb(0, 218, 255)",
-              "yaxis": 1
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT last(\"count\")/5 as \"Throughput\" FROM \"$measurement\" WHERE \"transaction\" = '$transactions' AND $timeFilter AND \"application\" =~ /$scenario/ GROUP BY time(5s) fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Throughput for $transactions",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "ops",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {
-            "jmeter.last": "#6ED0E0"
-          },
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "jmeter",
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 12,
-            "y": 68
-          },
-          "height": "350",
-          "id": 142,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "minSpan": 12,
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "h",
-          "repeatIteration": 1532775124448,
-          "repeatPanelId": 112,
-          "scopedVars": {
-            "transactions": {
-              "selected": false,
-              "text": "Transaction Controller",
-              "value": "Transaction Controller"
-            }
-          },
-          "seriesOverrides": [
-            {
-              "alias": "Throughput",
-              "color": "rgb(0, 218, 255)",
-              "yaxis": 1
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT last(\"count\")/5 as \"Throughput\" FROM \"$measurement\" WHERE \"transaction\" = '$transactions' AND $timeFilter AND \"application\" =~ /$scenario/ GROUP BY time(5s) fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Throughput for $transactions",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "ops",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {
-            "jmeter.last": "#6ED0E0"
-          },
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "jmeter",
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 0,
-            "y": 77
-          },
-          "height": "350",
-          "id": 143,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "minSpan": 12,
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "h",
-          "repeatIteration": 1532775124448,
-          "repeatPanelId": 112,
-          "scopedVars": {
-            "transactions": {
-              "selected": false,
-              "text": "jp@gc - Dummy Sampler",
-              "value": "jp@gc - Dummy Sampler"
-            }
-          },
-          "seriesOverrides": [
-            {
-              "alias": "Throughput",
-              "color": "rgb(0, 218, 255)",
-              "yaxis": 1
-            }
-          ],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$col",
-              "dsType": "influxdb",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT last(\"count\")/5 as \"Throughput\" FROM \"$measurement\" WHERE \"transaction\" = '$transactions' AND $timeFilter AND \"application\" =~ /$scenario/ GROUP BY time(5s) fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "value"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": []
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Throughput for $transactions",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "ops",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {
-            "jmeter.last": "#6ED0E0"
-          },
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "jmeter",
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 12,
-            "x": 12,
-            "y": 77
-          },
-          "height": "350",
-          "id": 144,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": true,
-            "min": true,
-            "rightSide": false,
-            "show": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "minSpan": 12,
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "repeat": null,
-          "repeatDirection": "h",
-          "repeatIteration": 1532775124448,
-          "repeatPanelId": 112,
-          "scopedVars": {
-            "transactions": {
-              "selected": false,
-              "text": "jp@gc - Dummy Sampler failed",
-              "value": "jp@gc - Dummy Sampler failed"
             }
           },
           "seriesOverrides": [
@@ -4583,7 +4113,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 21
       },
       "id": 97,
       "panels": [
@@ -4602,7 +4132,7 @@
             "h": 9,
             "w": 24,
             "x": 0,
-            "y": 87
+            "y": 127
           },
           "height": "350",
           "id": 37,
@@ -4859,7 +4389,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 21
+        "y": 22
       },
       "id": 98,
       "panels": [
@@ -4871,10 +4401,10 @@
           "datasource": "telegraf",
           "fill": 1,
           "gridPos": {
-            "h": 10,
+            "h": 7,
             "w": 24,
             "x": 0,
-            "y": 88
+            "y": 137
           },
           "height": "400",
           "id": 86,
@@ -4990,10 +4520,10 @@
           "datasource": "telegraf",
           "fill": 1,
           "gridPos": {
-            "h": 10,
+            "h": 7,
             "w": 24,
             "x": 0,
-            "y": 98
+            "y": 144
           },
           "height": "400",
           "id": 87,
@@ -5112,7 +4642,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 22
+        "y": 23
       },
       "id": 99,
       "panels": [
@@ -5130,7 +4660,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 23
+            "y": 152
           },
           "id": 88,
           "legend": {
@@ -5277,9 +4807,9 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 30
+            "y": 159
           },
-          "id": 151,
+          "id": 211,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -5302,7 +4832,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 88,
           "scopedVars": {
             "host": {
@@ -5426,9 +4956,9 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 37
+            "y": 166
           },
-          "id": 152,
+          "id": 212,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -5451,7 +4981,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 88,
           "scopedVars": {
             "host": {
@@ -5575,9 +5105,9 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 44
+            "y": 173
           },
-          "id": 153,
+          "id": 213,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -5600,7 +5130,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 88,
           "scopedVars": {
             "host": {
@@ -5724,9 +5254,9 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 51
+            "y": 180
           },
-          "id": 154,
+          "id": 214,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -5749,7 +5279,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 88,
           "scopedVars": {
             "host": {
@@ -5873,9 +5403,9 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 58
+            "y": 187
           },
-          "id": 155,
+          "id": 215,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -5898,7 +5428,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 88,
           "scopedVars": {
             "host": {
@@ -6022,9 +5552,9 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 65
+            "y": 194
           },
-          "id": 156,
+          "id": 216,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -6047,7 +5577,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 88,
           "scopedVars": {
             "host": {
@@ -6171,9 +5701,9 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 72
+            "y": 201
           },
-          "id": 157,
+          "id": 217,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -6196,7 +5726,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 88,
           "scopedVars": {
             "host": {
@@ -6320,9 +5850,9 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 79
+            "y": 208
           },
-          "id": 158,
+          "id": 218,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -6345,7 +5875,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 88,
           "scopedVars": {
             "host": {
@@ -6469,9 +5999,9 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 86
+            "y": 215
           },
-          "id": 159,
+          "id": 219,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -6494,7 +6024,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 88,
           "scopedVars": {
             "host": {
@@ -6618,9 +6148,9 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 93
+            "y": 222
           },
-          "id": 160,
+          "id": 220,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -6643,7 +6173,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 88,
           "scopedVars": {
             "host": {
@@ -6767,9 +6297,9 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 100
+            "y": 229
           },
-          "id": 161,
+          "id": 221,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -6792,7 +6322,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 88,
           "scopedVars": {
             "host": {
@@ -6916,9 +6446,9 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 107
+            "y": 236
           },
-          "id": 162,
+          "id": 222,
           "legend": {
             "alignAsTable": true,
             "avg": true,
@@ -6941,7 +6471,7 @@
           "renderer": "flot",
           "repeat": null,
           "repeatDirection": "h",
-          "repeatIteration": 1532777022923,
+          "repeatIteration": 1532867432954,
           "repeatPanelId": 88,
           "scopedVars": {
             "host": {
@@ -7065,7 +6595,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 114
+            "y": 243
           },
           "id": 91,
           "legend": {
@@ -7248,8 +6778,8 @@
         "auto_count": 30,
         "auto_min": "1s",
         "current": {
-          "text": "30s",
-          "value": "30s"
+          "text": "10s",
+          "value": "10s"
         },
         "hide": 0,
         "label": null,
@@ -7266,12 +6796,12 @@
             "value": "5s"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "10s",
             "value": "10s"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "30s",
             "value": "30s"
           },
@@ -7481,5 +7011,5 @@
   "timezone": "",
   "title": "Load test monitoring",
   "uid": "rxKcwpFmk",
-  "version": 6
+  "version": 4
 }
