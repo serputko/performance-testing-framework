@@ -20,7 +20,7 @@ This framework could be used both for backend load testing with Apache Jmeter an
 
 ### Custom Grafana dashboards features:
 * **view** application/server-side metrics in real time while test is running
-* **analyse** errors cause with detailed traces for failed requests
+* **analyze** errors cause with detailed traces for failed requests
 * **compare** different test runs in scripted dashboard
 
 #### Dashboard demo
