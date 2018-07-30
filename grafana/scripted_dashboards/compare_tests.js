@@ -2943,34 +2943,6 @@ return function(callback) {
                     "type": "row"
                 });
 
-                //row wih jenkins iframe
-                dashboard.panels.push({
-                    "collapsed": true,
-                    "gridPos": {
-                        "h": 1,
-                        "w": 24,
-                        "x": 400,
-                        "y": 200
-                    },
-                    "id": 10,
-                    "panels": [{
-                        "type": "text",
-                        "title": "",
-                        "gridPos": {
-                            "x": 0,
-                            "y": 0,
-                            "w": 24,
-                            "h": 14
-                        },
-                        "id": 89,
-                        "mode": "html",
-                        "content": "<iframe src=\"http://35.172.70.115:8097/\" style=\"width: 100%; height: 100%\"></iframe> "
-                    }],
-                    "title": "Jenkins",
-                    "type": "row"
-                });
-
-
                 // when dashboard is composed call the callback
                 // function and pass the dashboard
                 callback(dashboard);
