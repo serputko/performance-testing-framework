@@ -2,3 +2,4 @@
 *.txt text eol=lf
 *.sh text eol=lf
 grafana/plugins/* linguist-vendored
+influxdb-timeshift-proxy/* linguist-vendored
