@@ -2,11 +2,8 @@ version: '3'
 services:
    grafana:
      container_name: grafana
-     depends_on:
-       - graphite
      links:
        - influxdb:influxdb
-       - graphite
      image: grafana
      build: ./grafana
      user: "104"
@@ -46,36 +43,6 @@ services:
    #environment:
        # - SYS_PATH_PREFIX=/rootfs
      restart: always
-   sitespeed.io:
-      image: sitespeedio/sitespeed.io
-      container_name: sitespeed.io
-      command: -V
-      privileged: true
-      shm_size: 1g
-      volumes:
-            - sitespeed:/sitespeed.io/
-   graphite:
-      image: sitespeedio/graphite:1.0.2-2-b
-      container_name: graphite
-      ports:
-        - "2003:2003"
-        - "8080:80"
-      restart: always
-      volumes:
-        - whisper:/opt/graphite/storage/whisper
-        #- ./graphite/graphite.db:/opt/graphite/storage/graphite.db
-        #- ./graphite/conf/storage-schemas.conf:/opt/graphite/conf/storage-schemas.conf
-        #- ./graphite/conf/storage-aggregation.conf:/opt/graphite/conf/storage-aggregation.conf
-        #- ./graphite/conf/carbon.conf:/opt/graphite/conf/carbon.conf
-      restart: always
-   grafana-setup:
-      image: sitespeedio/grafana-bootstrap:sitespeed.io-4.6
-      container_name: grafana-setup
-      links:
-        - grafana
-      environment:
-        - GF_PASSWORD=admin
-        - GF_USER=admin
    docker-dind:
       image: docker:dind
       volumes:
@@ -104,7 +71,6 @@ services:
       - JENKINS_ADMIN_LOGIN=admin
       - JENKINS_ADMIN_PASSWORD=admin
       volumes:
-        - /tmp/sitespeed.io/:/var/lib/sitespeed.io/
         - docker-dind:/usr/local/bin/dind/
         - /var/run/docker.sock:/var/run/docker.sock
         - jenkins-home:/var/jenkins_home
@@ -114,7 +80,6 @@ services:
         # https://blogs.msdn.microsoft.com/stevelasker/2016/06/14/configuring-docker-for-windows-volumes/
         # currently tests will be fetched from ./jmeter/scenarios/ directory
         - ./jmeter/scenarios/:/var/lib/jmeter-scenarios/
-        - ./wptserver/scripts/:/var/lib/wpt-scripts/
       restart: always
    portainer:
       image: portainer/portainer
@@ -124,49 +89,29 @@ services:
       volumes:
         - /var/run/docker.sock:/var/run/docker.sock
       restart: always
-   webpagetestserver:
-      build: ./wptserver
-      container_name: wptserver
-      image: wptserver
-      ports:
-        #expose 4000 port instead of 80 when sitespeed will add webpagetest.port parameter https://github.com/sitespeedio/sitespeed.io/issues/1855
-        #- "4000:80"
-        - "80:80"
-      volumes:
-        - webpagetest-results:/var/www/html/results/
-        - webpagetest-settings:/var/www/html/settings/
-        - webpagetest-logs:/var/www/html/logs/
-      restart: always
-   webpagetestagent:
-      image: webpagetest/agent
-      container_name: wptagent
-      depends_on:
-        - webpagetestserver
-      ports:
-        - "4001:80"
-      environment:
-        - SERVER_URL=http://wptserver:80/work/
-        - LOCATION=Test
-        # You need to also pass EXTRA_ARGS="--shaper none" to tell the agent that shaping isn't possible, 
-        # otherwise it will default to the netem shaper on Linux (in Docker) and still try to set up the configuration.
-        # https://github.com/WPO-Foundation/wptagent/issues/48
-        # -vvvvv - debug mode(more v - more detailed debug)
-        - EXTRA_ARGS=-vvvvv --shaper none
-      restart: always
    jmeter:
      container_name: jmeter
      build: ./jmeter
      image: jmeter
      entrypoint:
        - cat
+   influxdb-timeshift-proxy:
+     container_name: influxdb-timeshift-proxy
+     image: "node:alpine"
+     user: "node"
+     depends_on:
+       - influxdb
+     working_dir: /influxdb-timeshift-proxy/
+     environment:
+       - INFLUXDB=influxdb:8086
+     volumes:
+       - ./influxdb-timeshift-proxy/:/influxdb-timeshift-proxy/
+     expose:
+       - "8989"
+     command: "npm run start"
 volumes:
     grafana-home:
     grafana-conf:
-    whisper:
     docker-dind:
-    webpagetest-results:
-    webpagetest-settings:
-    webpagetest-logs:
     jenkins-home:
     influxdb:
-    sitespeed:
