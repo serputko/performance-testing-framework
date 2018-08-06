@@ -98,7 +98,7 @@ services:
    influxdb-timeshift-proxy:
      container_name: influxdb-timeshift-proxy
      image: "node:alpine"
-     user: "node"
+     user: "root"
      depends_on:
        - influxdb
      working_dir: /influxdb-timeshift-proxy/
@@ -108,7 +108,7 @@ services:
        - ./influxdb-timeshift-proxy/:/influxdb-timeshift-proxy/
      expose:
        - "8989"
-     command: "npm run start"
+     command: sh -c "npm i -d && npm run start"
 volumes:
     grafana-home:
     grafana-conf:

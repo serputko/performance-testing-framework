@@ -172,7 +172,7 @@ services:
        - ./influxdb-timeshift-proxy/:/influxdb-timeshift-proxy/
      expose:
        - "8989"
-     command: "npm run start"
+     command: sh -c "npm i -d && npm run start"
 volumes:
     grafana-home:
     grafana-conf:
