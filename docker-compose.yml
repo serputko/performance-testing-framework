@@ -98,7 +98,7 @@ services:
    influxdb-timeshift-proxy:
      container_name: influxdb-timeshift-proxy
      image: "node:alpine"
-     user: "root"
+     user: "node"
      depends_on:
        - influxdb
      working_dir: /influxdb-timeshift-proxy/
