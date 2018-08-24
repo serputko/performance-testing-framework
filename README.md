@@ -133,6 +133,11 @@ Start demo_scenario.jmx test with jenkins Backend job
 Real time results should be available in grafana
 Open 'Load test monitoring' dashboard. Dashboard contains visualizations based on data from influxdb.
 
+### Available metrics
+
+Dashboard has multiple rows with different metrics
+![](https://github.com/serputko/performance-testing-framework/blob/master/docs/img/grafana_dashboard_available_stats.png)
+
 ### Timerange
 All values in visualizations are calculated according to selected time range. Default timerange is last 15 min with 10 sec refresh. Timerange could be set in timepicker or selected on any graph.
 ![](https://github.com/serputko/performance-testing-framework/blob/master/docs/img/grafana_set_time_range.gif)
