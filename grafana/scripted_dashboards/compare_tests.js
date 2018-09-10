@@ -1145,13 +1145,13 @@ return function(callback) {
                             "points": false,
                             "renderer": "flot",
                             "seriesOverrides": [{
-                                    "alias": "$tag_left Active threads in " + tag_right,
+                                    "alias": "$tag_right Active threads in " + tag_right,
                                     "color": "rgb(205, 255, 0)",
                                     "dashes": true,
                                     "fill": 3
                                 },
                                 {
-                                    "alias": "$tag_right Active threads in " + tag_left,
+                                    "alias": "$tag_left Active threads in " + tag_left,
                                     "fill": 3,
                                     "dashes": true,
                                     "color": "#6ed0e0"
@@ -1162,11 +1162,11 @@ return function(callback) {
                             "steppedLine": false,
                             "targets": [{
                                     "$$hashKey": "object:322",
-                                    "alias": "$tag_left Active threads in " + tag_right,
+                                    "alias": "$tag_right Active threads in " + tag_right,
                                     "dsType": "influxdb",
                                     "groupBy": [{
                                             "params": [
-                                                "$__interval"
+                                                "$__interval"   
                                             ],
                                             "type": "time"
                                         },
@@ -1200,7 +1200,7 @@ return function(callback) {
                                 },
                                 {
                                     "$$hashKey": "object:333",
-                                    "alias": "$tag_right Active threads in " + tag_left,
+                                    "alias": "$tag_left Active threads in " + tag_left,
                                     "dsType": "influxdb",
                                     "groupBy": [{
                                             "params": [
@@ -1312,12 +1312,12 @@ return function(callback) {
                             "renderer": "flot",
                             "repeat": null,
                             "seriesOverrides": [{
-                                    "alias": "$tag_left Error count trend " + tag_right,
+                                    "alias": "$tag_right Error count trend " + tag_right,
                                     "fill": 3,
                                     "color": "#890f02"
                                 },
                                 {
-                                    "alias": "$tag_right Error count trend " + tag_left,
+                                    "alias": "$tag_left Error count trend " + tag_left,
                                     "color": "#cca300",
                                     "fill": 3
                                 }
@@ -1326,7 +1326,7 @@ return function(callback) {
                             "stack": false,
                             "steppedLine": false,
                             "targets": [{
-                                    "alias": "$tag_left Error count trend " + tag_right,
+                                    "alias": "$tag_right Error count trend " + tag_right,
                                     "dsType": "influxdb",
                                     "groupBy": [{
                                             "params": [
@@ -1364,7 +1364,7 @@ return function(callback) {
                                     "tags": []
                                 },
                                 {
-                                    "alias": "$tag_right Error count trend " + tag_left,
+                                    "alias": "$tag_left Error count trend " + tag_left,
                                     "dsType": "influxdb",
                                     "groupBy": [{
                                             "params": [
@@ -1499,12 +1499,12 @@ return function(callback) {
                         "renderer": "flot",
                         "repeat": "transactions",
                         "seriesOverrides": [{
-                                "alias": "/$tag_left/",
+                                "alias": "/$tag_right/",
                                 "fill": 0,
                                 "points": true
                             },
                             {
-                                "alias": "/$tag_right/",
+                                "alias": "/$tag_left/",
                                 "fill": 0,
                                 "points": true
                             }
@@ -1513,7 +1513,7 @@ return function(callback) {
                         "stack": false,
                         "steppedLine": false,
                         "targets": [{
-                                "alias": "$tag_left $transactions $metric",
+                                "alias": "$tag_right $transactions $metric",
                                 "dsType": "influxdb",
                                 "groupBy": [{
                                         "params": [
@@ -1551,7 +1551,7 @@ return function(callback) {
                                 "tags": []
                             },
                             {
-                                "alias": "$tag_right $transactions $metric",
+                                "alias": "$tag_left $transactions $metric",
                                 "dsType": "influxdb",
                                 "groupBy": [{
                                         "params": [
@@ -2528,13 +2528,13 @@ return function(callback) {
                             "points": false,
                             "renderer": "flot",
                             "seriesOverrides": [{
-                                    "alias": "$tag_left Throughput in " + tag_right,
+                                    "alias": "$tag_right Throughput in " + tag_right,
                                     "color": "rgb(205, 255, 0)",
                                     "dashes": true,
                                     "fill": 0
                                 },
                                 {
-                                    "alias": "$tag_right Throughput in" + tag_left,
+                                    "alias": "$tag_left Throughput in" + tag_left,
                                     "fill": 0,
                                     "dashes": true,
                                     "color": "#6ed0e0"
@@ -2544,7 +2544,7 @@ return function(callback) {
                             "stack": false,
                             "steppedLine": false,
                             "targets": [{
-                                    "alias": "$tag_left Throughput in " + tag_right,
+                                    "alias": "$tag_right Throughput in " + tag_right,
                                     "dsType": "influxdb",
                                     "groupBy": [{
                                             "params": [
@@ -2581,7 +2581,7 @@ return function(callback) {
                                     "tags": []
                                 },
                                 {
-                                    "alias": "$tag_right Throughput in" + tag_left,
+                                    "alias": "$tag_left Throughput in" + tag_left,
                                     "dsType": "influxdb",
                                     "groupBy": [{
                                             "params": [
