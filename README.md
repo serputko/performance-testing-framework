@@ -62,7 +62,8 @@ start cmd as administrator and execute ```setx COMPOSE_CONVERT_WINDOWS_PATHS "1"
 
 1. ```git clone``` this repository
 2. open performance-testing-framework dir
-3. ```docker-compose up -d``` will start containers for backend performance testing
+3. (optional) if you want to update services- execute ``docker-compose pull```
+4. ```docker-compose up -d``` will start containers for backend performance testing
 if you need to test frontend performance execute: docker-compose -f docker-compose-with-frontend.yml up -d
 
 All containers should be up and running
