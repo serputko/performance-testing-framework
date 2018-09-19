@@ -69,6 +69,7 @@ start cmd as administrator and execute ```setx COMPOSE_CONVERT_WINDOWS_PATHS "1"
 ```
 docker-compose pull
 docker-compose build 
+docker-compose down
 ```
 4. ```docker-compose up -d```
 
@@ -78,6 +79,7 @@ docker-compose build
 ```
 docker-compose -f docker-compose-with-frontend.yml pull
 docker-compose -f docker-compose-with-frontend.yml build
+docker-compose -f docker-compose-with-frontend.yml down
 ```
 4. ```docker-compose -f docker-compose-with-frontend.yml up -d```
 
