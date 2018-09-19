@@ -138,7 +138,7 @@ grafana_url = &quot;127.0.0.1:8857&quot;
 }
 
 // grafana url for aggregate dashboard - replace time stamp with %s
-def perfResult = &quot;http://%s/dashboard/db/load-test-monitoring-with-docker-containers-monitoring?from=%s&amp;to=%s&quot;
+def perfResult = &quot;http://%s/dashboard/db/load-test-monitoring?from=%s&amp;to=%s&quot;
 
 // get build start and end time
 def start = build.getStartTimeInMillis();

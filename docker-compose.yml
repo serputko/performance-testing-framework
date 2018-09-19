@@ -4,7 +4,7 @@ services:
      container_name: grafana
      links:
        - influxdb:influxdb
-     image: grafana
+     image: grafana/grafana
      build: ./grafana
      user: "104"
      ports:
@@ -52,7 +52,7 @@ services:
       privileged: true
       restart: always
    jenkins:
-      image: jenkins
+      image: jenkins/jenkins
       build: ./jenkins
       depends_on:
        - docker-dind
@@ -92,7 +92,7 @@ services:
    jmeter:
      container_name: jmeter
      build: ./jmeter
-     image: jmeter
+     image: "java:8-jdk"
      entrypoint:
        - cat
    influxdb-timeshift-proxy:
