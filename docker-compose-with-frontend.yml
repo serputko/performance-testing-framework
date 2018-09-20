@@ -127,7 +127,7 @@ services:
    webpagetestserver:
       build: ./wptserver
       container_name: wptserver
-      image: wptserver
+      image: webpagetest/server
       ports:
         #expose 4000 port instead of 80 when sitespeed will add webpagetest.port parameter https://github.com/sitespeedio/sitespeed.io/issues/1855
         #- "4000:80"
