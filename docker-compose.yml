@@ -92,7 +92,7 @@ services:
    jmeter:
      container_name: jmeter
      build: ./jmeter
-     image: "java:8-jdk"
+     image: "jmeter"
      entrypoint:
        - cat
    influxdb-timeshift-proxy:
