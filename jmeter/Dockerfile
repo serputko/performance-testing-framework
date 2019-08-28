@@ -1,6 +1,6 @@
 FROM java:8-jdk
 
-ARG JMETER_VERSION="3.3"
+ARG JMETER_VERSION="5.1"
 ENV JMETER_HOME /opt/apache-jmeter-${JMETER_VERSION}
 ENV	JMETER_BIN	${JMETER_HOME}/bin
 ENV	JMETER_DOWNLOAD_URL  https://archive.apache.org/dist/jmeter/binaries/apache-jmeter-${JMETER_VERSION}.tgz
