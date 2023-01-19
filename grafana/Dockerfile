@@ -1,4 +1,4 @@
-FROM grafana/grafana:5.1.5
+FROM grafana/grafana:5.4.3
 
 USER root
 RUN apt-get update && \
