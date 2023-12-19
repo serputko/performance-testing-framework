@@ -1,0 +1,6 @@
+username,firstName,lastName,email,password,phone,userStatus
+username1,Egor1,Doe1,username1@gmail.com,password1,+380674568901,1
+username2,Egor2,Doe2,username2@gmail.com,password2,+380674568902,0
+username3,Egor3,Doe3,username3@gmail.com,password3,+380674568903,1
+username4,Egor4,Doe4,username4@gmail.com,password4,+380674568904,0
+username5,Egor5,Doe5,username5@gmail.com,password5,+380674568905,1
